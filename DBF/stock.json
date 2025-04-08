@@ -1,0 +1,26 @@
+[
+  {
+    "stockno": "1",
+    "descrp": "BCG",
+    "lotno": "LOTNO123",
+    "expiry": "2028-05-23"
+  },
+  {
+    "stockno": "2",
+    "descrp": "Hep B",
+    "lotno": "Hep BLOTNO123",
+    "expiry": "2028-05-23"
+  },
+  {
+    "stockno": "3",
+    "descrp": "Penta Hib",
+    "lotno": "Penta HibLOTNO123",
+    "expiry": "2028-05-23"
+  },
+  {
+    "stockno": "4",
+    "descrp": "OPV",
+    "lotno": "OPVLOTNO123",
+    "expiry": "2028-05-23"
+  }  
+]
