@@ -29,7 +29,7 @@ function start_app(){
   
   //searchContentInFile('SW_DTR.js', 'cacheName')
   // Get text from character 10 to 50
-  fetchTextPortion('SW_DTR.js', 17, 22)
+  fetchTextPortion('SW_VAXi.js', 17, 22)
   .then(portion => {
     console.log('Text portion:', portion);      
     document.getElementById('ver_sion').innerHTML=CURR_VER;

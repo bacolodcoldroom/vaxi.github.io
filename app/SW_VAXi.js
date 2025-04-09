@@ -48,7 +48,7 @@ const staticAssets = [
   './app_setting.js',     
   './rep_dtr.js', './rest_api.js',     
   
-  './gfx/snd/chimes.mp3', 
+  '../gfx/snd/chimes.mp3', 
   './gfx/proc_logo.gif',  
   './gfx/jprn.png', './gfx/jrefresh.png', './gfx/jpdf.png',
 
