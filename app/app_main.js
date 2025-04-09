@@ -835,7 +835,7 @@ function formatPhoneNumber(phoneNumber) {
 
 function showQR(){
   var h=H_BODY-100;
-  var txt='https://bacolodcoldroom.github.io/dtr_pwa.github.io/';
+  var txt='https://bacolodcoldroom.github.io/vaxi.github.io/app/';
   //txt=window.location.origin;
   //txt=CURR_SITE;
   var dtl=     
