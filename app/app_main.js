@@ -154,7 +154,7 @@ function showProfile(v){
  
   document.getElementById('div_bar').style.display='block';
   var n = new Date().toLocaleTimeString('it-IT');
-  var v_mphoto='gfx/avatar.png';
+  var v_mphoto='../gfx/avatar.png';
  
   dispHeaderMode();
  

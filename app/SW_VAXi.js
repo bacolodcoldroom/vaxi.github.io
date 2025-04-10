@@ -1,4 +1,4 @@
-const cacheName = 'CC_123456';
+const cacheName='01.01';
 /*
 Copyright 2015, 2019, 2020, 2021 Google LLC. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,7 +52,7 @@ const staticAssets = [
   './gfx/proc_logo.gif',  
   './gfx/jprn.png', './gfx/jrefresh.png', './gfx/jpdf.png',
 
-  './gfx/avatar.png',    './gfx/dots.png',    
+  '../gfx/avatar.png',    './gfx/dots.png',    
   './gfx/jadd.png',      './gfx/jback.png',  
   './gfx/jbell.png',     './gfx/jcall.png',
   './gfx/jcam.png',      './gfx/jcancel.png', 
