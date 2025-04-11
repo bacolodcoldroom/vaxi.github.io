@@ -73,7 +73,7 @@ function showMap(vmode,usercode){
       
       '<div onclick="gotoMarker(marker_me)" style="float:left;width:20%;height:100%;color:'+JBE_TXCLOR1+';background:none;">'+        
         '<div class="footer_gfxs">'+
-          '<img src="gfx/avatar.png"  style="height:100%;" alt="del image" />'+
+          '<img src="../gfx/avatar.png"  style="height:100%;" alt="del image" />'+
         '</div>'+
         '<span class="footer_fonts">Me</span>'+
       '</div>'+  
