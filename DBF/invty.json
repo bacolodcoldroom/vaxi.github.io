@@ -1,0 +1,38 @@
+[
+  {
+    "brgycode": "A001",
+    "date": "2025-01-01",    
+    "weekno": "2",    
+    "stockno": "1",    
+    "lotno": "LOTNO123",
+    "expiry": "2028-05-23",
+    "qty": "12"
+  },
+  {
+    "brgycode": "A002",
+    "date": "2025-01-01",    
+    "weekno": "2",    
+    "stockno": "1",    
+    "lotno": "LOTNO123",
+    "expiry": "2028-05-23",
+    "qty": "12"
+  },
+  {
+    "brgycode": "A003",
+    "date": "2025-01-01",    
+    "weekno": "2",    
+    "stockno": "1",    
+    "lotno": "LOTNO123",
+    "expiry": "2028-05-23",
+    "qty": "12"
+  }, 
+  {
+    "brgycode": "A004",
+    "date": "2025-01-01",    
+    "weekno": "2",    
+    "stockno": "1",    
+    "lotno": "LOTNO123",
+    "expiry": "2028-05-23",
+    "qty": "23"
+  }  
+]

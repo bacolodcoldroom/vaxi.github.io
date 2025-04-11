@@ -1,22 +1,27 @@
 [
   {
     "areano": "10001",
-    "name": "Alijis"
+    "name": "Alijis",
+    "cat": "1"
   },
   {
     "areano": "10002",
-    "name": "Banago"
+    "name": "Banago",
+    "cat": "1"
   },
   {
     "areano": "10003",
-    "name": "Cabug"
+    "name": "Cabug",
+    "cat": "1"
   },
   {
     "areano": "10004",
-    "name": "Sum-ag"
+    "name": "Sum-ag",
+    "cat": "1"
   },
   {
     "areano": "10005",
-    "name": "Tangub"
+    "name": "Tangub",
+    "cat": "1"
   }
 ]
