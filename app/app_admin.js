@@ -282,10 +282,6 @@ async function fm_admin(){
         '</div>'+
         '<hr style="margin-top:10px;">'+
 
-        '<div class="cls_system" onclick="layas()" style="margin-top:10px;">'+
-          '<img id="xxx" src="gfx/jcategory.png" />'+
-        '</div>'+
-
         '<div class="cls_system" onclick="layas()" style="margin-top:40px;">'+
           '<img src="gfx/jedit.png" />'+
           '<span style="color:'+JBE_CLOR+';font-weight:bold;">Log Out</span>'+

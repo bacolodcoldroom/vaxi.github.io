@@ -953,8 +953,8 @@ function factoryReset(){
     await clearAllRecords('sig');
     await clearAllRecords('user');    
     
-    let data=await getFile('dtr/sig.json'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
-    let data_user=await getFile('dtr/user.json'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
+    let data=await getFile('vaxi/sig.json'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
+    let data_user=await getFile('vaxi/user.json'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
 
     await saveDataToIDX(DB_SIG,2);
     await saveDataToIDX(DB_USER,3);

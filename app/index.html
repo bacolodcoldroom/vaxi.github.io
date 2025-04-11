@@ -289,7 +289,7 @@
       <div style="width:96%;height:75px;margin:2% auto;font-weight:bold;text-align:center;padding:10px;
               font-weight:bold;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;border:1px solid navy;background:none;">        
         <div style="width:100%;height:25px;font-size:16px;font-weight:bold;text-align:center;border:0px solid red;">BARANGAY VACCINE INVENTORY SYSTEM</div>
-        <div id="heeding1" style="font-size:12px;color:darkgreen;">1</div>
+        <div id="heeding1" style="font-size:15px;color:navy;">1</div>
         <div id="heeding2">2</div>
         <div id="heeding3" style="font-style:italic;color:blue;"></div>
       </div>
@@ -300,8 +300,8 @@
       </div>  
 
       <div style="margin-top:20px;width:100%;height:140px;text-align:center;border:0px solid blue;padding:10px; background:none;">                
-        <input type="button" class="cls_button_round color_head" onclick="fm_weekly()" style="width:80%;height:48%;color:white;" value="Weekly Inventory" />
-        <input type="button" class="cls_button_round color_head" style="margin-top:2%;width:80%;height:48%;color:white;" value="NIP Monthly Inventory" />
+        <input type="button" class="cls_button_round color_head2" onclick="fm_weekly()" style="width:80%;height:44%;color:white;" value="Weekly Inventory" />
+        <input type="button" class="cls_button_round color_head2" style="margin-top:4%;width:80%;height:44%;color:white;" value="NIP Weekly Accomplishment" />
       </div>  
       
     </div>
@@ -546,10 +546,10 @@
 
 </div> <!--main div-->
 
-<link rel="stylesheet" href="../main_styles.css">
-<link rel="stylesheet" href="../mobile.css">
+<link rel="stylesheet" href="main_styles.css">
+<link rel="stylesheet" href="mobile.css">
 
-<link rel="stylesheet" href="../misc/jbe_fmlib.css">
+<!--link rel="stylesheet" href="misc/jbe_fmlib.css"-->
 
 <link rel="stylesheet" type="text/css" href="../js/leaflet.css" />
 <script type='text/javascript' src='../js/html2pdf.jeffbundle.min.js'></script>
@@ -561,34 +561,22 @@
 <script type='text/javascript' src='../js/coke.js'></script>
 <script type='text/javascript' src='../js/je_msg.js'></script>
 <script type='text/javascript' src='../js/qrcode.min.js'></script>
-<!--script type='text/javascript' src='js/rec_lock.js'></script-->
-
-<!--script type='text/javascript' src='js/jsPDF0.js'></script>
-<script type='text/javascript' src='js/html2canvas.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script-->
-
 
 <!-- libs -->
 <script type='text/javascript' src='../misc/jbe_fmlib.js'></script>
+<script type='text/javascript'  src='../misc/sha_api.js'></script>
+<script type='text/javascript'  src='../misc/sha_image.js'></script>
+<script type='text/javascript'  src='../misc/jbe_map.js'></script>
 
-<!--script type='text/javascript'  src='app_db.js'></script>
-<script type='text/javascript'  src='app_idx.js'></script-->
 <script type='text/javascript'  src='app_main.js'></script>
 <script type='text/javascript'  src='app_admin.js'></script>
-
 <script type='text/javascript'  src='app_daily.js'></script>
 <script type='text/javascript'  src='app_setting.js'></script>
 <script type='text/javascript'  src='app_weekly.js'></script>
 <script type='text/javascript'  src='app_reports.js'></script>
-
 <script type='text/javascript'  src='rest_api.js'></script>
-<!--script type='text/javascript'  src='api_repo.js'></script>
-<script type='text/javascript'  src='jeff_gistFile.js'></script-->
 <script type='text/javascript'  src='rep_dtr.js'></script>
-<script type='text/javascript'  src='sha_api.js'></script>
-<script type='text/javascript'  src='sha_image.js'></script>
 
-<script type='text/javascript'  src='../misc/jbe_map.js'></script>
 
 <script>
   var THISFILE=[];
@@ -596,10 +584,11 @@
 
   var jbe_screen_mode=0;
   
-  var JBE_CLOR='#0060aa';
+ 
   var GITHUB_TOKEN='';
   //039be5
   //JBE_CLOR='#039be5';
+  var JBE_CLOR='#0060aa';
   var JBE_CLOR2='#3474bb'; 
   var JBE_CLOR3='#57a8e7'; 
   var JBE_CLOR4='#8bcdff'; 
@@ -798,7 +787,7 @@
   myResizeFunction();   
 
   JBE_SET_COLOR_BY_CLASS('color_head','',JBE_CLOR);
-  JBE_SET_COLOR_BY_CLASS('color_head2','black',JBE_CLOR2);
+  JBE_SET_COLOR_BY_CLASS('color_head2','white',JBE_CLOR2);
   JBE_SET_COLOR_BY_CLASS('color_head3','black',JBE_CLOR3);
   JBE_SET_COLOR_BY_CLASS('color_head4','black',JBE_CLOR4);
   JBE_SET_COLOR_BY_CLASS('back_main','blue',JBE_CLOR);

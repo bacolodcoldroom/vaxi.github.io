@@ -1,12 +1,12 @@
 {
-  "name": "DTR App",
-  "short_name": "DTR",
+  "name": "Vaccine Inventory App",
+  "short_name": "VAXi",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#a9a9a9",
   "theme_color": "#a9a9a9",
-  "description": "DTR App for Bacolod Cold Chain Facility",
+  "description": "Vaccine Inventory System for Bacolod Barangays",
   "icons": [
     {
       "src": "gfx/favicon_io/android-chrome-152x152.png",

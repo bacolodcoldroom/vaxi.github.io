@@ -11,6 +11,10 @@ async function rest_api_start(){
   data=await getFile('vaxi/area.json'); DB_AREA=data.content; console.log('DB_AREA',DB_AREA);    
   console.log('CURR_USER',CURR_USER);
   let v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
+  console.log('v_mphoto',v_mphoto);
+  if(v_mphoto==null){
+    v_mphoto='gfx/avatar.png';
+  }
   document.getElementById('bar_avatar').src=v_mphoto;
   document.getElementById('owner').src=v_mphoto;
   showProgress(false);
@@ -189,7 +193,7 @@ async function chg_date_updownForm(jmode,d1,d2){
     );
     ctr=result.length;
   }else if(jmode==2){
-    let currentData = await getFile('dtr/daily.json'); 
+    let currentData = await getFile('vaxi/daily.json'); 
     let tbl_daily=currentData.content;
     let result = tbl_daily.filter(item => 
       item.usercode === CURR_USER && (JBE_DATE_FORMAT(item.date,'YYYY-MM-DD') >= s_date && JBE_DATE_FORMAT(item.date,'YYYY-MM-DD') <= e_date) && !time_empty(item.txt,item.time1,item.time2,item.time3,item.time4) 
@@ -236,7 +240,7 @@ async function do2_upload(){
   showProgress(true);
   console.log('For Upload ------:',result);
   //jeff_update_gistFile(gistId, fileName,result,fld,val);
-  await jeff_update_File('dtr/daily.json',result,fld,val);
+  await jeff_update_File('vaxi/daily.json',result,fld,val);
   showProgress(false);
   //console.log(result);
   snackBar('Upload Successful...');    
@@ -253,7 +257,7 @@ async function do_download(d1,d2){
   let s_date=JBE_DATE_FORMAT(d1+'-01','YYYY-MM-DD');
   let e_date=JBE_DATE_FORMAT(dum2_date,'YYYY-MM-DD');
 
-  let currentData = await getFile('dtr/daily.json');
+  let currentData = await getFile('vaxi/daily.json');
   let tbl_daily=currentData.content;
   let arr=[]; let arr_ctr=0;
   for(var i=0;i<tbl_daily.length;i++){

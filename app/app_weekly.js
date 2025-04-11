@@ -8,30 +8,43 @@ function fm_weekly(){
   let pa_height=H_VIEW-20;
   
   var dtl= 
-  '<div id="dv_dtr" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:5px;border:1px solid lightgray;background:white;">'+
+  '<div id="dv_weekly" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:5px;border:1px solid lightgray;background:white;">'+
 
     '<div style="height:35px;width:100%;padding:0px;border:1px solid lightgray;background:none;">'+             
       
       '<div class="cls_daily" style="margin:0 auto;width:250px;height:100%;padding:4px;border:0px solid lightgray;">'+ 
-        '<span style="float:left;width:40%;height:100%;padding:3px 0 0 0;font-size:14px;font-weight:bold;background:none;">DTR Month of:</span>'+ 
-        '<input id="date_dtr" style="width:60%;height:100%;" onchange="chg_dtr_month(this.value)" type="month" value="'+JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM')+'"  placeholder="Date" />'+       
+        '<span style="float:left;width:40%;height:100%;padding:3px 0 0 0;font-size:14px;font-weight:bold;background:none;">Month of: </span>'+ 
+        '<input id="date_dtr" style="width:60%;height:100%;" onchange="chg_dtr_month(this.value)" type="month" value="'+JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM')+'"  placeholder="Date" />'+ 
       '</div>'+
 
-    '</div>'+   
+    '</div>'+
 
-    '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;overflow:auto;padding:10px 0 10px 0;background:lightgray;">'+     
-      
-          'xxxxx'+
-      
+    '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:lightgray;">'+
+
+      '<div style="width:100%;height:20%;border:1px solid blue;overflow:auto;padding:5px;background:green;">'+
+        '<div style="float:left;width:40%;height:20%;border:1px solid blue;overflow:auto;padding:5px;">aaaa</div>'+
+        '<div style="float:right;width:40%;height:20%;border:1px solid blue;overflow:auto;padding:5px;">bbbb</div>'+
+      '</div>'+
+
+      '<div style="width:100%;height:80%;border:1px solid blue;overflow:auto;padding:5px;">';        
+        let vdtl='';
+          for(var i=0;i<DB_STOCK.length;i++){
+            vdtl+=
+              '<div onclick="oc_brgy('+DB_STOCK[i].stockno+')" style="width:100%;height:25px;">'+DB_STOCK[i].descrp+'</div>';
+          }
+          dtl+=vdtl+
+        
+      '</div>'+
+
     '</div>'+
         
   '</div>';
   
-  JBE_OPEN_VIEW(dtl,'My DTR','showMainPage');       
+  JBE_OPEN_VIEW(dtl,'My DTR','showMainPage');
   querySel_dtr();
   
-  disp_month(JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM'));
-  disp_user_time(JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM'),false);
+  //disp_month(JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM'));
+  //disp_user_time(JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM'),false);
 }
 
 function disp_user_time(vDate,f_print){
