@@ -67,7 +67,7 @@ function start_app(){
         item.style.backgroundImage = `url(${item.dataset.src})`;
     };
   }); 
-  //readAllRecords('tbl',func)  
+  
 }
 
 
@@ -133,7 +133,7 @@ function showMainPage(){
   dispMenu(true,vmenu);
 }
 
-function dispHeaderMode(){
+async function dispHeaderMode(){
   //var n = new Date().toLocaleTimeString('it-IT');
   let v_mphoto='../gfx/avatar.png'; 
   if(!CURR_USER){    
@@ -142,10 +142,11 @@ function dispHeaderMode(){
   }else{    
     document.getElementById('logger').innerHTML='Hi!, '+CURR_NAME;     
     document.getElementById("page_login").style.display="none";
-    //v_mphoto=    
+    v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
   }
   document.getElementById('bar_avatar').src=v_mphoto;
   document.getElementById('owner').src=v_mphoto;
+  document.getElementById('brgyname').innerHTML=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
 }
 
 // ** ======================= SHOW ROUTINES ===================================

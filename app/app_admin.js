@@ -375,6 +375,8 @@ function fm_profile(vmode){
 
   var profileImg='gfx/avatar.png'+'?'+n;
   var userRow='';
+  var areano='';
+  var areaname='';
   var userid='';
   var username='';
   var username2='';
@@ -415,7 +417,8 @@ function fm_profile(vmode){
     console.log('lastname',lastname,firstname,middlename);
     addrss=aryDB['addrss'];
     celno=aryDB['celno'];
-    //foto=aryDB['photo'];
+    areano=aryDB['areano'];
+    areaname=JBE_GETFLD('name',DB_AREA,'areano',areano);
     
     lat=parseFloat(aryDB['lat']);
     lng=parseFloat(aryDB['lng']);
@@ -489,6 +492,11 @@ function fm_profile(vmode){
             '<span style="height:15px; width:100%; background:none;">Celphone</span>'+
             '<input id="fcelno2" class="class_profile" type="number" placeholder="Contact Number"  maxlength=11" '+
                 'value="'+celno+'"/>'+           
+          '</div>'+
+
+          '<div style="margin-top:10px; height:auto; width:100%;text-align:center;background:none;">'+
+            '<div style="height:15px;width:100%;font-weight:bold;font-size:12px;color:black;">BARANGAY</div>'+
+            '<div style="height:15px;width:100%;font-weight:bold;font-size:23px;color:'+JBE_CLOR+';">'+areaname+'</div>'+
           '</div>'+
 
           '<div style="display:none;margin-top:10px; height:40px; width:100%;background:none;">'+

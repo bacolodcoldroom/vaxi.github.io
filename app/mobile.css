@@ -81,7 +81,7 @@
   }
 
   .class_footer{
-    float:left;height:100%;width:100%;text-align:center;cursor:pointer;color:lightgray;
+    float:left;height:100%;width:100%;text-align:center;cursor:pointer;color:white;
   }
       .class_footer img{
         height:auto;max-height:70%;
@@ -233,10 +233,8 @@
     .cls_title input{ width:100%;height:50%;background:pink; }
 
   .cls_time{ font-size:14px; }
-
-  .bounce-ball {
-    width: 50px;
-    height: 50px;
-    animation: bounce 1s infinite;
-  }
+/*
+  .cls_weekly_row{ float:left;width:13%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; color:red;border:1px solid lightgray; }
+    .cls_weekly_row button{ width:100%;height:100%;border-radius:3px;font-size:11px;pointer-events:auto; color:white; }
+    */
 }

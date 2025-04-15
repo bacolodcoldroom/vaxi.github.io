@@ -131,6 +131,7 @@
   var CURR_CLIENTNAME="Bacolod Cold Chain Facility";
   var CURR_CLIENTADDRESS="Annex Bldg., Bacolod New Gov't Center, Bacolod City";
   var CURR_TELNO="410-4810"; 
+  var CURR_AREANO=''; 
   
   var DEBUG_NODE=false;
   var JBE_API='https://bacolodcoldroom.github.io/';  
@@ -299,7 +300,11 @@
         <div style="position:absolute;width:100%;height:100%;top:0px;left:0px;opacity:0.9;border:0px solid green;"><img src="gfx/screenx.png" style="height:100%;" /></div>      
       </div>  
 
-      <div style="margin-top:20px;width:100%;height:140px;text-align:center;border:0px solid blue;padding:10px; background:none;">                
+      <div style="width:100%;height:40px;text-align:center;font-size:12px;padding:10px 40px 10px 40px;background:none;">                
+        <div style="width:100%;height:100%;border-radius:5px;padding:2px;border:1px solid darkgray;">Barangay: <span id="brgyname" style="font-weight:bold;"></span></div>
+      </div>  
+
+      <div style="margin-top:0px;width:100%;height:140px;text-align:center;border:0px solid blue;padding:10px; background:none;">                
         <input type="button" class="cls_button_round color_head2" onclick="fm_weekly()" style="width:80%;height:44%;color:white;" value="Weekly Inventory" />
         <input type="button" class="cls_button_round color_head2" style="margin-top:4%;width:80%;height:44%;color:white;" value="NIP Weekly Accomplishment" />
       </div>  
@@ -402,7 +407,7 @@
         </div>      
       </a> 
   
-      <hr> 
+      
   
       <!--a href="javascript:logout()" class="nav_menu">
         <div style="width:100%;">
@@ -622,6 +627,8 @@
   var DB_ADJ2=[];
   var DB_PRODUCT=[];
   var DB_STOCK=[];  
+  var DB_INVTY=[];  
+  var DB_ACCOM=[];  
   var DB_SIG=[];  
 
   var DB_COMMENT=[];  

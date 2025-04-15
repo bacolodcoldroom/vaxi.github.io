@@ -9,9 +9,14 @@ async function rest_api_start(){
   data=await getFile('vaxi/user.json'); DB_USER=data.content; console.log('DB_USER',DB_USER);
   data=await getFile('vaxi/stock.json'); DB_STOCK=data.content; console.log('DB_STOCK',DB_STOCK);
   data=await getFile('vaxi/area.json'); DB_AREA=data.content; console.log('DB_AREA',DB_AREA);    
+  data=await getFile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);    
   console.log('CURR_USER',CURR_USER);
+  CURR_AREANO=JBE_GETFLD('areano',DB_USER,'usercode',CURR_USER);
+  document.getElementById('brgyname').innerHTML=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
+  
+  console.log('CURR_AREANO',CURR_AREANO);
   let v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
-  console.log('v_mphoto',v_mphoto);
+
   if(v_mphoto==null){
     v_mphoto='gfx/avatar.png';
   }
@@ -34,6 +39,7 @@ function rest_api_lognow(u,p){
     CURR_NAME=DB_USER[i]['username']; 
     CURR_NAME2=DB_USER[i]['username2']; 
     CURR_AXTYPE=DB_USER[i]['usertype'];   
+    CURR_AREANO=DB_USER[i]['areano'];   
     login_ok(0);            
     greetings();
   }else{
@@ -69,8 +75,7 @@ function JBE_CHK_BASE64(img){
 }
 
 async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,lastname,firstname,middlename,a,photo,c,lat,lng,d_active,usertype){  
-  //console.log(photo.substring(0,11));
-  console.log('photo',photo);
+  
   var jimg=photo;  
   if(JBE_CHK_BASE64(photo)){    
     await JBE_BLOB(n,jimg).then(result => jimg=result);
@@ -80,6 +85,7 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
   var ob = {
     id:userRow, 
     clientno:CURR_CLIENT,
+    areano:CURR_AREANO,
     usercode:usercode,
     userid:u,
     username:n,
@@ -101,11 +107,10 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
   };      
 
   showProgress(true);
-  console.log('save:',lastname,':',firstname,':',middlename);
-  console.log(ob);
+  console.log('save:',lastname,':',firstname,':',middlename);  
   await uploadImage(photo,'vaxi/images/'+usercode+'.jpg');  
   ob.photo='';
-  await jeff_update_File('vaxi/user.json',ob,'usercode',CURR_USER);    
+  await jeff_update_File('vaxi/user.json',ob,record => record.usercode !== CURR_USER || record.areano !== CURR_AREANO);    
   showProgress(false);  
   document.getElementById('admin_avatar').src=photo;
   document.getElementById('bar_avatar').src=photo;

@@ -232,7 +232,7 @@ function format_12(timeString){
   return hh+':'+mm;
 }
 
-function querySel_dtr(){
+function querySel_weekly(){
   document.querySelectorAll('.rightBox').forEach(function(el) {  
     el.style.borderRight='1px solid black';
   });
