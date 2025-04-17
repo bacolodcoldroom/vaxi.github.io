@@ -264,30 +264,19 @@ function myResizeFunction(){
   });
 
   //fix main screen
-  let height_status=parseInt(document.getElementById('online_stat').style.height); 
-  //let height_img=parseInt(document.getElementById('img_main').style.height); 
-  //let height_heed_main=parseInt(document.getElementById('heed_main').style.height); 
-  let height_btns=420; 
- 
-  if(window.innerHeight < 700){ height_btns=280; }
+  let user_main=H_BODY-(H_HEADER+0);
+  //user_main=H_BODY;
+  let user_hd=parseInt(document.getElementById('user_hd').style.height); 
+  let online_stat=parseInt(document.getElementById('online_stat').style.height); 
+  let user_body=parseInt(document.getElementById('user_body').style.height); 
+  let user_foot=parseInt(document.getElementById('user_foot').style.height); 
+  let user_margin=(user_main-(user_hd+online_stat+user_body+user_foot))/2;
+  
+  document.getElementById('user_body').style.marginTop=user_margin+'px'; 
+  document.getElementById('user_body').style.marginBottom=user_margin+'px'; 
 
-  if(JBE_MOBILE){ height_btns=200; }
-  height_btns=0; //override
-
-  /*
-  let height_filler=H_PAGE-(height_img+height_btns+height_status+0)-H_HEADER;
-  let height_heed_main=height_filler-70-0;
-  let height_heed_main_gfx=300;
-  */
- 
-  //document.getElementById('img_main').style.height=height_img+'px'; 
-  //document.getElementById('filler').style.height=(height_filler)+'px'; 
-  /*
-  document.getElementById('heed_main').style.height=height_heed_main+'px'; 
-  document.getElementById('heed_main').style.paddingTop=((height_heed_main-height_heed_main_gfx)/2)+'px';
-  document.getElementById('btns').style.height=height_btns+'px';
-  */
-  document.getElementById('user_main').style.height=window.innerHeight - (H_FOOTER+10)+'px'; 
+  document.getElementById('user_main').style.height=user_main+'px'; 
+   
   document.getElementById('mySidenav').style.height=(window.innerHeight-H_HEADER)+'px';
   document.getElementById('mySidenav').style.top=(H_HEADER)+'px';
 }

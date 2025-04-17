@@ -533,7 +533,7 @@ img.center {display: block;margin-left: auto;margin-right: auto;}
 
 .cls_button_round{
   border:1px solid lightgray;
-  border-radius: 5px;padding:0px;
+  border-radius: 15px;padding:0px;
   background:white;
 }
 
