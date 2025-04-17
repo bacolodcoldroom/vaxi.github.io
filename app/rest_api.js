@@ -18,7 +18,7 @@ async function rest_api_start(){
   let v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
 
   if(!v_mphoto){
-    v_mphoto='gfx/avatar.png';
+    v_mphoto='../gfx/avatar.png';
   }
   document.getElementById('bar_avatar').src=v_mphoto;
   document.getElementById('owner').src=v_mphoto;
