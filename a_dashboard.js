@@ -132,106 +132,100 @@ function fm_dashboard(f_clear){
  // disp_dashboard();
 }
 
-function disp_all_invty(){
-  let h1=50;
+function fm_invty(){
+  CURR_PAGE='invty';
+  let h1=60;
   let b1=H_BODY-h1-10-10;
   let vdtl='';
   let dtl=
-    '<div style="width:100%;height:100%;padding:10px;">'+
+  '<div style="width:100%;height:100%;padding:10px;">'+
 
-      '<div style="width:100%;height:30px;font-size:20px;padding:5px;font-weight:bold;border:1px solid black;color:black;background:yellow;">MONTHLY VACCINE INVENTORY FORM</div>'+
+    '<div style="width:100%;height:30px;font-size:20px;padding:5px;font-weight:bold;border:1px solid black;color:black;background:yellow;">MONTHLY VACCINE INVENTORY FORM</div>'+
 
-      '<div style="width:100%;height:20px;font-size:12px;padding:2px;font-weight:normal;text-align:left;border:1px solid black;color:black;background:yellow;">'+
-        '<div style="float:left;width:50%;height:100%;">Barangay : <span id="id_brgy" style="font-size:13;font-weight:bold;"></span></div>'+
-        '<div style="float:left;width:50%;height:100%;">Date : <span id="id_date" style="font-size:13;font-weight:bold;"></span></div>'+
-      '</div>'+
+    '<div style="width:100%;height:30px;font-size:20px;padding:2px;font-weight:normal;text-align:left;border:1px solid black;color:black;background:yellow;">'+
+      '<div style="float:left;width:50%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-size:13;font-weight:bold;"></span></div>'+
+      '<div style="float:left;width:50%;height:100%;">Date : <span id="id_date" style="font-size:13;font-weight:bold;"></span></div>'+
+    '</div>'+
 
-      '<div style="width:100%;height:'+b1+'px;border:1px solid orange;">'+
+    '<div style="width:100%;height:'+b1+'px;border:1px solid orange;">'+
 
-        '<div style="float:left;width:20%;height:100%;border:1px solid red;">'+
-          '<div id="da_invty" style="width:100%;height:100%;padding:5px;overflow:auto;">';
-             vdtl='';
-            for(var i=0;i<DB_AREA.length;i++){
-              vdtl+='<div id="id_'+DB_AREA[i].areano+'" onclick="oc_invty(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;background:gray;">'+DB_AREA[i].name+'</div>';
-            }
-            dtl+=vdtl+
-          '</div>'+
+      '<div style="float:left;width:20%;height:100%;border:1px solid red;">'+
+        '<div id="da_invty" data-row=0 style="width:100%;height:100%;padding:5px;overflow:auto;">';
+          vdtl='';          
+          for(var i=0;i<DB_AREA.length;i++){
+            //JBE_HL_ROW(i,'black','white','dtl_invty','dtl2_');
+            //let li=document.getElementsByClassName('dtls');    
+            //vdtl+='<div id="id_'+(i+1)+'" onclick="JBE_HL_ROW('+(i+1)+',&quot;black&quot;,&quot;white&quot;,&quot;da_invty&quot;,&quot;id_&quot;);oc_invty(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;background:gray;">'+DB_AREA[i].name+'</div>';
+            vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="JBE_HL_ROW('+i+',&quot;black&quot;,&quot;gray&quot;, &quot;.class_brgy&quot;, &quot;id_&quot;,  &quot;red&quot;, &quot;black&quot;); oc_invty(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
+          }
+          dtl+=vdtl+
         '</div>'+
-        //////////////////////////////////////////right side
-        '<div style="float:left;width:80%;height:100%;background:none;overflow:auto;">'+
+      '</div>'+
+      //////////////////////////////////////////right side
+      '<div style="float:left;width:80%;height:100%;background:none;overflow:auto;">'+
 
-          //'<div style="width:100%;height:50px;border:1px solid orange;">'+
-            
-            //'<div style="width:100%;height:20px;font-size:12px;padding:2px;font-weight:normal;text-align:left;border:1px solid black;color:black;background:yellow;">'+
-              
-            //'</div>'+
-          //'</div>'+
-
-          '<div id="da_dtls" style="width:100%;height:80%;text-align:left;background:white;">';
-            vdtl=
-            '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid '+JBE_CLOR+';padding:5px;">'+
-              '<div style="float:left;width:23%;height:100%;padding:5px;">Vaccines</div>'+
-              '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
-                '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="xedit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-                '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="xedit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-                '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="xedit_weekly(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-                '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="xedit_weekly(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-                '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="xedit_weekly(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
-                '<div class="cls_weekly_row" style="width:23%;padding:5px;border:0px;">Lot No.</div>'+
-                '<div class="cls_weekly_row" style="width:12%;padding:5px;border:0px;">Exp.</div>'+
-              '</div>'+
+        '<div id="da_dtls" style="width:100%;height:80%;text-align:left;background:white;">';
+          vdtl=
+          '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid '+JBE_CLOR+';padding:5px;">'+
+            '<div style="float:left;width:23%;height:100%;padding:5px;">Vaccines</div>'+
+            '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="xedit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="xedit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="xedit_weekly(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="xedit_weekly(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="xedit_weekly(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
+              '<div class="cls_weekly_row" style="width:23%;padding:5px;border:0px;">Lot No.</div>'+
+              '<div class="cls_weekly_row" style="width:12%;padding:5px;border:0px;">Exp.</div>'+
             '</div>'+
-            '<div id="div_dtls" style="width:100%;height:450px;border:1px solid blue;overflow:auto;padding:5px;background:none;">';              
-              for(var i=0;i<DB_STOCK.length;i++){
-                vdtl+=
-                '<div id="div_row" style="width:100%;height:50px;border:1px solid black;color:black;background:none;">'+
-                  '<div style="float:left;width:23%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK[i].descrp+'</div>'+
+          '</div>'+
+          '<div id="div_dtls" style="width:100%;height:450px;border:1px solid blue;overflow:auto;padding:5px;background:none;">';              
+            for(var i=0;i<DB_STOCK.length;i++){
+              vdtl+=
+              '<div id="div_row" style="width:100%;height:50px;border:1px solid black;color:black;background:none;">'+
+                '<div style="float:left;width:23%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK[i].descrp+'</div>'+
 
-                  '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
-                    '<div style="width:100%;height:50%;border:0px solid black;">'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
+                '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
+                  '<div style="width:100%;height:50%;border:0px solid black;">'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
 
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
-                    '</div>'+
-                    '<div style="width:100%;height:50%;border:0px solid black;">'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
-
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
-                      '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
-                    '</div>'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
                   '</div>'+
+                  '<div style="width:100%;height:50%;border:0px solid black;">'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
 
-                '</div>';
-              }
-              dtl+=vdtl+        
-            '</div>'+
-            
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
+                  '</div>'+
+                '</div>'+
+
+              '</div>';
+            }
+            dtl+=vdtl+        
           '</div>'+
-
+          
         '</div>'+
 
       '</div>'+
 
-    '</div>';
-  document.getElementById('div_right').innerHTML=dtl;  
+    '</div>'+
 
-  let stockno=2;
-  let weekno=2;
-  //document.getElementById('id_'+stockno+'_w'+weekno).innerHTML=555;  
+  '</div>';
+  document.getElementById('div_right').innerHTML=dtl;  
 }
 
 function oc_invty(areano){
-  let a=JBE_GETFLD('name',DB_AREA,'areano',areano);
-  document.getElementById('id_brgy').innerHTML=a;  
+  let name=JBE_GETFLD('name',DB_AREA,'areano',areano);
+  document.getElementById('id_brgy').setAttribute('data-areano',areano);
+  document.getElementById('id_brgy').innerHTML=name;    
   disp_invty_brgy(areano);
 }
 
@@ -863,49 +857,4 @@ function show_notes(){
   let ctr_tomm=0;   let dtl_tomm='';
   let ctr_seven=0;  let dtl_seven='';
   let f_show=false;
-  
-  axios.get('/api/get_all', { params: {tbl:'notif2'} })
-  .then(function (response) { 
-    DB_NOTIF2=response.data;
-    let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM-DD'); 
-     
-    for(var i=0;i<DB_NOTIF2.length;i++){  
-      let vdate=JBE_DATE_FORMAT(DB_NOTIF2[i].date,'YYYY-MM-DD');
-      if(!vdate || vdate < curdate){ continue; }
-
-      let diff=JBE_DATE_SUBSTRACT_DAYS(vdate,curdate);
-      if(diff > 7){ continue; }
-
-      let wday = weekday[new Date(vdate).getDay()].substring(0,3);
-
-      if(diff==0){         
-        ctr_today++; 
-        dtl_today+='\u25C6 '+DB_NOTIF2[i].msg+'\n';        
-      }else if(diff==1){         
-        ctr_tomm++; 
-        //dtl_tomm+=ctr_tomm.toString().padStart(2,' ')+'.) '+DB_NOTIF2[i].msg+'\n\n';        
-        dtl_tomm+='\u25C6 '+DB_NOTIF2[i].msg+'\n';        
-      }else if(diff > 1 && diff <= 7){ 
-        ctr_seven++; 
-        dtl_seven+='\u25C6 '+JBE_DATE_FORMAT(DB_NOTIF2[i].date,'MMM DD, YYYY')+' ['+wday+'] \u2B9E\u2B9E '+DB_NOTIF2[i].msg+'\n';     
-      }      
-      //console.log(diff+'::: vdate:'+vdate+' curdate:'+curdate);
-    }
-    //console.log('ctr_today:'+ctr_today);
-    //console.log('ctr_tomm:'+ctr_tomm);
-    //console.log('ctr_seven:'+ctr_seven);
-    document.getElementById('hd_num1').innerHTML=ctr_today;
-    document.getElementById('hd_num2').innerHTML=ctr_tomm;
-    document.getElementById('hd_num3').innerHTML=ctr_seven;
-    document.getElementById('hd_num1').title='TODAY:\n'+dtl_today;
-    document.getElementById('hd_num2').title='TOMORROW:\n'+dtl_tomm;
-    document.getElementById('hd_num3').title='COMING:\n'+dtl_seven;
-      
-    document.getElementById('hd_num1').style.display=iif(ctr_today > 0,'block','none');
-    document.getElementById('hd_num2').style.display=iif(ctr_tomm > 0,'block','none');
-    document.getElementById('hd_num3').style.display=iif(ctr_seven > 0,'block','none');
-    let ctr=ctr_today+ctr_tomm+ctr_seven;
-    document.getElementById('hd_notif').style.display=iif(ctr > 0,'block','none');
-  })    
-  .catch(function (error) { console.log(error); });   
 }

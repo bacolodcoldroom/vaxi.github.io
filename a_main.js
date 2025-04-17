@@ -36,7 +36,8 @@ async function start_app(){
   //dispHeaderMode();
   showMainPage();
   show_sidenav();
-  disp_all_invty();
+  fm_invty();
+  //nowLive();
 }
 
 
@@ -426,7 +427,7 @@ function show_sidenav(){
   let mtop=0;
   if(JBE_MOBILE){ mtop=50; }
   let dtl=
-  '<div id="div_left_box" style="width:100px;height:'+H_BODY+'px;margin-top:'+mtop+'px;font-size:9px;border:0px solid violet;background:black;">'+
+  '<div id="div_left_box" style="width:100px;height:'+H_BODY+'px;margin-top:'+mtop+'px;font-size:9px;border:1px solid white;background:black;">'+
               
     '<div id="back_menu" onclick="closeNav()" style="height:20px;background:black;">'+
       '<img src="gfx/jback.png" style="float:left;height:100%;padding:5px;"/><span style="float:left;height:100%;padding:5px;">BACK</span>'+
@@ -482,7 +483,7 @@ function show_sidenav(){
 
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
-      '<div class="nw_menu">'+
+      '<div class="nw_menu" onclick="fm_invty()">'+
         '<img src="gfx/jedit.png"/>'+
         '<span>Inventory</span>'+
       '</div>'+
@@ -968,7 +969,7 @@ function nowLive() {
   if(f_syslive==0) {
     //document.getElementById('id_LiveTime').innerHTML=new Date().toLocaleTimeString();
     f_syslive=1;
-    live_id = setInterval(function(){ refresh_votes(); }, 20000);		
+    live_id = setInterval(function(){ refresh_allData(); }, 20000);		
     document.getElementById('lbLive').innerHTML='STOP';
     document.getElementById('divLive').setAttribute('data-live',1);
     document.getElementById('divLive').src='gfx/live.gif';
@@ -981,9 +982,12 @@ function nowLive() {
   }      
 }
 
-function refresh_votes(){
+async function refresh_allData(){
   //var n =  new Date().toLocaleTimeString();
   JBE_AUDIO('gfx/snd/insight',5);
-  //update_datetime();
-  //refresh_all_main_screen(true);
+  if(CURR_PAGE=='invty'){
+    let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+    let data=await getFile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
+    disp_invty_brgy(areano);
+  }
 }
