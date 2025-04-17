@@ -17,7 +17,7 @@ async function rest_api_start(){
   console.log('CURR_AREANO',CURR_AREANO);
   let v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
 
-  if(v_mphoto==null){
+  if(!v_mphoto){
     v_mphoto='gfx/avatar.png';
   }
   document.getElementById('bar_avatar').src=v_mphoto;
