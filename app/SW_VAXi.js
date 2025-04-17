@@ -20,59 +20,6 @@ const CACHE_NAME = 'offline';
 // Customize this with a different URL if needed.
 const OFFLINE_URL = 'offline.html';
 
-const staticAssets = [
-  './',
-  './index.html',
-  './gfx/icon-512x512.png',  './gfx/icon-192x192.png',  
-  './gfx/jadmin.jpg',
-
-  './misc/jbe_fmlib.js', './misc/jbe_map.js',
-  './main_styles.css',   './mobile.css',
-
-  './js/leaflet.js',              './js/leaflet.css',
-  './js/images/jRedMarker.png',   './js/images/jblueMarker.png',
-  './js/images/layers.png',       
-
-  './js/axios.min.js',  './js/enadlib.js',   './js/coke.js',     './js/je_msg.js',
-    
-   
-  './app_admin.js', 
-  './app_camera.js', 
-  './app_daily.js',   
-  './app_db.js', 
-  './app_dtr.js', 
-  './app_idx.js', 
-  './app_main.js', 
-  './app_prn.js', 
-  './app_report.js', 
-  './app_setting.js',     
-  './rep_dtr.js', './rest_api.js',     
-  
-  '../gfx/snd/chimes.mp3', 
-  './gfx/proc_logo.gif',  
-  './gfx/jprn.png', './gfx/jrefresh.png', './gfx/jpdf.png',
-
-  '../gfx/avatar.png',    './gfx/dots.png',    
-  './gfx/jadd.png',      './gfx/jback.png',  
-  './gfx/jbell.png',     './gfx/jcall.png',
-  './gfx/jcam.png',      './gfx/jcancel.png', 
-  './gfx/jcart.png',     './gfx/jcategory.png', 
-  './gfx/jchat.png',     './gfx/jdele.png',  
-  './gfx/jedit.png',     './gfx/jham.png',   
-  './gfx/jhome.png',     './gfx/jimage.png', 
-  './gfx/jimg_error.png','./gfx/jNext.png', 
-  
-  './gfx/jnotif.png',    './gfx/jPrev.png', 
-  './gfx/jproduct.png',   './gfx/jshare.png', 
-  './gfx/jpromo.png',    './gfx/jpurchase.png',  
-  './gfx/jrefresh.png',  './gfx/jsave.png',
-  './gfx/jsearch.png',   './gfx/jsend.png',
-  './gfx/jsite.png',     './gfx/jsms.png',   
-  './gfx/landmark.png',  './gfx/qrcode.png',  
-    
-  './manifest.webmanifest'
-];
-
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
