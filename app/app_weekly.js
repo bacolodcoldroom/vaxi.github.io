@@ -1,4 +1,5 @@
 function fm_weekly(){
+  if(!CHK_ONLINE()){ return; };
   if(!CURR_USER){
     snackBar('Please Log In...');
     return;
@@ -10,8 +11,6 @@ function fm_weekly(){
   mnu_fm_weekly();
 
   let pa_height=H_VIEW-0;
-
-  
   
   let dtl= 
   '<div id="dv_weekly" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+

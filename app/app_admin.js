@@ -218,8 +218,11 @@ function preLogOut(){
 
 //************************************************************************************************ */
 async function fm_admin(){
-  console.log('fm_admin DB_USER');  
-  console.log(DB_USER); 
+  if(!CHK_ONLINE()){ return; }
+  if(!CURR_USER){
+    snackBar('Please Log In...');
+    return;
+  }
   window.history.pushState({ noBackExitsApp: true }, '');
   f_MainPage=false;
   var n = new Date().toLocaleTimeString('it-IT');

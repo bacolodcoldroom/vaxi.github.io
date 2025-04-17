@@ -214,7 +214,16 @@ function showSystem(){
 
 function imgOnError(dv){   
   dv.onerror=null;
-  dv.src="gfx/jimg_error.png";
+  dv.src="../gfx/jimg_error.png";
+}
+
+function CHK_ONLINE(){
+  if(JBE_ONLINE){
+    return true;
+  }else{
+    snackBar('You are OFFLINE...');
+    return false;
+  }   
 }
 
 function jdebug(t){
@@ -284,6 +293,7 @@ function myResizeFunction(){
 /***************************************************** */
 function openNav() {
   //if(!JBE_CHK_USER(0)){ return; };
+  if(!CHK_ONLINE()){ return; }
   if(!CURR_USER){
     snackBar('Please Log In...');
     return;
