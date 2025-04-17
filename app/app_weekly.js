@@ -48,21 +48,21 @@ function fm_weekly(){
 
             '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
 
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
               '</div>'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
 
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
