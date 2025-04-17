@@ -1,7 +1,9 @@
 var THISFILE=[];
 clear_THISFILE();
+//var JBE_ARY_MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 var JBE_ARY_FULLMONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 var JBE_ARY_MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 function JBE_GET_IMAGE(id,inp_file,targ_div,cb,likod){
   //alert('i:'+inp_file+'\nt:'+targ_div);    
@@ -9,7 +11,7 @@ function JBE_GET_IMAGE(id,inp_file,targ_div,cb,likod){
   
   THISFILE[id]=null;
   var real_ImgBtn = document.getElementById(inp_file);
-  real_ImgBtn.setAttribute("accept","image/* capture"); //accept="image/*"
+  real_ImgBtn.setAttribute("accept","image/*"); //accept="image/*"
 
   real_ImgBtn.addEventListener('change', e => {
     if (real_ImgBtn.value) {
@@ -140,7 +142,7 @@ function JBE_PICK_IMAGE(id,inp_file,targ_div,cb){
   real_ImgBtn.click();
 }
 
-async function uploadNOW(file,newName,dir,ndiv,keepSize,likod){     
+function uploadNOW(file,newName,dir,ndiv,keepSize,likod){     
   /*
   alert(
     'file: '+file+
@@ -162,9 +164,9 @@ async function uploadNOW(file,newName,dir,ndiv,keepSize,likod){
   var config = {}; 
   showProgress(true);
   //axios.post(JBE_API+'z_load.php', data, config)
-  await axios.post('/upload_IMG', data, config)
+  axios.post('/upload', data, config)
   .then(function (response) {
-    console.log(response.data);    
+    //console.log(response.data);    
     //alert(response.data[1]);    
     showProgress(false);
     /*
@@ -181,7 +183,7 @@ async function uploadNOW(file,newName,dir,ndiv,keepSize,likod){
        
   })  
   .catch(function (err) {    
-    console.log(err.message);
+    //console.log(err.message);
     showProgress(false);
     MSG_SHOW(vbOk,"ERROR: Upload Failed",err.message,function(){},function(){return;});
   });  
@@ -190,11 +192,13 @@ async function uploadNOW(file,newName,dir,ndiv,keepSize,likod){
 function RefreshImage(likod,dir,newName,ndiv){    
   var n = new Date().toLocaleTimeString('it-IT');
   var targ=dir+newName+'?'+n;
+  
   if(likod){
     document.getElementById(ndiv).style.backgroundImage='url('+targ+')'; 
   }else{
     document.getElementById(ndiv).src=targ;
   }
+  //alert('div:'+ndiv+'\ntarg:'+targ+'\nLikod:'+likod);
 }
 
 function JBE_ZOOM(img,div_close){
@@ -213,6 +217,42 @@ function close_JBE_ZOOM(){
   var closeDiv=document.getElementById('main_JBE_zoom').getAttribute('data-close');
   var fn = window[closeDiv];
   if (typeof fn === "function") fn();
+}
+
+function JBE_OPENBOX2(div,title,dtl,dtl2,func) {   
+  var div_dtl=      
+    '<div id="myJBox_main" data-open=0 data-close="'+func+'" class="bottom_box" style="float:right;height:0px;border:1px solid lightghray;background:'+JBE_CLOR+';">'+
+      '<div id="hd_jbox" class="hd_box" style="width:100%;height:30px;font-size:15px;font-weight:bold;border:1px solid black;background:none;">'+        
+        '<div style="float:left;width:10%;height:100%;text-align:left;padding:0 0 0 10px;background:none;">'+
+          '<input type="button" onclick="JBE_CLOSEBOX()" style="width:28px;height:100%;font-size:14px;color:white;border-radius:50%;border:1px solid white;background:red;" value="X" />'+
+        '</div>'+
+        '<div id="cap_jbox" style="float:right;text-align:right;width:90%;height:100%;padding:5px;color:'+JBE_TXCLOR1+';background:none;">'+title+'</div>'+
+      '</div>'+      
+      '<div id="dtl_jbox" style="width:100%;height:auto;padding:5px;overflow:auto;border:1px solid black;color:black;background:white;">'+
+        dtl+
+      '</div>'+
+      '<div id="footer_jbox" class="jfooter" style="display:block;height:50px;width:100%;color:'+JBE_TXCLOR1+';background:'+JBE_CLOR+';">'+
+        dtl2+
+      '</div>'+   
+    '</div>';
+  
+  document.getElementById("myJBox").innerHTML=div_dtl;  
+  document.getElementById("myJBox").style.width='100%';
+  document.getElementById("myJBox").style.height = '100%';
+  
+  var h=parseInt(document.getElementById(div).style.height); 
+  var hh=h+30+50; //dtl height + box head height + paddings         
+  document.getElementById("dtl_jbox").style.height = h+'px';
+  
+  document.getElementById(div).style.height="auto";
+  document.getElementById(div).style.width="100%";
+  document.getElementById(div).style.height = (h-12)+'px';
+  
+  document.getElementById("myJBox_main").style.height = hh+'px';    
+  //document.getElementById("myJBox_main").style.width = vwidth+'px';    
+  document.getElementById("myJBox_main").style.width = '100%';
+  document.getElementById("myJBox_main").style.cssFloat='right';
+  //document.getElementById("myJBox_main").style.border='1px solid yellow';
 }
 
 function JBE_OPENBOX(div,title,dtl,dtl2,func) {   
@@ -308,9 +348,6 @@ function showProgress(v){
   document.getElementById("loading").style.display=vd;
 }
 
-
-
-
 function JBE_zoom2(){
   var div=document.getElementById('main_JBE_zoom');
   var mod=parseInt(document.getElementById('main_JBE_zoom').getAttribute('data-zoom'));
@@ -340,7 +377,6 @@ function JBE_zoom2(){
   }
 }
 
-
 function JBE_OPEN_VIEW(dtl,cap,xclose) {
   //alert(xclose);
   document.getElementById('page_main').style.display='none';
@@ -365,12 +401,11 @@ function JBE_OPEN_VIEW(dtl,cap,xclose) {
   document.getElementById("myView1").setAttribute('data-JBEpage',m);    
   //alert(document.getElementById("dtl_myView"+m).innerHTML);
   //document.getElementById("copyright").innerHTML=m;
-  //alert('m:'+m);
 }
 
 function JBE_CLOSE_VIEW(){
   var m=parseInt(document.getElementById("myView1").getAttribute('data-JBEpage'));
-  console.log('closeView # '+m);
+  //alert('closeView # '+m);
   var xclose=document.getElementById("myView"+m).getAttribute('data-close');
   //var param=xclose.substr(xclose.lastIndexOf('|')+1);
   //xclose=xclose.substr(0,xclose.lastIndexOf('|')+0);
@@ -384,13 +419,14 @@ function JBE_CLOSE_VIEW(){
     xclose=xclose.substring(0,ndx);
   }
   
-  console.log('param:'+param);
-  console.log('xclose:'+xclose);
+  //alert('param:'+param);
+  //alert('xclose:'+xclose);
 
   var fn = window[xclose];
   if (typeof fn === "function"){
-    //alert('yawa na!');
-    if(fn(param)==false){ console.log('hear this!');return; }
+    //var ret_func=fn(param);
+    //if(!ret_func){ return; }
+    if(fn(param)==false){ return; }
   }
   
   document.getElementById("myView"+m).setAttribute('data-open','0');
@@ -404,6 +440,24 @@ function JBE_CLOSE_VIEW(){
     document.getElementById('back_view'+m).style.display='block';  
     document.getElementById('cap_viewMid'+m).innerHTML='';
   }
+  //document.getElementById("copyright").innerHTML=m-1;
+}
+
+function JBE_OPEN_VIEW2(dtl,cap,xclose) {  
+  document.getElementById("div_left").style.pointerEvents='none';
+  document.getElementById("div_left").style.opacity='0.3';
+  document.getElementById("div_right").innerHTML=dtl;
+  document.getElementById("hd_user").style.pointerEvents='none';
+  document.getElementById("mySidenav").style.width='0px';
+}
+
+function JBE_CLOSE_VIEW2(){
+  //alert('XXX JBE_CLOSE_VIEW2');
+  fm_dashboard(false);
+  document.getElementById("div_left").style.pointerEvents='auto';
+  document.getElementById("hd_user").style.pointerEvents='auto';
+  document.getElementById("div_left").style.opacity='1';
+  if(CURR_AXTYPE==5){ showLocks(); } 
 }
 
 //function EP_SetColorByClass(cls,clr1,clr2){
@@ -463,19 +517,21 @@ function JBE_FILTER_ARRAY(db,cond){
       ctr++;
     }
   } 
-  alert('ctr:'+ctr+' \nLen:'+aryDB.length);
+  //alert('ctr:'+ctr+' \nLen:'+aryDB.length);
   return aryDB;
 }
 
 function JBE_GETARRY(r_arry,r_fld,r_key){   
-  //JBE_GETFLD('usertype',DB_USER,'usercode',usercode);  
+  //JBE_GETFLD('usertype',DB_CLIENTS,'usercode',usercode);  
   var rval=[];
   for(var i=0; i<r_arry.length; i++) {    
     if(r_key==r_arry[i][r_fld]){
-      rval=r_arry[i];
+      rval=r_arry[i];      
+      //alert(rval['clientno']);
       break;
     }
-  }
+  }  
+  //console.log(rval);    
   return rval;
 }
 
@@ -498,7 +554,7 @@ function JBE_GETARRY2(db,cond){
     }
   } 
   //alert('ctr:'+ctr+' \nLen:'+aryDB.length);
-  console.log(aryDB);
+  //console.log(aryDB);
   return aryDB;
 }
 
@@ -549,6 +605,7 @@ function jbe_updatePosition(position) {
     },JBE_HEADER)     
     .then(function (response) {        
         DB_USER = response.data;
+        get_db_clients();     
         //alert(response.data.length);
         showProgress(false);
         if(GEO_MODE!=0){
@@ -622,9 +679,9 @@ function JBE_getBLOB(n,jimg,callback){
   //img.src = "https://somesite.com/someimage.jpg"  
   //img.setAttribute('crossorigin', 'anonymous'); // works for me
   img.src=jimg;
-  //if(!JBE_ONLINE){
-  //  img.onerror=img.onerror=null;img.src="gfx/jimg_error.png"; 
-  //}
+  if(!JBE_ONLINE){
+    img.onerror=img.onerror=null;img.src="gfx/jsite.png"; 
+  }
 
   img.onload =  function() {
     canvas.width=img.width;
@@ -740,18 +797,17 @@ function JBE_DATE_FORMAT(d,f) {
     rval=month + '/' + day + '/' + year;
   }else if(f=='YYYY-MM-DD'){
     rval=year + '-' + month + '-' + day;  
+  }else if(f=='YYYY-MM'){
+    rval=year + '-' + month;    
   }else if(f=='YYYY/MM/DD'){
     rval=year + '/' + month + '/' + day;
   }else if(f=='DD-MMM-YYYY'){
     rval=day + '-' + monthNames[date.getMonth()] + '-' + year;  
-  }else if(f=='YYYY-MM'){
-    rval=year + '-' + month;  
   }else if(f=='MMM YYYY'){
     rval=monthNames[date.getMonth()] + ' ' + year;
   }else if(f=='MMMM YYYY'){
     rval=monthFullNames[date.getMonth()] + ' ' + year;
   }
-
   //if(isNaN(rval)){ return 'zzzz'; }
   return rval;
 }
@@ -841,13 +897,14 @@ async function JBE_PRINT_PDF(divName,title) {
   document.title = 'Generating PDF...';
 
   await html2pdf().set(opt).from(element).toPdf().output('blob').then((data) => {
-    console.log(document.title);    
+    //console.log(document.title);    
     document.title = originalTitle;
     let fileURL = URL.createObjectURL(data);
-    window.open(fileURL);
+    //window.open(fileURL);
+    window.open(fileURL, '_blank');
     //var newWindow= window.open(fileURL);
     //newWindow.document.title = "xxxx";
-    document.getElementById(divName).style.border='2px solid black';
+    //document.getElementById(divName).style.border='2px solid black';
   });
 }
 
@@ -858,7 +915,8 @@ function JBE_PRINTDIV(divName,title) {
   }
   var divToPrint=document.getElementById(divName);
   var printWindow = window.open(divName, 'PRINT', 'height=500,width=1000');
-  printWindow.document.write('<html><head><title>'+title+'</title>');
+  //printWindow.document.write('<html><head><title>'+title+'</title>');
+  printWindow.document.write('<html><head><title></title>');
   printWindow.document.write('</style>');
   printWindow.document.write('</head>');
   printWindow.document.write('<body>');
@@ -985,6 +1043,7 @@ function JBE_CHK_USER(axtype){
 }
 
 function JBE_LOGGER_SAVE(usercode,mode,trano,trans,details){
+  return;
   /*
   alert(
     'usercode:'+usercode+'\n'+
@@ -1083,5 +1142,56 @@ function JBE_SHOW_LOGGER(trano,trans){
   JBE_OPENBOX('div_showlog','Logger',dtl,dtl2); 
   document.getElementById('file_create').innerHTML=file_create;
   document.getElementById('date_create').innerHTML=JBE_DATE_FORMAT(date_create,'MM-DD-YYYY')+'  '+time_create;
+}
+
+function JBE_HL_ROW(row,curFg,curBg,dtl_class,dtl_line,c1,c2){   
+  document.querySelectorAll(dtl_class).forEach(function(el) {
+    el.style.color=curFg;
+    el.style.backgroundColor=curBg;
+  });    
+  document.getElementById(dtl_line+row).style.color=c1;
+  document.getElementById(dtl_line+row).style.backgroundColor=c2;
+}
+
+function JBE_DATE_SUBSTRACT_DAYS(d1,d2){
+  //d1=JBE_DATE_FORMAT(d1,'MM/DD/YYYY');
+  //d2=JBE_DATE_FORMAT(d2,'MM/DD/YYYY');
+  //const date1 = new Date('7/13/2010');
+  //const date2 = new Date('12/15/2010');
+  const date1 = new Date(d1);
+  const date2 = new Date(d2);
+  const diffTime = Math.abs(date2 - date1);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+  //console.log(diffTime + " milliseconds");
+  //console.log(diffDays + " dayz");
+  return diffDays;
+}
+
+function JBE_BACKUP_DB(filename){    
+  showProgress(true);
+  //axios.post('/backup', {headers: { 'Content-Type': 'application/json' }}, { params: { filename:filename }})
+  axios.get('/backup', { params: { filename:filename }})
+  .then(function (response) {      
+    showProgress(false);       
+    //snackBar(response.data);    
+    MSG_SHOW(vbOk,"SUCCESS:","Database Backup is created successfully!",function(){},function(){return;});
+  })  
+  .catch(function (err) {    
+    //console.log(err.message);
+    showProgress(false);
+    MSG_SHOW(vbOk,"ERROR: Backup Database Failed",err.message,function(){},function(){return;});
+  });  
+}
+
+async function JBE_FILE_EXIST(filename){
+  await axios.get('/fileExist', { params: { filename:filename }})
+  .then(function (response) { 
+    console.log(response.data);
+    alert('JBE_FILE_EXIST: '+response.data);
+    return response.data;
+  })  
+  .catch(function (err) {
+    MSG_SHOW(vbOk,"ERROR:",err.message,function(){},function(){return;});
+  });  
 }
 //enad
