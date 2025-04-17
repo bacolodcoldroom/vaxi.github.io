@@ -223,7 +223,7 @@ function CHK_ONLINE(){
   }else{
     snackBar('You are OFFLINE...');
     return false;
-  }   
+  } 
 }
 
 function jdebug(t){
