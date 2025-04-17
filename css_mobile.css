@@ -342,5 +342,7 @@
     .cls_ptr_tot_panel div { width:auto;height:50%;text-align:left;padding:3px;background:none; }
     .cls_ptr_tot_panel input { width:110px;height:50%;text-align:center;padding:5px;color:black;background:lightgray; }
 
+  .cls_weekly_row{ float:left;height:100%;color:black;padding:2px;border:1px solid lightgray; }
+  
 }
 
