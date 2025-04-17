@@ -88,16 +88,19 @@ async function deleteEntry(path,index) {
 // deleteEntry(0); // Delete an entry
 
 
-async function jeff_update_File(fileName,newData,fld,val){
+async function jeff_update_File(fileName,newData,cond){
   try {
     const { content, sha } = await getFile(fileName);
-    const filteredData = content.filter(record => String(record[fld]) !== val);
-    //console.log('filteredData',filteredData);    
+    //const filteredData = content.filter(record => String(record[fld]) !== val);
+    const filteredData = content.filter(cond);
+    //const filteredData = filterArray(people, person => person.age === 30 && person.city === "NY");
+    console.log('filteredData',filteredData);    
     const finalData = filteredData.concat(newData); 
     // Commit the updated array back to the file with a commit message.
-    await updateFile(fileName,finalData, `Deleted item by value: ${val}`, sha);
-    //console.log('finalData',finalData);    
-    speakText('Data Uploaded to Server');
+    await updateFile(fileName,finalData, ``, sha);
+    console.log('finalData',finalData);    
+    speakText('Data updated.');
+    //return finalData;
   } catch (error) {
     MSG_SHOW(vbOk,"ERROR:",error.message,function(){},function(){});
   }
