@@ -1,4 +1,4 @@
-const cacheName='01.35';
+const cacheName='01.13';
 const staticAssets = [
   './',
   './index.html',
