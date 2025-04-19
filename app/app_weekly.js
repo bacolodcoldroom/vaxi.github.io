@@ -62,9 +62,9 @@ function fm_weekly(){
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:5%;" value="" />'+
 */
-                '<div id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:18%;overflow:auto;background:'+clor_lotno+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_1expiry'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_expiry+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_req+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:18%;pointer-events:auto;overflow:auto;background:'+clor_lotno+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_1expiry'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_expiry+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_req+';"></div>'+
               '</div>'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
@@ -77,9 +77,9 @@ function fm_weekly(){
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:5%;" value="" />'+                
 */                
-                '<div id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:18%;overflow:auto;background:'+clor_lotno+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_2expiry'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_expiry+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_req+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:18%;pointer-events:auto;overflow:auto;background:'+clor_lotno+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_2expiry'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_expiry+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_req+';"></div>'+
               '</div>'+
             '</div>'+
 
@@ -93,12 +93,11 @@ function fm_weekly(){
   '</div>';
   
   JBE_OPEN_VIEW(dtl,'Weekly Inventory','showMainPage');
-  init_fm_weekly(); 
-  disp_weekly();
+  disp_fm_weekly();
 }
 
 //‐-------
-function disp_weekly(){  
+function disp_fm_weekly(){  
   JBE_BACK_VIEW(true);
   let curdate=document.getElementById('date_weekly').value;  
   clear_fm_weekly();
@@ -114,12 +113,12 @@ function disp_weekly(){
       div=DB_INVTY[i].stockno+'_'+fld2;    document.getElementById(div).value=DB_INVTY[i][fld2];
     }
     
-    div=DB_INVTY[i].stockno+'_1lotno';        document.getElementById(div).innerHTML=DB_INVTY[i]['1lotno'];    
-    div=DB_INVTY[i].stockno+'_1expiry';       document.getElementById(div).innerHTML=DB_INVTY[i]['1expiry'];
-    div=DB_INVTY[i].stockno+'_1req';          document.getElementById(div).innerHTML=DB_INVTY[i]['1req'];
-    div=DB_INVTY[i].stockno+'_2lotno';        document.getElementById(div).innerHTML=DB_INVTY[i]['2lotno'];    
-    div=DB_INVTY[i].stockno+'_2expiry';       document.getElementById(div).innerHTML=DB_INVTY[i]['2expiry'];
-    div=DB_INVTY[i].stockno+'_2req';          document.getElementById(div).innerHTML=DB_INVTY[i]['2req'];
+    div=DB_INVTY[i].stockno+'_1lotno';        document.getElementById(div).innerHTML=DB_INVTY[i]['1lotno'];   
+    div=DB_INVTY[i].stockno+'_1expiry';       document.getElementById(div).innerHTML=DB_INVTY[i]['1expiry'];  
+    div=DB_INVTY[i].stockno+'_1req';          document.getElementById(div).innerHTML=DB_INVTY[i]['1req'];     
+    div=DB_INVTY[i].stockno+'_2lotno';        document.getElementById(div).innerHTML=DB_INVTY[i]['2lotno'];   
+    div=DB_INVTY[i].stockno+'_2expiry';       document.getElementById(div).innerHTML=DB_INVTY[i]['2expiry'];  
+    div=DB_INVTY[i].stockno+'_2req';          document.getElementById(div).innerHTML=DB_INVTY[i]['2req'];     
   }  
   mnu_fm_weekly();
 }
@@ -152,12 +151,12 @@ function clear_fm_weekly(){
       div=DB_STOCK[i].stockno+'_1w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
       div=DB_STOCK[i].stockno+'_2w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
     }    
-    div=DB_STOCK[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).value='';
 
     document.getElementById('btn'+(i+1)).style.color='white'; 
     document.getElementById('btn'+(i+1)).disabled=false;
@@ -209,16 +208,11 @@ async function save_fm_weekly(){
   await jeff_update_File('vaxi/invty.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   let data=await getFile('vaxi/invty.json'); DB_INVTY=data.content;
   showProgress(false);
-  disp_weekly();
+  disp_fm_weekly();
 }
 
 function chg_weekly_month(v){
-  disp_weekly();
-}
-
-function init_fm_weekly(){
-  clear_fm_weekly();
-  disp_weekly();
+  disp_fm_weekly();
 }
 
 function close_fm_weekly(){
@@ -252,7 +246,7 @@ function mnu_save_fm_weekly(){
           '<span>Save</span>'+
         '</div>'+
       '</div>'+
-      '<div onclick="init_fm_weekly()" style="float:right;width:25%;height:100%;background:none;">'+
+      '<div onclick="disp_fm_weekly()" style="float:right;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jclose.png"  alt="home image" />'+
           '<span>Cancel</span>'+
