@@ -422,7 +422,7 @@ img.center {display: block;margin-left: auto;margin-right: auto;}
 }
 
 .back_class{
-  float:left;height:100%;font-size:20px;background:none;font-weight:normal;
+  float:left;height:100%;font-size:16px;background:none;font-weight:normal;
   width:100px;cursor:pointer;  
 }
     .back_class img{
@@ -923,5 +923,5 @@ font-size:20px;
   .cls_ptr_tot_panel div { float:left;width:auto;height:100%;text-align:left;padding:3px;background:none; }
   .cls_ptr_tot_panel input { float:left;width:auto;height:100%;text-align:center;padding:5px;color:black;background:lightgray; }
 
-.cls_weekly_row{ float:left;width:13%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; border:1px solid lightgray; }
+.cls_weekly_row{ float:left;width:11%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; border:1px solid lightgray; }
     .cls_weekly_row button{ width:100%;height:100%;border-radius:3px;font-size:11px;pointer-events:auto; color:white; }

@@ -104,7 +104,7 @@ self.addEventListener('fetch', (event) => {
         }
 
         // Always try the network first.
-        const networkResponse = await fetch(event.request);
+        const networkResponse = await fetch(event.request, {cache: "no-store"});
         return networkResponse;
       } catch (error) {
         // catch is only triggered if an exception is thrown, which is likely

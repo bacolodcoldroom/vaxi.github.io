@@ -83,23 +83,6 @@ async function get_app_default(){
   showProgress(false);
 }
 
-function dispMenu(f_main,m){
-  return;
-  //alert('dispMenu activated... :'+m);
-  document.querySelectorAll('.menu_class').forEach(function(el) {
-    el.style.display = 'none'; 
-  });
-  //document.getElementById('mnu_main').style.display='none';
-  document.getElementById('mnu_main_owner').style.display='none';
-  if(f_main){
-    document.getElementById('mnu_mainmenu').style.display='block';   
-    document.getElementById(m).style.display='block';
-  }else{
-    document.getElementById('mnu_submenu').style.display='block';   
-    document.getElementById('mnu_submenu').innerHTML=m;
-  }
-}
-
 //=================================================================================
 //=======================show page=================================================
 function showMainPage(){
@@ -117,8 +100,7 @@ function showMainPage(){
   console.log('mainpage '+f_MainPage);
   openPage('page_main');  
 
-  vmenu='mnu_main_owner';
-  dispMenu(true,vmenu);
+  //mnu_fm_invty();  
 }
 
 function dispHeaderMode(){
@@ -489,13 +471,7 @@ function show_sidenav(){
       '</div>'+
     '</div>'+
 
-    '<div class="dropdown">'+
-      '<div class="dropbtn"></div>'+
-      '<div class="nw_menu" onclick="main_ptr(0)">'+
-        '<img src="gfx/jedit.png"/>'+
-        '<span>NIP Accomplishment</span>'+
-      '</div>'+
-    '</div>'+
+    
     
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
@@ -515,6 +491,14 @@ function show_sidenav(){
       '<div class="nw_menu" onclick="nowLive()">'+
         '<img id="divLive" data-live=0 src="gfx/notlive.jpg"/>'+
         '<span id="lbLive">Live</span>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="dropdown">'+
+      '<div class="dropbtn"></div>'+
+      '<div class="nw_menu" onclick="refresh_all_data()">'+
+        '<img src="gfx/jrefresh.png"/>'+
+        '<span>Refresh</span>'+
       '</div>'+
     '</div>'+
 
@@ -969,7 +953,7 @@ function nowLive() {
   if(f_syslive==0) {
     //document.getElementById('id_LiveTime').innerHTML=new Date().toLocaleTimeString();
     f_syslive=1;
-    live_id = setInterval(function(){ refresh_allData(); }, 20000);		
+    live_id = setInterval(function(){ refresh_all_invty(); }, 20000);		
     document.getElementById('lbLive').innerHTML='STOP';
     document.getElementById('divLive').setAttribute('data-live',1);
     document.getElementById('divLive').src='gfx/live.gif';
@@ -982,7 +966,7 @@ function nowLive() {
   }      
 }
 
-async function refresh_allData(){
+async function refresh_all_invty(){
   //var n =  new Date().toLocaleTimeString();
   JBE_AUDIO('gfx/snd/insight',5);
   if(CURR_PAGE=='invty'){
@@ -990,4 +974,14 @@ async function refresh_allData(){
     let data=await getFile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
     disp_invty_brgy(areano);
   }
+}
+
+async function refresh_all_data(){
+  showProgress(true);
+  await get_app_default();
+  if(CURR_PAGE=='invty'){
+    let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+    disp_invty_brgy(areano);
+  }
+  showProgress(false);
 }
