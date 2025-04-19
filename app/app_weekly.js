@@ -14,7 +14,7 @@ function fm_weekly(){
   document.getElementById('back_view1').style.display='block';  
   mnu_fm_weekly();
   
-  let pa_height=H_VIEW-0;  
+  let pa_height=H_BODY-35-8;  
   let dtl= 
   '<div id="dv_weekly" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+
 
@@ -29,7 +29,7 @@ function fm_weekly(){
 
     '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:white;">'+
 
-      '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid '+JBE_CLOR+';overflow:auto;padding:5px;">'+
+      '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid lightgray;overflow:auto;padding:5px;">'+
         '<div style="float:left;width:15%;height:100%;padding:5px;">Vaccines</div>'+
         '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
@@ -43,11 +43,11 @@ function fm_weekly(){
         '</div>'+
       '</div>'+
 
-      '<div id="div_dtls" style="width:100%;height:450px;border:1px solid blue;overflow:auto;padding:5px;background:none;">';
+      '<div id="div_dtls" style="width:100%;height:'+(pa_height-40-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
         let vdtl='';
         for(var i=0;i<DB_STOCK.length;i++){
           vdtl+=
-          '<div id="div_row" style="width:100%;height:50px;border:1px solid black;color:black;background:none;">'+
+          '<div id="div_row" style="width:100%;height:60px;border:1px solid black;color:black;background:none;">'+
             '<div style="float:left;width:15%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK[i].descrp+'</div>'+
 
             '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
