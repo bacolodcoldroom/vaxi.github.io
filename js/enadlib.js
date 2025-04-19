@@ -403,6 +403,11 @@ function JBE_OPEN_VIEW(dtl,cap,xclose) {
   //document.getElementById("copyright").innerHTML=m;
 }
 
+function JBE_BACK_VIEW(f){
+  var m=parseInt(document.getElementById("myView1").getAttribute('data-JBEpage'));
+  document.getElementById('back_view'+m).style.display=iif(f,'block','none');  
+}
+
 function JBE_CLOSE_VIEW(){
   var m=parseInt(document.getElementById("myView1").getAttribute('data-JBEpage'));
   //alert('closeView # '+m);
