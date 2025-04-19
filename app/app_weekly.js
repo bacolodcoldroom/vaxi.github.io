@@ -1,3 +1,7 @@
+let clor_lotno='#ddebf7';
+let clor_expiry='#fce4d6';
+let clor_req='#c9daf8';
+
 function fm_weekly(){
   if(!CHK_ONLINE()){ return; };
   if(!CURR_USER){
@@ -7,11 +11,10 @@ function fm_weekly(){
   window.history.pushState({ noBackExitsApp: true }, '');
   f_MainPage=false;
   var n = new Date().toLocaleTimeString('it-IT');
-  document.getElementById('back_view1').style.display='none';  
+  document.getElementById('back_view1').style.display='block';  
   mnu_fm_weekly();
-
-  let pa_height=H_VIEW-0;
   
+  let pa_height=H_VIEW-0;  
   let dtl= 
   '<div id="dv_weekly" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+
 
@@ -27,15 +30,16 @@ function fm_weekly(){
     '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:white;">'+
 
       '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid '+JBE_CLOR+';overflow:auto;padding:5px;">'+
-        '<div style="float:left;width:25%;height:100%;padding:5px;">Vaccines</div>'+
-        '<div style="float:left;width:75%;height:100%;border:0px solid black;">'+
+        '<div style="float:left;width:15%;height:100%;padding:5px;">Vaccines</div>'+
+        '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_weekly(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_weekly(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="edit_weekly(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
-          '<div class="cls_weekly_row" style="width:23%;padding:5px;border:0px;">Lot No.</div>'+
-          '<div class="cls_weekly_row" style="width:12%;padding:5px;border:0px;">Exp.</div>'+
+          '<div class="cls_weekly_row" style="width:18%;padding:6px 0 0 0;border:0px;background:'+clor_lotno+';">Lot No.</div>'+
+          '<div class="cls_weekly_row" style="width:11%;padding:6px 0 0 0;border:0px;background:'+clor_expiry+';">Exp.</div>'+
+          '<div class="cls_weekly_row" style="width:11%;padding:6px 0 0 0;border:0px;background:'+clor_req+';">Req.</div>'+
         '</div>'+
       '</div>'+
 
@@ -44,18 +48,23 @@ function fm_weekly(){
         for(var i=0;i<DB_STOCK.length;i++){
           vdtl+=
           '<div id="div_row" style="width:100%;height:50px;border:1px solid black;color:black;background:none;">'+
-            '<div style="float:left;width:23%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK[i].descrp+'</div>'+
+            '<div style="float:left;width:15%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK[i].descrp+'</div>'+
 
-            '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
+            '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
-
+/*
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:5%;" value="" />'+
+*/
+                '<div id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:18%;overflow:auto;background:'+clor_lotno+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_1expiry'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_expiry+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_req+';"></div>'+
               '</div>'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
@@ -63,9 +72,14 @@ function fm_weekly(){
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
                 '<input type="number" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
-
+/*
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
                 '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
+                '<input type="number" id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:5%;" value="" />'+                
+*/                
+                '<div id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:18%;overflow:auto;background:'+clor_lotno+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_2expiry'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_expiry+';"></div>'+
+                '<div id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:11%;overflow:auto;background:'+clor_req+';"></div>'+
               '</div>'+
             '</div>'+
 
@@ -85,6 +99,7 @@ function fm_weekly(){
 
 //‐-------
 function disp_weekly(){  
+  JBE_BACK_VIEW(true);
   let curdate=document.getElementById('date_weekly').value;  
   clear_fm_weekly();
   for(var i=0;i<DB_INVTY.length;i++){
@@ -99,25 +114,32 @@ function disp_weekly(){
       div=DB_INVTY[i].stockno+'_'+fld2;    document.getElementById(div).value=DB_INVTY[i][fld2];
     }
     
-    div=DB_INVTY[i].stockno+'_1lotno';        document.getElementById(div).value=DB_INVTY[i]['1lotno'];    
-    div=DB_INVTY[i].stockno+'_1expiry';       document.getElementById(div).value=DB_INVTY[i]['1expiry'];
-    div=DB_INVTY[i].stockno+'_2lotno';        document.getElementById(div).value=DB_INVTY[i]['2lotno'];    
-    div=DB_INVTY[i].stockno+'_2expiry';       document.getElementById(div).value=DB_INVTY[i]['2expiry'];
+    div=DB_INVTY[i].stockno+'_1lotno';        document.getElementById(div).innerHTML=DB_INVTY[i]['1lotno'];    
+    div=DB_INVTY[i].stockno+'_1expiry';       document.getElementById(div).innerHTML=DB_INVTY[i]['1expiry'];
+    div=DB_INVTY[i].stockno+'_1req';          document.getElementById(div).innerHTML=DB_INVTY[i]['1req'];
+    div=DB_INVTY[i].stockno+'_2lotno';        document.getElementById(div).innerHTML=DB_INVTY[i]['2lotno'];    
+    div=DB_INVTY[i].stockno+'_2expiry';       document.getElementById(div).innerHTML=DB_INVTY[i]['2expiry'];
+    div=DB_INVTY[i].stockno+'_2req';          document.getElementById(div).innerHTML=DB_INVTY[i]['2req'];
   }  
   mnu_fm_weekly();
 }
 
 //‐-------
 function edit_weekly(col){
+  JBE_BACK_VIEW(false);
   btn_enabled(col);
   //assign
   for(var i=0;i<DB_STOCK.length;i++){
     let div=DB_STOCK[i].stockno+'_1w'+col;  document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
     div=DB_STOCK[i].stockno+'_2w'+col;      document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
+    /*
     div=DB_STOCK[i].stockno+'_1lotno';      document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
     div=DB_STOCK[i].stockno+'_1expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
+    div=DB_STOCK[i].stockno+'_1req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
     div=DB_STOCK[i].stockno+'_2lotno';      document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
     div=DB_STOCK[i].stockno+'_2expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
+    div=DB_STOCK[i].stockno+'_2req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
+    */
   }
   document.getElementById('btn'+col).disabled=false;
   mnu_save_fm_weekly();
@@ -129,11 +151,13 @@ function clear_fm_weekly(){
     for(var k=0;k<5;k++){
       div=DB_STOCK[i].stockno+'_1w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
       div=DB_STOCK[i].stockno+'_2w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    }
-    div=DB_STOCK[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    }    
+    div=DB_STOCK[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+    div=DB_STOCK[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
 
     document.getElementById('btn'+(i+1)).style.color='white'; 
     document.getElementById('btn'+(i+1)).disabled=false;
