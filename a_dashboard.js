@@ -148,7 +148,7 @@ function fm_invty(){
 
     '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:1px solid black;color:black;background:yellow;">'+
       '<div style="float:left;width:50%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
-      '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="id_date" style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" value='+curdate+' /></div>'+
+      '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="id_date" onchange="chg_fm_invty()"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
     '</div>'+
 
     '<div style="width:100%;height:'+b1+'px;border:1px solid black;">'+
@@ -271,6 +271,14 @@ function oc_invty(areano){
   let name=JBE_GETFLD('name',DB_AREA,'areano',areano);
   document.getElementById('id_brgy').setAttribute('data-areano',areano);
   document.getElementById('id_brgy').innerHTML=name;    
+  document.getElementById('id_date').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
+  document.getElementById('id_date').disabled=false;
+  disp_invty_brgy(areano);
+}
+
+function chg_fm_invty(){
+  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+  if(!areano){ snackBar('No Barangay selected...'); }
   disp_invty_brgy(areano);
 }
 
@@ -299,7 +307,7 @@ function clear_invty_brgy(){
 
 //‐-------
 function disp_invty_brgy(areano){  
-  let curdate=document.getElementById('hd_date').innerHTML;  
+  let curdate=document.getElementById('id_date').value;
   curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
   clear_invty_brgy();
   for(var i=0;i<DB_INVTY.length;i++){
