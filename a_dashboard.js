@@ -196,7 +196,7 @@ function fm_invty(){
                     '<input type="text" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
 
                     '<input type="text" id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:20%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-                    '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:12%;background:'+clor_expiry+';" value="" />'+
+                    '<input type="month" id="'+DB_STOCK[i].stockno+'_1expiry'+'" class="cls_weekly_row" style="width:12%;background:'+clor_expiry+';" value="" />'+
                     '<input type="number" id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />'+
                   '</div>'+
                   '<div style="width:100%;height:50%;border:0px solid black;">'+
@@ -206,9 +206,9 @@ function fm_invty(){
                     '<input type="text" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
                     '<input type="text" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
 
-                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:20%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:12%;background:'+clor_expiry+';" value="" />'+
-                    '<input type="number" id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:11%;margin-left:1%;border:1px solid black;border-bottom:0px;border-right:0px;background:'+clor_req+';" value="" />'+
+                    '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"   class="cls_weekly_row" style="width:20%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
+                    '<input type="month" id="'+DB_STOCK[i].stockno+'_2expiry'+'" class="cls_weekly_row" style="width:12%;background:'+clor_expiry+';" value="" />'+
+                    '<input type="number" id="'+DB_STOCK[i].stockno+'_2req'+'"   class="cls_weekly_row" style="width:11%;margin-left:1%;border:1px solid black;border-bottom:0px;border-right:0px;background:'+clor_req+';" value="" />'+
                   '</div>'+
                 '</div>'+
 
