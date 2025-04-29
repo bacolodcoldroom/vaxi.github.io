@@ -924,3 +924,11 @@ font-size:20px;
 
 .cls_weekly_row{ float:left;width:11%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; border:1px solid lightgray; }
     .cls_weekly_row button{ width:100%;height:100%;border-radius:3px;font-size:11px;pointer-events:auto; color:white; }
+
+
+.cls_accom_row{ float:left;width:7.6%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; border:1px solid black;border-bottom:0px; }
+    .cls_accom_row button{ width:100%;height:100%;border-radius:3px;font-size:11px;pointer-events:auto; color:white; }
+
+.cls_dispMenu{
+  width:100%;height:35px;border:0px solid blue;padding:5px;border-bottom:0px;background:#333333;
+}    

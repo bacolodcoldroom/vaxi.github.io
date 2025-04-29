@@ -88,11 +88,9 @@
 </style>
 
 <!-- ****************************************************************** -->
+<title>VAXIMAIN App</title>
+<!--script src="./js/eruda.min.js"></script-->
 <!-- ****************************************************************** -->
-<title>VAXIMAIN</title>
-<!--script src="main_jslib/eruda.min.js"></script>
-<script>eruda.init();</script-->
-  
 
 <script>  
   var CURR_APPNAME="VAXIMAIN APP v3.3"; 
@@ -105,12 +103,21 @@
 
   var CURR_PAGE='';
   
-  var JBE_API='https://updesk.heliohost.org/rpd_api/';  
-  var pathloc=window.location.origin.substr(0,16);
-  if(pathloc == 'http://localhost') { 
-    JBE_API=window.location.origin+'/rpd_api/';  
-  }  
-  //alert(pathloc);
+  var JBE_CLOUD=true;
+  var JBE_ONLINE=true;
+  var JBE_ONLINE_NAVI=true;
+  console.log('window',window.location.origin.substring(0,26));
+
+  if(window.location.origin.substring(0,26) == 'http://localhost:8080') { 
+    JBE_API=window.location.origin+'/vaxi/';  
+    JBE_CLOUD=false;
+    eruda.init();   
+  }else if(window.location.origin.substring(0,16) == 'http://localhost') { 
+    JBE_API=window.location.origin+'/vaxi/';   
+    JBE_CLOUD=false;
+  }
+  console.log(JBE_API,'JBE_CLOUD',JBE_CLOUD);
+  
 </script>
 <!-- ****************************************************************** -->
 <!-- ****************************************************************** -->
@@ -382,17 +389,20 @@
 <script type='text/javascript' src='js/je_msg.js'></script>
 <script type='text/javascript' src='js/qrcode.min.js'></script>
 
+<script type='text/javascript'  src='api_jefflib.js'></script>
+<script type='text/javascript'  src='app_db.js'></script>
+<script type='text/javascript'  src='app_idx.js'></script>
+
+
 <script type='text/javascript' src='misc/jbe_fmlib_2.js'></script>
 <script type='text/javascript' src='misc/leaflet.js'></script>
-<script type='text/javascript' src='misc/sha_api.js'></script>
+
 <script type='text/javascript' src='misc/sha_image.js'></script>
 
 <script type='text/javascript'  src='a_main.js'></script>
+<script type='text/javascript'  src='a_admin.js'></script>
+<script type='text/javascript'  src='a_area.js'></script>
 <script type='text/javascript'  src='a_dashboard.js'></script>
-
-
-
-
 
 <!--script type='text/javascript' src='main_jslib/leaflet.js'></script>
 <script type='text/javascript' src='main_jslib/axios.min.js'></script>
@@ -511,7 +521,7 @@
   var DB_ADJ=[];
   var DB_ADJ2=[];
   var DB_PRODUCT=[];
-  var DB_STOCK=[];  
+  var DB_STOCK_INVTY=[];  
   var DB_SIG=[];  
 
   var DB_COMMENT=[];  
@@ -586,10 +596,6 @@
 
 */
 
-  var JBE_STORE_IDX = [    
-    { "id":0, "flename":"SysFile", "numrec":0 , "init":1 },
-    { "id":1, "flename":"User", "numrec":0 , "init":1 }
-  ];
 
   /***************************************************** */
   

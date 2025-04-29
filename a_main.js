@@ -30,13 +30,33 @@ async function start_app(){
   //speakText('Hello '+CURR_NAME2+'! Welcome to the Bahcolod City Cold Chain Facility.');
   JBE_ONLINE=true; 
   //document.getElementById('div_bar').style.display='block';
-  
+
+  await fetch('./DBF/sysfile.json').then(res => res.json()).then(data => { DB_SYS=data; })
+  GITHUB_TOKEN = DB_SYS[0].sys_pat.substring(3);
+  console.log('GITHUB_TOKEN:',GITHUB_TOKEN);
+  console.log('DB_SYS',DB_SYS);
+   
+  JBE_CLOUD=false;
+  JBE_API='';
+  if(JBE_CLOUD){ JBE_API='vaxi/'; }
+  console.log('JBE_API',JBE_API);
   await get_app_default();
+  console.log('CURR_USER',CURR_USER);
+  
+  
+  if(!JBE_CLOUD){
+    if(DB_USER.length==0){
+      MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){ get_all_db_from_json(); },function(){});
+    }
+  }
+  
+  
   //document.getElementById('online_status').innerHTML='';  
   //dispHeaderMode();
   showMainPage();
   show_sidenav();
-  fm_invty();
+  fm_dashboard();
+  //fm_invty();
   //nowLive();
 }
 
@@ -64,22 +84,15 @@ function jeff(){
 //=======APP DB AND DISPLAY==========================================================
 async function get_app_default(){   
   showProgress(true);
-  await fetch('./DBF/sysfile.json').then(res => res.json()).then(data => { DB_SYS=data; })
-  GITHUB_TOKEN = DB_SYS[0].sys_pat.substring(3);
-  console.log('GITHUB_TOKEN:',GITHUB_TOKEN);
-  console.log('DB_SYS',DB_SYS);
-  
   let data;  
-  data=await getFile('vaxi/user.json'); DB_USER=data.content; console.log('DB_USER',DB_USER);
-  data=await getFile('vaxi/stock.json'); DB_STOCK=data.content; console.log('DB_STOCK',DB_STOCK);
-  data=await getFile('vaxi/area.json'); DB_AREA=data.content; console.log('DB_AREA',DB_AREA);    
-  data=await getFile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
-  console.log('CURR_USER',CURR_USER);
-  /*
-  let v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
-  document.getElementById('bar_avatar').src=v_mphoto;
-  document.getElementById('owner').src=v_mphoto;
-  */
+  data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; console.log('DB_ACCOM',DB_ACCOM);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'user'); DB_USER=data.content; console.log('DB_USER',DB_USER);
+  
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty'); DB_STOCK_INVTY=data.content; console.log('DB_STOCK_INVTY',DB_STOCK_INVTY);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom'); DB_STOCK_ACCOM=data.content; console.log('DB_STOCK_ACCOM',DB_STOCK_ACCOM);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'area'); DB_AREA=data.content; console.log('DB_AREA',DB_AREA);    
+  data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content; console.log('DB_SYS',DB_SYS); 
   showProgress(false);
 }
 
@@ -105,21 +118,25 @@ function showMainPage(){
 
 function dispHeaderMode(){
   //var n = new Date().toLocaleTimeString('it-IT');
-  let v_mphoto='../gfx/avatar.png'; 
+  let v_mphoto='gfx/avatar.png'; 
   if(!CURR_USER){    
     document.getElementById('logger').innerHTML="Please Log In";
     document.getElementById("page_login").style.display="none";     
   }else{    
     document.getElementById('logger').innerHTML='Hi!, '+CURR_NAME;     
-    document.getElementById("page_login").style.display="none";
-    //v_mphoto=    
+    document.getElementById("page_login").style.display="none";    
   }
   document.getElementById('bar_avatar').src=v_mphoto;
-  document.getElementById('owner').src=v_mphoto;
+  //document.getElementById('owner').src=v_mphoto;
+}
+
+function dispMenu(divmenu,m){
+  document.getElementById(divmenu).innerHTML=m;
 }
 
 // ** ======================= SHOW ROUTINES ===================================
 function showProfile(v){ 
+  return;
   //alert('showprofile: '+v);
  
   document.getElementById('div_bar').style.display='block';
@@ -667,81 +684,8 @@ function get_bal_stock(v_loc,v_stockno,v_lotno,v_rundate){
   return ob; //v_bal;
 }
 
-function get_loc(whcode){
-  return JBE_GETFLD('name',DB_WHOUSE,'whcode',whcode);
-}
 function get_area(v){
   return JBE_GETFLD('name',DB_AREA,'areano',v);
-}
-function get_prod(v){
-  return JBE_GETFLD('prodname',DB_PRODUCT,'prodno',v);
-}
-
-function get_descrp(stockno){
-  return JBE_GETFLD('descrp',DB_STOCK,'stockno',stockno);
-}
-
-function UPDATE_LOC_STOCKBAL(loc,stockno,lotno,qty,qty_old){
-  //alert(qty);
-  let ddate=new Date();
-  ddate=JBE_GETFLD2('date_tf',DB_TRANSFER2, [
-    { "fld":"loc","val":loc },
-    { "fld":"stockno","val":stockno },
-    { "fld":"lotno","val":lotno }
-  ]);
-  let rundate=JBE_DATE_FORMAT(ddate,'YYYY-MM-DD');
-  let arr=get_bal_stock(parseInt(loc),stockno,lotno,rundate);
-  let v_bal=parseInt(arr.bal);
-  let v_tf=parseInt(arr.tf);
-  let v_ris=parseInt(arr.ris);
-  let v_ret=parseInt(arr.ret);
-  //let the_qty=(v_tf+qty_old)-(v_ris+v_ret+qty);
-  let the_qty=(v_bal+qty_old)-qty;
-  if(qty){ v_bal=(v_bal+qty_old)-qty; }
-
-  console.log(
-    '*** UPDATE_LOC_STOCKBAL'+
-    '\nloc: '+loc+   
-    '\nstockno: '+stockno+
-    '\nbal: '+v_bal+
-    '\nlotno: '+lotno+
-    '\nqty: '+qty+
-    '\nold qty: '+qty_old+
-    '\n\nthe_qty: '+the_qty+
-    '\n\nv_tf: '+v_tf+
-    '\n\nv_ris: '+v_ris+
-    '\n\nv_ret: '+v_ret
-  );
- 
-  axios.put('/api/upd_loc_stock', {headers: { 'Content-Type': 'application/json' }}, { params: {
-    bal:v_bal,
-    loc:loc,
-    stockno: stockno,
-    lotno:lotno
-  }})
-  .then(function (response) {  
-    DB_TRANSFER2=response.data;       
-    showProgress(false);    
-  })
-  .catch(function (error) { console.log(error); });
-}
-
-function add_to_transfer2(ob){
-  //alert('going to add to transfer2 ');
-  axios.post('/api/save_transfer2', {headers: { 'Content-Type': 'application/json' }}, { params: {
-    trano:ob.trano,
-    loc:ob.loc,
-    stockno:ob.stockno,
-    lotno:ob.lotno,
-    refno:ob.refno,       
-    qty:ob.qty
-  }})
-  .then(function (response) { 
-    DB_TRANSFER2=response.data;       
-    //alert(DB_TRANSFER2.length);
-    showProgress(false);    
-  })
-  .catch(function (error) { console.log(error); });
 }
 
 function isMobileDevice() {
@@ -892,8 +836,8 @@ function factoryReset(){
     await clearAllRecords('sig');
     await clearAllRecords('user');    
     
-    let data=await getFile('vaxi/sig.json'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
-    let data_user=await getFile('vaxi/user.json'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
+    let data=await api_getfile('vaxi/sig'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
+    let data_user=await api_getfile('vaxi/user'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
 
     await saveDataToIDX(DB_SIG,2);
     await saveDataToIDX(DB_USER,3);
@@ -903,7 +847,7 @@ function factoryReset(){
   }  
 }
 
-async function fetchTextPortion(url, start, end) {
+async function xxxfetchTextPortion(url, start, end) {
   try {
       // Validate parameters
       const startNum = Number(start);
@@ -971,7 +915,7 @@ async function refresh_all_invty(){
   JBE_AUDIO('gfx/snd/insight',5);
   if(CURR_PAGE=='invty'){
     let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-    let data=await getFile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
+    let data=await api_getfile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
     disp_invty_brgy(areano);
   }
 }
@@ -985,3 +929,64 @@ async function refresh_all_data(){
   }
   showProgress(false);
 }
+
+
+function getWednesdaysInMonth(year, month) {
+  // Note: month is 0-indexed (0 = January, 11 = December)
+  const wednesdays = [];
+  const date = new Date(year, month, 1);
+  
+  // Find first Wednesday of the month
+  while (date.getDay() !== 3) {
+      date.setDate(date.getDate() + 1);
+  }
+  
+  // Add all Wednesdays in the month
+  while (date.getMonth() === month) {
+      wednesdays.push(new Date(date));
+      date.setDate(date.getDate() + 7);
+  }
+  
+  return wednesdays;
+}
+/*
+// Example usage for current month
+const today = new Date();
+const currentYear = today.getFullYear();
+const currentMonth = today.getMonth(); // 0-11
+
+const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
+
+// Format and display the dates
+console.log("All Wednesdays in the current month:");
+wednesdays.forEach(wed => {
+  console.log(wed.toDateString());
+});
+
+// If you want to display them in the browser
+const outputDiv = document.createElement('div');
+outputDiv.innerHTML = "<h3>Wednesdays this month:</h3><ul>" + 
+  wednesdays.map(wed => `<li>${wed.toDateString()}</li>`).join('') + 
+  "</ul>";
+document.body.appendChild(outputDiv);
+*/
+
+function getFormattedWednesdaysInMonth(year, month) {
+  const wednesdays = getWednesdaysInMonth(year, month);
+  return wednesdays.map(date => {
+      return {
+          day: date.getDate(),
+          fullDate: date.toISOString().split('T')[0], // YYYY-MM-DD format
+          readable: date.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              month: 'long', 
+              day: 'numeric', 
+              year: 'numeric' 
+          })
+      };
+  });
+}
+
+// Example usage
+//const formattedWednesdays = getFormattedWednesdaysInMonth(2023, 10); // November 2023
+//console.log(formattedWednesdays);
