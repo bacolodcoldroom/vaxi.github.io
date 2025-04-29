@@ -218,7 +218,7 @@ function preLogOut(){
 
 //************************************************************************************************ */
 async function fm_admin(){
-  if(!CHK_ONLINE()){ return; }
+  if(!CHK_ONLINE() && JBE_CLOUD){ return; }
   if(!CURR_USER){
     snackBar('Please Log In...');
     return;
@@ -295,12 +295,6 @@ async function fm_admin(){
     '</div>';       
 
   JBE_OPEN_VIEW(dtl,'My Account','close_admin');   
-  document.getElementById('bar_avatar').src = await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
-  if(JBE_ONLINE){
-    document.getElementById('down_load').disabled=false;
-    document.getElementById('down_load').style.opacity=1;
-    document.getElementById('down_load').style.pointerEvents='auto';
-  }
 }
 
 function close_admin(){

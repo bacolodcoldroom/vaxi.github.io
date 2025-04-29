@@ -29,7 +29,7 @@ function start_app(){
   
   //searchContentInFile('SW_DTR.js', 'cacheName')
   // Get text from character 10 to 50
-  fetchTextPortion('SW_VAXi.js', 17, 22)
+  fetchTextPortion('SW_VAXIAPP.js', 17, 22)
   .then(portion => {
     console.log('Text portion:', portion);      
     document.getElementById('ver_sion').innerHTML=CURR_VER;
@@ -141,8 +141,18 @@ async function dispHeaderMode(){
     document.getElementById("page_login").style.display="none";     
   }else{    
     document.getElementById('logger').innerHTML='Hi!, '+CURR_NAME;     
-    document.getElementById("page_login").style.display="none";
-    v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
+    document.getElementById("page_login").style.display="none";    
+    if(JBE_CLOUD){
+      v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
+    }else{        
+      const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
+      if(ndx > -1){
+        v_mphoto='data:image/png;base64,' + btoa(DB_USER[ndx]['photo']);
+      }
+    }
+    if(!v_mphoto){
+      v_mphoto='../gfx/avatar.png';
+    }
   }
   document.getElementById('bar_avatar').src=v_mphoto;
   document.getElementById('owner').src=v_mphoto;
@@ -728,83 +738,6 @@ function get_bal_stock(v_loc,v_stockno,v_lotno,v_rundate){
   return ob; //v_bal;
 }
 
-function get_loc(whcode){
-  return JBE_GETFLD('name',DB_WHOUSE,'whcode',whcode);
-}
-function get_area(v){
-  return JBE_GETFLD('name',DB_AREA,'areano',v);
-}
-function get_prod(v){
-  return JBE_GETFLD('prodname',DB_PRODUCT,'prodno',v);
-}
-
-function get_descrp(stockno){
-  return JBE_GETFLD('descrp',DB_STOCK,'stockno',stockno);
-}
-
-function UPDATE_LOC_STOCKBAL(loc,stockno,lotno,qty,qty_old){
-  //alert(qty);
-  let ddate=new Date();
-  ddate=JBE_GETFLD2('date_tf',DB_TRANSFER2, [
-    { "fld":"loc","val":loc },
-    { "fld":"stockno","val":stockno },
-    { "fld":"lotno","val":lotno }
-  ]);
-  let rundate=JBE_DATE_FORMAT(ddate,'YYYY-MM-DD');
-  let arr=get_bal_stock(parseInt(loc),stockno,lotno,rundate);
-  let v_bal=parseInt(arr.bal);
-  let v_tf=parseInt(arr.tf);
-  let v_ris=parseInt(arr.ris);
-  let v_ret=parseInt(arr.ret);
-  //let the_qty=(v_tf+qty_old)-(v_ris+v_ret+qty);
-  let the_qty=(v_bal+qty_old)-qty;
-  if(qty){ v_bal=(v_bal+qty_old)-qty; }
-
-  console.log(
-    '*** UPDATE_LOC_STOCKBAL'+
-    '\nloc: '+loc+   
-    '\nstockno: '+stockno+
-    '\nbal: '+v_bal+
-    '\nlotno: '+lotno+
-    '\nqty: '+qty+
-    '\nold qty: '+qty_old+
-    '\n\nthe_qty: '+the_qty+
-    '\n\nv_tf: '+v_tf+
-    '\n\nv_ris: '+v_ris+
-    '\n\nv_ret: '+v_ret
-  );
- 
-  axios.put('/api/upd_loc_stock', {headers: { 'Content-Type': 'application/json' }}, { params: {
-    bal:v_bal,
-    loc:loc,
-    stockno: stockno,
-    lotno:lotno
-  }})
-  .then(function (response) {  
-    DB_TRANSFER2=response.data;       
-    showProgress(false);    
-  })
-  .catch(function (error) { console.log(error); });
-}
-
-function add_to_transfer2(ob){
-  //alert('going to add to transfer2 ');
-  axios.post('/api/save_transfer2', {headers: { 'Content-Type': 'application/json' }}, { params: {
-    trano:ob.trano,
-    loc:ob.loc,
-    stockno:ob.stockno,
-    lotno:ob.lotno,
-    refno:ob.refno,       
-    qty:ob.qty
-  }})
-  .then(function (response) { 
-    DB_TRANSFER2=response.data;       
-    //alert(DB_TRANSFER2.length);
-    showProgress(false);    
-  })
-  .catch(function (error) { console.log(error); });
-}
-
 function isMobileDevice() {
   return /Mobi|Android/i.test(navigator.userAgent);
 }
@@ -953,8 +886,8 @@ function factoryReset(){
     await clearAllRecords('sig');
     await clearAllRecords('user');    
     
-    let data=await getFile('vaxi/sig.json'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
-    let data_user=await getFile('vaxi/user.json'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
+    let data=await jeff_getFile('vaxi/sig.json'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
+    let data_user=await jeff_getFile('vaxi/user.json'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
 
     await saveDataToIDX(DB_SIG,2);
     await saveDataToIDX(DB_USER,3);

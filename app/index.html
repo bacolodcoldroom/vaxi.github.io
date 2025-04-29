@@ -117,33 +117,31 @@
 </style>
 
 <!-- ****************************************************************** -->
-<!-- ****************************************************************** -->
 <title>VAXi App</title>
-<!--script src="js/eruda.min.js"></script>
-<script>eruda.init();</script-->
-  
-
+<!--script src="../js/eruda.min.js"></script-->
+<!-- ****************************************************************** -->
 <script>  
   var CURR_APPNAME="VAXi APP"; 
-  var CURR_CLIENT='VAXi';
+  var CURR_CLIENT='VAXIAPP';
   var CURR_SITE='http://192.168.0.199:4440';
   var CURR_VER="1.001";
   var CURR_CLIENTNAME="Bacolod Cold Chain Facility";
   var CURR_CLIENTADDRESS="Annex Bldg., Bacolod New Gov't Center, Bacolod City";
   var CURR_TELNO="410-4810"; 
   var CURR_AREANO=''; 
+  var JBE_CLOUD=false;
+  console.log('window',window.location.origin.substring(0,26));
+
+  if(window.location.origin.substring(0,26) == 'http://localhost:8080') { 
+    JBE_API=window.location.origin+'/vaxi/app/';  
+    //JBE_CLOUD=false;
+    eruda.init();   
+  }else if(window.location.origin.substring(0,16) == 'http://localhost') { 
+    JBE_API=window.location.origin+'/vaxi/app/';   
+    //JBE_CLOUD=false;
+  }
+  console.log(JBE_API,'JBE_CLOUD',JBE_CLOUD);
   
-  var DEBUG_NODE=false;
-  var JBE_API='https://bacolodcoldroom.github.io/';  
-  //var pathloc=window.location.origin.substring(0,21);
-  var pathloc=window.location.origin;
-  let posloc = pathloc.search("4400");
-  let posloc2 = pathloc.search("4440");
-  if(posloc == -1 && posloc2 == -1) { //android debug
-    JBE_API=window.location.origin;  
-    DEBUG_NODE=false;
-  }  
-  JBE_API='api/';
   var JBE_ONLINE=true;
   var JBE_ONLINE_NAVI=true;
   //alert(JBE_API);
@@ -308,7 +306,7 @@
       <div id="user_foot" style="width:100%;height:220px;text-align:center;border:0px solid blue;padding:10px; background:none;">
         <div style="width:100%;height:125px;text-align:center;border:0px solid blue;padding:0px; background:none;">               
           <input type="button" class="cls_button_round color_head2" onclick="fm_weekly()" style="width:80%;height:50px;color:white;" value="Weekly Inventory" />
-          <input type="button" class="cls_button_round color_head2" onclick="not_yet()" style="margin-top:10px;width:80%;height:50px;color:white;" value="NIP Weekly Accomplishment" />
+          <input type="button" class="cls_button_round color_head2" onclick="fm_accom()" style="margin-top:10px;width:80%;height:50px;color:white;" value="NIP Weekly Accomplishment" />
         </div> 
 
         <div style="margin-top:5px;width:100%;height:60px;border-radius:5px;border:1px solid gray;padding:5px;background:whitesmoke;">
@@ -527,13 +525,13 @@
         
       <div onclick="show_credits()" style="float:left;width:25%;height:100%;background:none;">
         <div class="class_footer">
-          <img src="gfx/jchat.png" alt="call image" />
+          <img src="../gfx/jorg.png" alt="call image" />
           <span>Credits</span>
         </div>
       </div>           
       <div id="mnu_upload" onclick="upload2server()" style="float:left;width:25%;height:100%;background:none;">
         <div class="class_footer">
-          <img src="gfx/jupload.png" alt="call image" />
+          <img src="gfx/jchat.png" alt="call image" />
           <span>Upload</span>
         </div>
       </div>
@@ -569,22 +567,23 @@
 <script type='text/javascript' src='../js/qrcode.min.js'></script>
 
 <!-- libs -->
-<script type='text/javascript' src='../misc/jbe_fmlib.js'></script>
-<script type='text/javascript'  src='../misc/sha_api.js'></script>
+<script type='text/javascript'  src='../api_jefflib.js'></script>
+<script type='text/javascript'  src='../misc/jbe_fmlib.js'></script>
+<!--script type='text/javascript'  src='../misc/sha_api.js'></script-->
 <script type='text/javascript'  src='../misc/sha_image.js'></script>
 <script type='text/javascript'  src='../misc/jbe_map.js'></script>
 
+<script type='text/javascript'  src='../app_db.js'></script>
+<script type='text/javascript'  src='../app_idx.js'></script>
+
 <script type='text/javascript'  src='app_main.js'></script>
 <script type='text/javascript'  src='app_admin.js'></script>
-<!--script type='text/javascript'  src='app_daily.js'></script>
-<script type='text/javascript'  src='app_reports.js'></script>
-  <script type='text/javascript'  src='rep_dtr.js'></script-->
+
 <script type='text/javascript'  src='app_setting.js'></script>
 <script type='text/javascript'  src='app_weekly.js'></script>
+<script type='text/javascript'  src='app_accom.js'></script>
 
 <script type='text/javascript'  src='rest_api.js'></script>
-
-
 
 <script>
   var THISFILE=[];
@@ -629,7 +628,8 @@
   var DB_ADJ=[];
   var DB_ADJ2=[];
   var DB_PRODUCT=[];
-  var DB_STOCK=[];  
+  var DB_STOCK_ACCOM=[];  
+  var DB_STOCK_INVTY=[];  
   var DB_INVTY=[];  
   var DB_ACCOM=[];  
   var DB_SIG=[];  
@@ -704,12 +704,7 @@
 
 */
 
-  var JBE_STORE_IDX = [    
-    { "id":0, "flename":"daily", "numrec":0 , "init":1 },
-    { "id":1, "flename":"monthly", "numrec":0 , "init":1 },
-    { "id":2, "flename":"sig", "numrec":0 , "init":1 },
-    { "id":3, "flename":"user", "numrec":0 , "init":1 }    
-  ];
+  
 
   /***************************************************** */
   

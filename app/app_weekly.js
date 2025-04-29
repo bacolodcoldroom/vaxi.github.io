@@ -3,7 +3,8 @@ let clor_expiry='#fce4d6';
 let clor_req='#c9daf8';
 
 function fm_weekly(){
-  if(!CHK_ONLINE()){ return; };
+  //if(!CHK_ONLINE()){ return; };
+  if(!CHK_ONLINE() && JBE_CLOUD){ return; }
   if(!CURR_USER){
     snackBar('Please Log In...');
     return;
@@ -29,8 +30,8 @@ function fm_weekly(){
 
     '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:white;">'+
 
-      '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid lightgray;overflow:auto;padding:5px;">'+
-        '<div style="float:left;width:15%;height:100%;padding:5px;">Vaccines</div>'+
+      '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid lightgray;padding:5px;">'+
+        '<div style="float:left;width:15%;height:100%;padding:5px;">Vaccine</div>'+
         '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
           '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
@@ -45,41 +46,33 @@ function fm_weekly(){
 
       '<div id="div_dtls" style="width:100%;height:'+(pa_height-40-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
         let vdtl='';
-        for(var i=0;i<DB_STOCK.length;i++){
+        for(var i=0;i<DB_STOCK_INVTY.length;i++){
           vdtl+=
           '<div id="div_row" style="width:100%;height:60px;border:1px solid black;color:black;background:none;">'+
-            '<div style="float:left;width:15%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK[i].descrp+'</div>'+
+            '<div style="float:left;width:15%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
 
             '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
-/*
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_1expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:5%;" value="" />'+
-*/
-                '<div id="'+DB_STOCK[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:18%;pointer-events:auto;overflow:auto;background:'+clor_lotno+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_1expiry'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_expiry+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_req+';"></div>'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
+
+                '<div id="'+DB_STOCK_INVTY[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:18%;pointer-events:auto;overflow:auto;background:'+clor_lotno+';"></div>'+
+                '<div id="'+DB_STOCK_INVTY[i].stockno+'_1expiry'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_expiry+';"></div>'+
+                '<div id="'+DB_STOCK_INVTY[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_req+';"></div>'+
               '</div>'+
               '<div style="width:100%;height:50%;border:0px solid black;">'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
-/*
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:22%;overflow:auto;" value="" />'+
-                '<input type="text" id="'+DB_STOCK[i].stockno+'_2expiry'+'" maxlength=5 class="cls_weekly_row" style="width:13%;" value="" />'+
-                '<input type="number" id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:5%;" value="" />'+                
-*/                
-                '<div id="'+DB_STOCK[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:18%;pointer-events:auto;overflow:auto;background:'+clor_lotno+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_2expiry'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_expiry+';"></div>'+
-                '<div id="'+DB_STOCK[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_req+';"></div>'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
+                '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
+
+                '<div id="'+DB_STOCK_INVTY[i].stockno+'_2lotno'+'"  class="cls_weekly_row" style="width:18%;pointer-events:auto;overflow:auto;background:'+clor_lotno+';"></div>'+
+                '<div id="'+DB_STOCK_INVTY[i].stockno+'_2expiry'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_expiry+';"></div>'+
+                '<div id="'+DB_STOCK_INVTY[i].stockno+'_2req'+'"  class="cls_weekly_row" style="width:11%;pointer-events:auto;overflow:auto;background:'+clor_req+';"></div>'+
               '</div>'+
             '</div>'+
 
@@ -98,6 +91,7 @@ function fm_weekly(){
 
 //‐-------
 function disp_fm_weekly(){  
+  console.log('CURR_AREANO:',CURR_AREANO);
   JBE_BACK_VIEW(true);
   let curdate=document.getElementById('date_weekly').value;  
   clear_fm_weekly();
@@ -125,38 +119,31 @@ function disp_fm_weekly(){
 
 //‐-------
 function edit_weekly(col){
-  JBE_BACK_VIEW(false);
+  JBE_BACK_VIEW(false); 
   btn_enabled(col);
   //assign
-  for(var i=0;i<DB_STOCK.length;i++){
-    let div=DB_STOCK[i].stockno+'_1w'+col;  document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK[i].stockno+'_2w'+col;      document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
-    /*
-    div=DB_STOCK[i].stockno+'_1lotno';      document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK[i].stockno+'_1expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK[i].stockno+'_1req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK[i].stockno+'_2lotno';      document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK[i].stockno+'_2expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK[i].stockno+'_2req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    */
+  for(var i=0;i<DB_STOCK_INVTY.length;i++){
+    let div=DB_STOCK_INVTY[i].stockno+'_1w'+col;  document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
+    div=DB_STOCK_INVTY[i].stockno+'_2w'+col;      document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
   }
   document.getElementById('btn'+col).disabled=false;
   mnu_save_fm_weekly();
 }
 
 function clear_fm_weekly(){
-  for(var i=0;i<DB_STOCK.length;i++){
+  for(var i=0;i<DB_STOCK_INVTY.length;i++){
     let div='';
     for(var k=0;k<5;k++){
-      div=DB_STOCK[i].stockno+'_1w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-      div=DB_STOCK[i].stockno+'_2w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+      div=DB_STOCK_INVTY[i].stockno+'_1w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
+      div=DB_STOCK_INVTY[i].stockno+'_2w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
     }    
-    div=DB_STOCK[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).value='';
-    div=DB_STOCK[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).value='';
+    div=DB_STOCK_INVTY[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).innerHTML='';
+    div=DB_STOCK_INVTY[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).innerHTML='';
+    div=DB_STOCK_INVTY[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).innerHTML='';
+
+    div=DB_STOCK_INVTY[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).innerHTML='';
+    div=DB_STOCK_INVTY[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).innerHTML='';
+    div=DB_STOCK_INVTY[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).innerHTML='';
 
     document.getElementById('btn'+(i+1)).style.color='white'; 
     document.getElementById('btn'+(i+1)).disabled=false;
@@ -180,33 +167,35 @@ function btn_enabled(col){
 async function save_fm_weekly(){
   console.clear();
   let arr=[];arr_ctr=0;
-  for(var i=0;i<DB_STOCK.length;i++){
+  for(var i=0;i<DB_STOCK_INVTY.length;i++){
     let div='';
     let row1=[]; let row2=[];
     for(var k=0;k<5;k++){      
-      row1[k]=document.getElementById(DB_STOCK[i].stockno+'_1w'+(k+1)).value;
-      row2[k]=document.getElementById(DB_STOCK[i].stockno+'_2w'+(k+1)).value;
+      row1[k]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1w'+(k+1)).value;
+      row2[k]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2w'+(k+1)).value;
     }
 
-    row1[5]=document.getElementById(DB_STOCK[i].stockno+'_1lotno').value; row1[6]=document.getElementById(DB_STOCK[i].stockno+'_1expiry').value;    
-    row2[5]=document.getElementById(DB_STOCK[i].stockno+'_2lotno').value; row2[6]=document.getElementById(DB_STOCK[i].stockno+'_2expiry').value;
+    row1[5]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1lotno').innerHTML; row1[6]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1expiry').innerHTML;  row1[7]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1req').innerHTML; 
+    row2[5]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2lotno').innerHTML; row2[6]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2expiry').innerHTML;  row2[7]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2req').innerHTML; 
     
     let obj={
       "areano":CURR_AREANO,
-      "stockno":DB_STOCK[i].stockno,
+      "stockno":DB_STOCK_INVTY[i].stockno,
       "date":document.getElementById('date_weekly').value,
-      "1w1":row1[0],"1w2":row1[1],"1w3":row1[2],"1w4":row1[3],"1w5":row1[4], "1lotno":row1[5],"1expiry":row1[6],
-      "2w1":row2[0],"2w2":row2[1],"2w3":row2[2],"2w4":row2[3],"2w5":row2[4], "2lotno":row2[5],"2expiry":row2[6]
+      "1w1":row1[0],"1w2":row1[1],"1w3":row1[2],"1w4":row1[3],"1w5":row1[4], "1lotno":row1[5],"1expiry":row1[6],"1req":row1[7],
+      "2w1":row2[0],"2w2":row2[1],"2w3":row2[2],"2w4":row2[3],"2w5":row2[4], "2lotno":row2[5],"2expiry":row2[6],"2req":row2[7]
     }
-    console.log(DB_STOCK[i].descrp,obj);
+    console.log(DB_STOCK_INVTY[i].descrp,obj);
     arr[arr_ctr]=obj; 
     arr_ctr++;
   }
   console.log('arr',arr);
   showProgress(true);
   let curdate=document.getElementById('date_weekly').value;
-  await jeff_update_File('vaxi/invty.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
-  let data=await getFile('vaxi/invty.json'); DB_INVTY=data.content;
+  //await jeff_update_File(JBE_CLOUD,JBE_API+'invty.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
+  //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'invty.json'); DB_INVTY=data.content;
+  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
+  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   showProgress(false);
   disp_fm_weekly();
 }

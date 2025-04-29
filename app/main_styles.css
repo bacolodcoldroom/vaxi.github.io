@@ -865,3 +865,6 @@ background-color: rgba(241, 128, 23, 0.6) !important;
 
 .cls_weekly_row{ float:left;width:12%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; border:1px solid lightgray; }
     .cls_weekly_row button{ width:100%;height:100%;border-radius:3px;font-size:11px;pointer-events:auto; color:white; }
+    
+.cls_accom_row{ float:left;width:7.6%;height:100%;font-size:11px;color:black;text-align:center;pointer-events:none; border:1px solid lightgray; }
+    .cls_accom_row button{ width:100%;height:100%;border-radius:3px;font-size:11px;pointer-events:auto; color:white; }

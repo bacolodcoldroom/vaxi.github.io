@@ -1,21 +1,46 @@
 async function rest_api_start(){  
-  showProgress(true);
+  showProgress(true);  
   await fetch('../DBF/sysfile.json').then(res => res.json()).then(data => { DB_SYS=data; })
   GITHUB_TOKEN = DB_SYS[0].sys_pat.substring(3);
   console.log('GITHUB_TOKEN:',GITHUB_TOKEN);
   console.log('DB_SYS',DB_SYS);
+
+  JBE_CLOUD=false;
+  JBE_API='';
+  if(JBE_CLOUD){ JBE_API='vaxi/'; }
+  console.log('JBE_API',JBE_API);
   
   let data;  
-  data=await getFile('vaxi/user.json'); DB_USER=data.content; console.log('DB_USER',DB_USER);
-  data=await getFile('vaxi/stock.json'); DB_STOCK=data.content; console.log('DB_STOCK',DB_STOCK);
-  data=await getFile('vaxi/area.json'); DB_AREA=data.content; console.log('DB_AREA',DB_AREA);    
-  data=await getFile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);    
+  data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   console.log('DB_USER',DB_USER);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty');  DB_STOCK_INVTY=data.content;  console.log('DB_STOCK_INVTY',DB_STOCK_INVTY);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom');  DB_STOCK_ACCOM=data.content;  console.log('DB_STOCK_ACCOM',DB_STOCK_ACCOM);
+  data=await api_getfile(JBE_CLOUD,JBE_API+'area');   DB_AREA=data.content;   console.log('DB_AREA',DB_AREA);    
+  data=await api_getfile(JBE_CLOUD,JBE_API+'invty');  DB_INVTY=data.content;  console.log('DB_INVTY',DB_INVTY);    
+  data=await api_getfile(JBE_CLOUD,JBE_API+'accom');  DB_ACCOM=data.content;  console.log('DB_ACCOM',DB_ACCOM);    
   console.log('CURR_USER',CURR_USER);
+ 
+  if(!JBE_CLOUD){
+    if(DB_USER.length==0){
+      MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){ get_all_db_from_json(); },function(){});
+    }
+  }
+
   CURR_AREANO=JBE_GETFLD('areano',DB_USER,'usercode',CURR_USER);
-  document.getElementById('brgyname').innerHTML=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
+  let brgyname=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
   
-  console.log('CURR_AREANO',CURR_AREANO);
-  let v_mphoto=await jeff_get_GitHubImage('vaxi/images/'+CURR_USER+'.jpg');
+  document.getElementById('brgyname').innerHTML=brgyname;
+  
+  console.log('CURR_AREANO',CURR_AREANO,' --- '+brgyname);
+
+  let v_mphoto;
+  if(JBE_CLOUD){
+    v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
+  }else{        
+    const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
+    if(ndx > -1){
+      v_mphoto='data:image/png;base64,' + btoa(DB_USER[ndx]['photo']);
+    }
+  }
 
   if(!v_mphoto){
     v_mphoto='../gfx/avatar.png';
@@ -68,14 +93,9 @@ function rest_api_chk_fld(u,p){
   }
 }
 
-function JBE_CHK_BASE64(img){
-  let rval=false;
-  if(img.substring(0,11)=='data:image/'){ rval=true; }
-  return rval;
-}
+
 
 async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,lastname,firstname,middlename,a,photo,c,lat,lng,d_active,usertype){  
-  
   var jimg=photo;  
   if(JBE_CHK_BASE64(photo)){    
     await JBE_BLOB(n,jimg).then(result => jimg=result);
@@ -108,13 +128,14 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
 
   showProgress(true);
   console.log('save:',lastname,':',firstname,':',middlename);  
-  await uploadImage(photo,'vaxi/images/'+usercode+'.jpg');  
-  ob.photo='';
-  await jeff_update_File('vaxi/user.json',ob,record => record.usercode !== CURR_USER || record.areano !== CURR_AREANO);    
+  if(JBE_CLOUD){ await jeff_uploadImage(photo,'vaxi/images/'+usercode+'.jpg'); ob.photo=''; }
+  //console.log('ob.photo',ob.photo);
+  await api_save(JBE_CLOUD,JBE_API+'user',[ob],record => record.usercode !== CURR_USER || record.areano !== CURR_AREANO);
   showProgress(false);  
   document.getElementById('admin_avatar').src=photo;
   document.getElementById('bar_avatar').src=photo;
   document.getElementById('owner').src=photo;
+  DB_USER=await readAllRecords('user'); 
   JBE_CLOSE_VIEW();
 }
   
@@ -198,7 +219,7 @@ async function chg_date_updownForm(jmode,d1,d2){
     );
     ctr=result.length;
   }else if(jmode==2){
-    let currentData = await getFile('vaxi/daily.json'); 
+    let currentData = await api_getfile(JBE_CLOUD,JBE_API+'daily'); 
     let tbl_daily=currentData.content;
     let result = tbl_daily.filter(item => 
       item.usercode === CURR_USER && (JBE_DATE_FORMAT(item.date,'YYYY-MM-DD') >= s_date && JBE_DATE_FORMAT(item.date,'YYYY-MM-DD') <= e_date) && !time_empty(item.txt,item.time1,item.time2,item.time3,item.time4) 
@@ -245,7 +266,7 @@ async function do2_upload(){
   showProgress(true);
   console.log('For Upload ------:',result);
   //jeff_update_gistFile(gistId, fileName,result,fld,val);
-  await jeff_update_File('vaxi/daily.json',result,fld,val);
+  await jeff_update_File(JBE_API+'daily.json',result,fld,val);
   showProgress(false);
   //console.log(result);
   snackBar('Upload Successful...');    
@@ -262,7 +283,7 @@ async function do_download(d1,d2){
   let s_date=JBE_DATE_FORMAT(d1+'-01','YYYY-MM-DD');
   let e_date=JBE_DATE_FORMAT(dum2_date,'YYYY-MM-DD');
 
-  let currentData = await getFile('vaxi/daily.json');
+  let currentData = await api_getfile(JBE_CLOUD,JBE_API+'daily');
   let tbl_daily=currentData.content;
   let arr=[]; let arr_ctr=0;
   for(var i=0;i<tbl_daily.length;i++){
