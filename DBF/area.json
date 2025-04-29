@@ -1,27 +1,32 @@
 [
   {
-    "areano": "10001",
-    "name": "Alijis",
+    "areano": "ALI",
+    "name": "Alijñis City",
+    "rank": "1",
     "cat": "1"
   },
   {
-    "areano": "10002",
+    "areano": "BAN",
     "name": "Banago",
+    "rank": "2",
     "cat": "1"
   },
   {
-    "areano": "10003",
+    "areano": "CAB",
     "name": "Cabug",
+    "rank": "3",
     "cat": "1"
   },
   {
-    "areano": "10004",
+    "areano": "SUM",
     "name": "Sum-ag",
+    "rank": "4",
     "cat": "1"
   },
   {
-    "areano": "10005",
+    "areano": "TAN",
     "name": "Tangub",
+    "rank": "5",
     "cat": "1"
   }
 ]

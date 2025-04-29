@@ -16,5 +16,17 @@
     "descrp": "Penta Hib",
     "lotno": "Penta HibLOTNO123",
     "expiry": "2028-05-23"
-  }
+  },
+  {
+    "stockno": "4",
+    "descrp": "OPV",
+    "lotno": "OPVLOTNO123",
+    "expiry": "2028-05-23"
+  },
+  {
+    "stockno": "5",
+    "descrp": "FLU Senior",
+    "lotno": "FLULOTNO123",
+    "expiry": "2028-05-28"
+  }    
 ]
