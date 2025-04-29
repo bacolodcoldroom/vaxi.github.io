@@ -1188,6 +1188,12 @@ function JBE_BACKUP_DB(filename){
   });  
 }
 
+function JBE_CHK_BASE64(img){
+  let rval=false;
+  if(img.substring(0,11)=='data:image/'){ rval=true; }
+  return rval;
+}
+
 async function JBE_FILE_EXIST(filename){
   await axios.get('/fileExist', { params: { filename:filename }})
   .then(function (response) { 
