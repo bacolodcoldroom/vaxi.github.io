@@ -36,7 +36,7 @@ async function start_app(){
   console.log('GITHUB_TOKEN:',GITHUB_TOKEN);
   console.log('DB_SYS',DB_SYS);
    
-  JBE_CLOUD=false;
+  JBE_CLOUD=true;
   JBE_API='';
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
   console.log('JBE_API',JBE_API);
