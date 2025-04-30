@@ -41,18 +41,15 @@ async function start_app(){
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
   console.log('JBE_API',JBE_API);
   await get_app_default();
+  console.log('JBE_CLOUD',JBE_CLOUD);
   console.log('CURR_USER',CURR_USER);
-  
-  
+    
   if(!JBE_CLOUD){
     if(DB_USER.length==0){
       MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){ get_all_db_from_json(); },function(){});
     }
-  }
+  }  
   
-  
-  //document.getElementById('online_status').innerHTML='';  
-  //dispHeaderMode();
   showMainPage();
   show_sidenav();
   fm_dashboard();

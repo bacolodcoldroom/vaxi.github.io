@@ -106,7 +106,6 @@
   var JBE_CLOUD=true;
   var JBE_ONLINE=true;
   var JBE_ONLINE_NAVI=true;
-  var JBE_API;
   console.log('window',window.location.origin.substring(0,26));
 
   if(window.location.origin.substring(0,26) == 'http://localhost:8080') { 
@@ -116,9 +115,7 @@
   }else if(window.location.origin.substring(0,16) == 'http://localhost') { 
     JBE_API=window.location.origin+'/vaxi/';   
     JBE_CLOUD=false;
-  }
-  console.log(JBE_API,'JBE_CLOUD',JBE_CLOUD);
-  
+  }    
 </script>
 <!-- ****************************************************************** -->
 <!-- ****************************************************************** -->

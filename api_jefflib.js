@@ -35,22 +35,23 @@ async function api_getfile(cloud,path) {
 
 async function updateFile(path,updatedContent, message, sha) {
   try {
-      const response = await fetch(apiBase+`${path}`, {
-          method: "PUT",
-          headers: {
-              Authorization: `token ${GITHUB_TOKEN}`,
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-              message,
-              //content: btoa(JSON.stringify(updatedContent, null, 2)),
-              content: btoa(unescape(encodeURIComponent(JSON.stringify(updatedContent, null, 2)))),
-              sha
-          })
-      });
+    path=path+'.json';
+    const response = await fetch(apiBase+`${path}`, {
+        method: "PUT",
+        headers: {
+            Authorization: `token ${GITHUB_TOKEN}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message,
+            //content: btoa(JSON.stringify(updatedContent, null, 2)),
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(updatedContent, null, 2)))),
+            sha
+        })
+    });
 
-      if (!response.ok) throw new Error(`Failed to update file: ${response.status}`);
-      console.log("File updated successfully");
+    if (!response.ok) throw new Error(`Failed to update file: ${response.status}`);
+    console.log("File updated successfully");
   } catch (error) {
       console.error("Error updating file:", error);
   }
