@@ -21,7 +21,7 @@ async function rest_api_start(){
  
   if(!JBE_CLOUD){
     if(DB_USER.length==0){
-      MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){ return; },function(){});
+      MSG_SHOW(vbOk,'ERROR:','No Database Found. Ask the Administrator.', function(){ return; },function(){});
     }
   }
 
