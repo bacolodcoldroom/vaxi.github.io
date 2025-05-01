@@ -908,7 +908,7 @@ function nowLive() {
 }
 
 async function refresh_all_now(){
-  JBE_AUDIO('gfx/snd/insight',5);
+  //JBE_AUDIO('gfx/snd/insight',5);
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   console.log(areano);
   let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     disp_invty_brgy(areano);
