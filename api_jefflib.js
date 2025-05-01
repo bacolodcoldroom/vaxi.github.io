@@ -18,7 +18,8 @@ async function api_getfile(cloud,path) {
         return { content: finalData, sha: data.sha };
     } catch (error) {
         showProgress(false);
-        console.error("Error fetching file:", error);
+        //console.error("Error fetching file:", error);
+        snackBar("Error fetching file: "+error);
     }
   }else{    
     try {
@@ -28,7 +29,7 @@ async function api_getfile(cloud,path) {
        return { content: tbl };
     } catch (error) {
         showProgress(false);
-        console.error("Error 2 fetching file:", error);
+        snackBar("Error fetching file: "+error);
     }
   }
 }
@@ -53,7 +54,7 @@ async function updateFile(path,updatedContent, message, sha) {
     if (!response.ok) throw new Error(`Failed to update file: ${response.status}`);
     console.log("File updated successfully");
   } catch (error) {
-      console.error("Error updating file:", error);
+    snackBar("Error updating file: "+error);
   }
 }
 

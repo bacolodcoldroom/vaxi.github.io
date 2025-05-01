@@ -910,11 +910,9 @@ function nowLive() {
 async function refresh_all_invty(){
   //var n =  new Date().toLocaleTimeString();
   JBE_AUDIO('gfx/snd/insight',5);
-  if(CURR_PAGE=='invty'){
-    let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-    let data=await api_getfile('vaxi/invty.json'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
-    disp_invty_brgy(areano);
-  }
+  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
+  disp_invty_brgy(areano);
 }
 
 async function refresh_all_data(){

@@ -29,7 +29,7 @@ function fm_dashboard(f_clear){
   let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
   //alert(curdate);
   //alert(DB_STOCK_INVTY.length);
-  let h_mainbox_invty=399;
+  let h_mainbox_invty=389;
   let h_mainbox_accom=h_mainbox_invty;
   let dtl=
   '<div style="display:block;width:100%;height:100%;font-size:18px;text-align:center;padding:10px;border:0px solid orange;background:	lightgray;">'+  
@@ -55,11 +55,16 @@ function fm_dashboard(f_clear){
 
       //right
       '<div style="float:left;margin-left:1%;width:79%;height:100%;margin-top:0px;text-align:center;padding:0px;border:0px solid red;overflow:auto;background:none;">'+
+
+        '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:white;background:'+JBE_CLOR+';">'+
+          '<div style="width:100%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
+        '</div>'+
+
         //invty
-        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:0px;text-align:center;padding:0%;border:1px solid darkgray;background:green;">'+
+        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid darkgray;background:green;">'+
 
           '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
-            '<div style="float:left;width:50%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
+            '<div style="float:left;width:50%;height:100%;">Weekly Inventory</div>'+
             '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="id_date" onchange="chgdate_invty_brgy()"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
           '</div>'+
 
