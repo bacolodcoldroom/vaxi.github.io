@@ -510,7 +510,7 @@ function show_sidenav(){
 
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
-      '<div class="nw_menu" onclick="refresh_all_data()">'+
+      '<div class="nw_menu" onclick="refresh_all_now()">'+
         '<img src="gfx/jrefresh.png"/>'+
         '<span>Refresh</span>'+
       '</div>'+
@@ -894,7 +894,7 @@ function nowLive() {
   if(f_syslive==0) {
     //document.getElementById('id_LiveTime').innerHTML=new Date().toLocaleTimeString();
     f_syslive=1;
-    live_id = setInterval(function(){ refresh_all_invty(); }, 20000);		
+    live_id = setInterval(function(){ refresh_all_now(); }, 20000);		
     document.getElementById('lbLive').innerHTML='STOP';
     document.getElementById('divLive').setAttribute('data-live',1);
     document.getElementById('divLive').src='gfx/live.gif';
@@ -907,14 +907,12 @@ function nowLive() {
   }      
 }
 
-async function refresh_all_invty(){
-  //var n =  new Date().toLocaleTimeString();
+async function refresh_all_now(){
   JBE_AUDIO('gfx/snd/insight',5);
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; 
-  data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; 
-  disp_invty_brgy(areano);
-  disp_accom_brgy(areano);
+  console.log(areano);
+  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     disp_invty_brgy(areano);
+  let data2=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   disp_accom_brgy(areano);
 }
 
 async function refresh_all_data(){

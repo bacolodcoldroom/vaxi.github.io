@@ -303,7 +303,6 @@ function clear_invty_brgy(){
 
 //‐-------
 function disp_invty_brgy(areano){  
-  console.log(DB_INVTY);
   let curdate=document.getElementById('id_date').value;
   curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
   clear_invty_brgy();
