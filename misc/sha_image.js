@@ -1,4 +1,4 @@
-async function uploadImage(IMAGE_URL,TARGET_FILENAME) {
+async function jeff_uploadImage(IMAGE_URL,TARGET_FILENAME) {
   const GITHUB_BRANCH = "main";
   const output = document.getElementById("output");
 
@@ -39,8 +39,6 @@ async function uploadImage(IMAGE_URL,TARGET_FILENAME) {
     body: JSON.stringify(payload)
   });
 
-  //const result = await res.json();
-  //output.innerText = JSON.stringify(result, null, 2);
 }
 
 // Convert Blob to base64
@@ -103,7 +101,7 @@ async function getPrivateImage(IMAGE_PATH) {
   }
 }
 
-async function jeff_get_GitHubImage(FILE_PATH) {
+async function jeff_getImage(FILE_PATH) {
   const BRANCH = 'main';
   const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`;
 
@@ -122,17 +120,6 @@ async function jeff_get_GitHubImage(FILE_PATH) {
     const base64 = data.content.replace(/\n/g, "");
     const mimeType = getMimeType(FILE_PATH);
     const dataURL = `data:${mimeType};base64,${base64}`;
-    /*
-    const img = document.createElement("img");    
-    img.src = dataURL;
-    img.alt = data.name;
-    img.style.maxWidth = "400px";
-    img.style.border = "1px solid #ccc";
-    
-    const container = document.getElementById("imageContainer");
-    container.innerHTML = ""; // Clear previous
-    container.appendChild(img);
-    */
     return dataURL;
   } catch (error) {
     console.error('Error:', error);
