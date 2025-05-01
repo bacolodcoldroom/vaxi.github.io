@@ -2,7 +2,7 @@ let clor_lotno='#ddebf7';
 let clor_expiry='#fce4d6';
 let clor_req='#c9daf8';
 
-function fm_weekly(){
+async function fm_weekly(){
   //if(!CHK_ONLINE()){ return; };
   if(!CHK_ONLINE() && JBE_CLOUD){ return; }
   if(!CURR_USER){
@@ -13,6 +13,8 @@ function fm_weekly(){
   f_MainPage=false;
   var n = new Date().toLocaleTimeString('it-IT');
   document.getElementById('back_view1').style.display='block';  
+
+  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; 
   mnu_fm_weekly();
   
   let pa_height=H_BODY-35-8;  

@@ -8,7 +8,10 @@ async function rest_api_start(){
   JBE_CLOUD=true;
   JBE_API='';
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
+  console.log('**************************************');
+  console.log('JBE_CLOUD',JBE_CLOUD);
   console.log('JBE_API',JBE_API);
+  console.log('**************************************');
   
   let data;  
   data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   console.log('DB_USER',DB_USER);
@@ -32,6 +35,7 @@ async function rest_api_start(){
   
   console.log('CURR_AREANO',CURR_AREANO,' --- '+brgyname);
 
+  /*
   let v_mphoto;
   if(JBE_CLOUD){
     v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
@@ -47,6 +51,8 @@ async function rest_api_start(){
   }
   document.getElementById('bar_avatar').src=v_mphoto;
   document.getElementById('owner').src=v_mphoto;
+  */
+  dispHeaderMode();
   showProgress(false);
 }
 
@@ -135,7 +141,9 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
   document.getElementById('admin_avatar').src=photo;
   document.getElementById('bar_avatar').src=photo;
   document.getElementById('owner').src=photo;
-  DB_USER=await readAllRecords('user'); 
+  
+  let data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;
+  console.log('save profile:',DB_USER);
   JBE_CLOSE_VIEW();
 }
   
