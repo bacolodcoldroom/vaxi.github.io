@@ -66,15 +66,23 @@ async function api_save(cloud,fileName,newData,cond){
     try {
       const { content, sha } = await api_getfile(cloud,fileName);
       //const filteredData = content.filter(record => String(record[fld]) !== val);
-      const filteredData = content.filter(cond);      
-      console.log('filteredData',filteredData);    
-      const finalData = filteredData.concat(newData); 
+      let filteredData;
+      let finalData;
+      let msg='';
+      if(cond){
+        filteredData = content.filter(cond);              
+        msg='Data updated.';
+      }else{
+        filteredData = content;
+      }
+      finalData = filteredData.concat(newData); 
       // Commit the updated array back to the file with a commit message.
       await updateFile(fileName,finalData, ``, sha);
       console.log('finalData',finalData);    
-      speakText('Data updated.');
+      speakText(msg);
     } catch (error) {
-      MSG_SHOW(vbOk,"ERROR:",error.message,function(){},function(){});
+      //MSG_SHOW(vbOk,"ERROR:",error.message,function(){},function(){});
+      console.log(error);
     }
   }else{
     let n=get_ndx_JBE_STORE_IDX(fileName);

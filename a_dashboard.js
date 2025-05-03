@@ -29,7 +29,7 @@ function fm_dashboard(f_clear){
   let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
   //alert(curdate);
   //alert(DB_STOCK_INVTY.length);
-  let h_mainbox_invty=389;
+  let h_mainbox_invty=378;
   let h_mainbox_accom=h_mainbox_invty;
   let dtl=
   '<div style="display:block;width:100%;height:100%;font-size:18px;text-align:center;padding:10px;border:0px solid orange;background:	lightgray;">'+  
@@ -54,7 +54,7 @@ function fm_dashboard(f_clear){
       '</div>'+
 
       //right
-      '<div style="float:left;margin-left:1%;width:79%;height:100%;margin-top:0px;text-align:center;padding:0px;border:0px solid red;overflow:auto;background:none;">'+
+      '<div style="float:left;margin-left:1%;width:59%;height:100%;margin-top:0px;text-align:center;padding:0px;border:1px solid gray;overflow:auto;background:white;">'+
 
         '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:white;background:'+JBE_CLOR+';">'+
           '<div style="width:100%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
@@ -186,6 +186,14 @@ function fm_dashboard(f_clear){
           
         '</div>'+
 
+      '</div>'+
+
+      //
+      '<div style="float:right;width:19%;height:100%;margin-left:1%;text-align:left;border:0px solid red;background:white;">'+
+        '<div style="width:100%;height:30px;padding:5px;text-align:center;color:white;background:'+JBE_CLOR+';">Log</div>'+
+        '<div id="id_log" style="width:100%;height:'+(H_BODY-40-35-2)+'px;font-size:12px;padding:5px;overflow:auto;background:white;">'+
+
+        '</div>'+        
       '</div>'+
 
     '</div>'+

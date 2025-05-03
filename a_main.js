@@ -82,15 +82,16 @@ function jeff(){
 async function get_app_default(){   
   showProgress(true);
   let data;  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; console.log('DB_ACCOM',DB_ACCOM);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'user'); DB_USER=data.content; console.log('DB_USER',DB_USER);
-  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty'); DB_STOCK_INVTY=data.content; console.log('DB_STOCK_INVTY',DB_STOCK_INVTY);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom'); DB_STOCK_ACCOM=data.content; console.log('DB_STOCK_ACCOM',DB_STOCK_ACCOM);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'area'); DB_AREA=data.content; console.log('DB_AREA',DB_AREA);    
-  data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; console.log('DB_INVTY',DB_INVTY);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content; console.log('DB_SYS',DB_SYS); 
+  data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
+  data=await api_getfile(JBE_CLOUD,JBE_API+'user'); DB_USER=data.content;
+  data=await api_getfile(JBE_CLOUD,JBE_API+'log'); DB_LOG=data.content; 
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty'); DB_STOCK_INVTY=data.content; 
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom'); DB_STOCK_ACCOM=data.content; 
+  data=await api_getfile(JBE_CLOUD,JBE_API+'area'); DB_AREA=data.content; 
+  data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
+  data=await api_getfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content;
   showProgress(false);
+  show_log();
 }
 
 //=================================================================================
@@ -913,6 +914,7 @@ async function refresh_all_now(){
   console.log(areano);
   let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     disp_invty_brgy(areano);
   let data2=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   disp_accom_brgy(areano);
+  show_log();
 }
 
 async function refresh_all_data(){
