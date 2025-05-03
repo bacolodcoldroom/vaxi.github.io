@@ -1,4 +1,4 @@
-function fm_accom(){
+async function fm_accom(){
   //if(!CHK_ONLINE()){ return; };
   if(!CHK_ONLINE() && JBE_CLOUD){ return; }
   if(!CURR_USER){
@@ -9,6 +9,9 @@ function fm_accom(){
   f_MainPage=false;
   var n = new Date().toLocaleTimeString('it-IT');
   document.getElementById('back_view1').style.display='block';  
+  showProgress(true);
+  let data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; 
+  showProgress(false);
   mnu_fm_accom();
   let clor_male='lightblue';
   let clor_female='pink';

@@ -14,12 +14,13 @@ async function rest_api_start(){
   console.log('**************************************');
   
   let data;  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   console.log('DB_USER',DB_USER);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty');  DB_STOCK_INVTY=data.content;  console.log('DB_STOCK_INVTY',DB_STOCK_INVTY);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom');  DB_STOCK_ACCOM=data.content;  console.log('DB_STOCK_ACCOM',DB_STOCK_ACCOM);
-  data=await api_getfile(JBE_CLOUD,JBE_API+'area');   DB_AREA=data.content;   console.log('DB_AREA',DB_AREA);    
-  data=await api_getfile(JBE_CLOUD,JBE_API+'invty');  DB_INVTY=data.content;  console.log('DB_INVTY',DB_INVTY);    
-  data=await api_getfile(JBE_CLOUD,JBE_API+'accom');  DB_ACCOM=data.content;  console.log('DB_ACCOM',DB_ACCOM);    
+  data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty');  DB_STOCK_INVTY=data.content;  
+  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom');  DB_STOCK_ACCOM=data.content;  
+  data=await api_getfile(JBE_CLOUD,JBE_API+'area');   DB_AREA=data.content; 
+  data=await api_getfile(JBE_CLOUD,JBE_API+'invty');  DB_INVTY=data.content;
+  data=await api_getfile(JBE_CLOUD,JBE_API+'accom');  DB_ACCOM=data.content;
+  data=await api_getfile(JBE_CLOUD,JBE_API+'log');  DB_LOG=data.content;  
   console.log('CURR_USER',CURR_USER);
  
   if(!JBE_CLOUD){
@@ -29,29 +30,9 @@ async function rest_api_start(){
   }
 
   CURR_AREANO=JBE_GETFLD('areano',DB_USER,'usercode',CURR_USER);
-  let brgyname=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
-  
-  document.getElementById('brgyname').innerHTML=brgyname;
-  
+  let brgyname=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);  
+  document.getElementById('brgyname').innerHTML=brgyname;  
   console.log('CURR_AREANO',CURR_AREANO,' --- '+brgyname);
-
-  /*
-  let v_mphoto;
-  if(JBE_CLOUD){
-    v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
-  }else{        
-    const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
-    if(ndx > -1){
-      v_mphoto='data:image/png;base64,' + btoa(DB_USER[ndx]['photo']);
-    }
-  }
-
-  if(!v_mphoto){
-    v_mphoto='../gfx/avatar.png';
-  }
-  document.getElementById('bar_avatar').src=v_mphoto;
-  document.getElementById('owner').src=v_mphoto;
-  */
   dispHeaderMode();
   showProgress(false);
 }

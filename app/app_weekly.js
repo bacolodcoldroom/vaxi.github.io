@@ -13,8 +13,9 @@ async function fm_weekly(){
   f_MainPage=false;
   var n = new Date().toLocaleTimeString('it-IT');
   document.getElementById('back_view1').style.display='block';  
-
+  showProgress(true);
   let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; 
+  showProgress(false);
   mnu_fm_weekly();
   
   let pa_height=H_BODY-35-8;  
@@ -198,6 +199,7 @@ async function save_fm_weekly(){
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'invty.json'); DB_INVTY=data.content;
   await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
+  make_log(CURR_AREANO,'Updated Weekly Inventory...');
   showProgress(false);
   disp_fm_weekly();
 }
