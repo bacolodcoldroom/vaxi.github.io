@@ -4,8 +4,8 @@ const REPO_OWNER = 'bacolodcoldroom';
 const REPO_NAME = 'JDB';
 var apiBase = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
 
-async function api_getfile(cloud,path) {    
-  console.log('api_getfile path:',path);
+async function api_readfile(cloud,path) {    
+  console.log('api_readfile path:',path);
   if(cloud){
     path=path+'.json';
     try {
@@ -64,7 +64,7 @@ async function api_save(cloud,fileName,newData,cond){
   console.log('=================================');
   if(cloud){
     try {
-      const { content, sha } = await api_getfile(cloud,fileName);
+      const { content, sha } = await api_readfile(cloud,fileName);
       //const filteredData = content.filter(record => String(record[fld]) !== val);
       let filteredData;
       let finalData;

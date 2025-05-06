@@ -82,14 +82,14 @@ function jeff(){
 async function get_app_default(){   
   showProgress(true);
   let data;  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
-  data=await api_getfile(JBE_CLOUD,JBE_API+'user'); DB_USER=data.content;
-  data=await api_getfile(JBE_CLOUD,JBE_API+'log'); DB_LOG=data.content; 
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty'); DB_STOCK_INVTY=data.content; 
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom'); DB_STOCK_ACCOM=data.content; 
-  data=await api_getfile(JBE_CLOUD,JBE_API+'area'); DB_AREA=data.content; 
-  data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
-  data=await api_getfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content;
+  data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
+  data=await api_readfile(JBE_CLOUD,JBE_API+'user'); DB_USER=data.content;
+  data=await api_readfile(JBE_CLOUD,JBE_API+'log'); DB_LOG=data.content; 
+  data=await api_readfile(JBE_CLOUD,JBE_API+'stock_invty'); DB_STOCK_INVTY=data.content; 
+  data=await api_readfile(JBE_CLOUD,JBE_API+'stock_accom'); DB_STOCK_ACCOM=data.content; 
+  data=await api_readfile(JBE_CLOUD,JBE_API+'area'); DB_AREA=data.content; 
+  data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
+  data=await api_readfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content;
   showProgress(false);
   show_log();
 }
@@ -834,8 +834,8 @@ function factoryReset(){
     await clearAllRecords('sig');
     await clearAllRecords('user');    
     
-    let data=await api_getfile('vaxi/sig'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
-    let data_user=await api_getfile('vaxi/user'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
+    let data=await api_readfile('vaxi/sig'); DB_SIG=data.content; console.log('DB_SIG',DB_SIG);
+    let data_user=await api_readfile('vaxi/user'); DB_USER=data_user.content; console.log('DB_USER',DB_USER);
 
     await saveDataToIDX(DB_SIG,2);
     await saveDataToIDX(DB_USER,3);
@@ -912,8 +912,8 @@ async function refresh_all_now(){
   //JBE_AUDIO('gfx/snd/insight',5);
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   console.log(areano);
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     disp_invty_brgy(areano);
-  let data2=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   disp_accom_brgy(areano);
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     disp_invty_brgy(areano);
+  let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   disp_accom_brgy(areano);
   show_log();
 }
 
