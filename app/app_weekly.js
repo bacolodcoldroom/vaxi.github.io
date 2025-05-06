@@ -14,7 +14,7 @@ async function fm_weekly(){
   var n = new Date().toLocaleTimeString('it-IT');
   document.getElementById('back_view1').style.display='block';  
   showProgress(true);
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; 
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; 
   showProgress(false);
   mnu_fm_weekly();
   
@@ -96,6 +96,7 @@ async function fm_weekly(){
 function disp_fm_weekly(){  
   console.log('CURR_AREANO:',CURR_AREANO);
   JBE_BACK_VIEW(true);
+  
   let curdate=document.getElementById('date_weekly').value;  
   clear_fm_weekly();
   for(var i=0;i<DB_INVTY.length;i++){
@@ -169,9 +170,12 @@ function btn_enabled(col){
 
 async function save_fm_weekly(){
   console.clear();
+  let n=new Date();
+  let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
+  let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
+
   let arr=[];arr_ctr=0;
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    let div='';
+  for(var i=0;i<DB_STOCK_INVTY.length;i++){    
     let row1=[]; let row2=[];
     for(var k=0;k<5;k++){      
       row1[k]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1w'+(k+1)).value;
@@ -182,8 +186,9 @@ async function save_fm_weekly(){
     row2[5]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2lotno').innerHTML; row2[6]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2expiry').innerHTML;  row2[7]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2req').innerHTML; 
     
     let obj={
-      "areano":CURR_AREANO,
+      "areano":CURR_AREANO,      
       "stockno":DB_STOCK_INVTY[i].stockno,
+      "date_save":date_save,"time_save":time_save,
       "date":document.getElementById('date_weekly').value,
       "1w1":row1[0],"1w2":row1[1],"1w3":row1[2],"1w4":row1[3],"1w5":row1[4], "1lotno":row1[5],"1expiry":row1[6],"1req":row1[7],
       "2w1":row2[0],"2w2":row2[1],"2w3":row2[2],"2w4":row2[3],"2w5":row2[4], "2lotno":row2[5],"2expiry":row2[6],"2req":row2[7]
@@ -198,7 +203,7 @@ async function save_fm_weekly(){
   //await jeff_update_File(JBE_CLOUD,JBE_API+'invty.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'invty.json'); DB_INVTY=data.content;
   await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   make_log(CURR_AREANO,'Updated Weekly Inventory...');
   showProgress(false);
   disp_fm_weekly();

@@ -10,7 +10,7 @@ async function fm_accom(){
   var n = new Date().toLocaleTimeString('it-IT');
   document.getElementById('back_view1').style.display='block';  
   showProgress(true);
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; 
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; 
   showProgress(false);
   mnu_fm_accom();
   let clor_male='lightblue';
@@ -156,6 +156,10 @@ function clear_fm_accom(){
 }
 
 async function save_fm_accom(){
+  let n=new Date();
+  let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
+  let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
+
   let curdate=document.getElementById('date_accom').value;  
   console.clear();
   console.log('JBE_CLOUD',JBE_CLOUD);
@@ -167,6 +171,7 @@ async function save_fm_accom(){
     let obj={
       "areano":CURR_AREANO,
       "stockno":DB_STOCK_ACCOM[i].stockno,
+      "date_save":date_save,"time_save":time_save,
       "date":document.getElementById('date_accom').value,
       "1wm":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'1wm').value,
       "1wf":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'1wf').value,
@@ -188,7 +193,8 @@ async function save_fm_accom(){
   //await jeff_update_File(JBE_CLOUD,JBE_API+'accom.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'accom.json'); DB_ACCOM=data.content;
   await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
+  make_log(CURR_AREANO,'Updated Weekly Accomplishment...');
   console.log('arr:',arr);
   showProgress(false);
   disp_fm_accom();

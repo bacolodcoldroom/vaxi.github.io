@@ -14,13 +14,13 @@ async function rest_api_start(){
   console.log('**************************************');
   
   let data;  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_invty');  DB_STOCK_INVTY=data.content;  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'stock_accom');  DB_STOCK_ACCOM=data.content;  
-  data=await api_getfile(JBE_CLOUD,JBE_API+'area');   DB_AREA=data.content; 
-  data=await api_getfile(JBE_CLOUD,JBE_API+'invty');  DB_INVTY=data.content;
-  data=await api_getfile(JBE_CLOUD,JBE_API+'accom');  DB_ACCOM=data.content;
-  data=await api_getfile(JBE_CLOUD,JBE_API+'log');  DB_LOG=data.content;  
+  data=await api_readfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   
+  data=await api_readfile(JBE_CLOUD,JBE_API+'stock_invty');  DB_STOCK_INVTY=data.content;  
+  data=await api_readfile(JBE_CLOUD,JBE_API+'stock_accom');  DB_STOCK_ACCOM=data.content;  
+  data=await api_readfile(JBE_CLOUD,JBE_API+'area');   DB_AREA=data.content; 
+  data=await api_readfile(JBE_CLOUD,JBE_API+'invty');  DB_INVTY=data.content;
+  data=await api_readfile(JBE_CLOUD,JBE_API+'accom');  DB_ACCOM=data.content;
+  data=await api_readfile(JBE_CLOUD,JBE_API+'log');  DB_LOG=data.content;  
   console.log('CURR_USER',CURR_USER);
  
   if(!JBE_CLOUD){
@@ -123,7 +123,7 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
   document.getElementById('bar_avatar').src=photo;
   document.getElementById('owner').src=photo;
   
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;
   console.log('save profile:',DB_USER);
   JBE_CLOSE_VIEW();
 }
@@ -208,7 +208,7 @@ async function chg_date_updownForm(jmode,d1,d2){
     );
     ctr=result.length;
   }else if(jmode==2){
-    let currentData = await api_getfile(JBE_CLOUD,JBE_API+'daily'); 
+    let currentData = await api_readfile(JBE_CLOUD,JBE_API+'daily'); 
     let tbl_daily=currentData.content;
     let result = tbl_daily.filter(item => 
       item.usercode === CURR_USER && (JBE_DATE_FORMAT(item.date,'YYYY-MM-DD') >= s_date && JBE_DATE_FORMAT(item.date,'YYYY-MM-DD') <= e_date) && !time_empty(item.txt,item.time1,item.time2,item.time3,item.time4) 
@@ -272,7 +272,7 @@ async function do_download(d1,d2){
   let s_date=JBE_DATE_FORMAT(d1+'-01','YYYY-MM-DD');
   let e_date=JBE_DATE_FORMAT(dum2_date,'YYYY-MM-DD');
 
-  let currentData = await api_getfile(JBE_CLOUD,JBE_API+'daily');
+  let currentData = await api_readfile(JBE_CLOUD,JBE_API+'daily');
   let tbl_daily=currentData.content;
   let arr=[]; let arr_ctr=0;
   for(var i=0;i<tbl_daily.length;i++){
