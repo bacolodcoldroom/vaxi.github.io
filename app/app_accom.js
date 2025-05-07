@@ -1,3 +1,6 @@
+let clor_male='lightblue';
+let clor_female='pink';
+
 async function fm_accom(){
   //if(!CHK_ONLINE()){ return; };
   if(!CHK_ONLINE() && JBE_CLOUD){ return; }
@@ -13,8 +16,6 @@ async function fm_accom(){
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; 
   showProgress(false);
   mnu_fm_accom();
-  let clor_male='lightblue';
-  let clor_female='pink';
   
   let pa_height=H_BODY-35-8;  
   let dtl= 
@@ -34,11 +35,11 @@ async function fm_accom(){
       '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid lightgray;padding:5px;">'+
         '<div style="float:left;width:13%;height:100%;padding:5px;">Vax</div>'+
         '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_accom(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_accom(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_accom(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_accom(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="edit_accom(5)" style="background:'+JBE_CLOR+';">W15</button></div>'+     
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_fm_accom(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_fm_accom(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_fm_accom(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_fm_accom(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="edit_fm_accom(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+     
           '<div class="cls_accom_row" style="width:22.8%;border:1px solid lightgray;padding:7px 0 0 0;margin-left:1.1%;font-weight:bold;text-align:center">TOTALS</div>'+     
         '</div>'+
       '</div>'+
@@ -90,6 +91,7 @@ function do_total_accom(id){
     tot_m+=Number(document.getElementById(div_m).value);
     tot_f+=Number(document.getElementById(div_f).value);
   }
+  console.log('>>>>>> ',tot_m,tot_f);
   document.getElementById(id+'_totM').value=tot_m;
   document.getElementById(id+'_totF').value=tot_f;
   document.getElementById(id+'_total').value=tot_m+tot_f;
@@ -123,7 +125,91 @@ function disp_fm_accom(){
 }
 
 //‐-------
-function edit_accom(col){
+function edit_fm_accom(col){
+  let vheight=H_BODY-100;
+  let fld1=col+'wm';      
+  let fld2=col+'wf';
+  let div='';    
+  let v_val1=0;    let v_val2=0;    
+
+  var dtl=       
+    '<div id="div_edit_fm_accom" style="width:100%;height:'+vheight+'px;text-align:center;padding:0px;background-color:none;">'+
+      '<div style="width:100%;height:30px;border:1px solid black;font-size:12px;font-weight:bold;padding:5px 0 0 0;color:black;background:none;">'+
+        '<div style="float:left;width:50%;">Vaccine</div>'+
+        '<div style="float:left;width:50%;">'+
+          '<div style="float:left;width:33%;">Male</div>'+
+          '<div style="float:left;width:33%;">Female</div>'+
+          '<div style="float:left;width:34%;">Total</div>'+
+        '</div>'+    
+      '</div>'+
+
+      '<div style="width:100%;height:'+(vheight-30-2-10)+'px;border:0px solid brown;font-size:12px;font-weight:bold;overflow:auto;padding:5px 0 0 0;color:black;background:none;">';
+      let vdtl='';
+      for(var i=0;i<DB_STOCK_ACCOM.length;i++){
+        div=DB_STOCK_ACCOM[i].stockno+'_'+fld1;            v_val1=document.getElementById(div).value;
+        div=DB_STOCK_ACCOM[i].stockno+'_'+fld2;            v_val2=document.getElementById(div).value;        
+        let v_total=Number(v_val1)+Number(v_val2);
+        vdtl+=
+        '<div id="div_row" class="dtls" style="width:100%;height:60px;margin-top:2px;border:1px solid green;color:black;background:none;">'+
+          '<div style="float:left;width:50%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_ACCOM[i].descrp+'</div>'+
+
+          '<div style="float:left;width:50%;height:100%;border:0px solid black;">'+            
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wm" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-weight:bold;border-left:2px solid black;background:'+clor_male+';" value='+v_val1+' />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wf" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-weight:bold;border-right:1px solid black;background:'+clor_female+';" value='+v_val2+' />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_total" class="cls_accom_row" style="width:34%;pointer-events:none;font-weight:bold;border-right:1px solid black;background:white;" value='+v_total+' />'+
+          '</div>'+
+
+        '</div>';
+      }
+      dtl+=vdtl+    
+
+      '</div>'+
+     
+    '</div>';
+
+  var dtl2=   
+    '<div style="width:100%;height:100%;">'+           
+      '<div onclick="repl_fm_accom('+col+');save_fm_accom();" style="float:left;width:25%;height:100%;background:none;">'+
+      //'<div onclick="repl_fm_accom('+col+');" style="float:left;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jsave.png"  alt="home image" />'+
+          '<span>Save</span>'+
+        '</div>'+
+      '</div>'+
+      '<div onclick="disp_fm_accom();JBE_CLOSEBOX();" style="float:right;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jclose.png"  alt="home image" />'+
+          '<span>Cancel</span>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  JBE_OPENBOX('div_edit_fm_accom','Edit Week # '+col,dtl,dtl2,'close_edit_dtr');
+}
+function get_total_accom(id){
+  let tot=0;
+  tot=Number(document.getElementById('_'+id+'_wm').value)+Number(document.getElementById('_'+id+'_wf').value);
+  document.getElementById('_'+id+'_total').value=tot;
+}
+
+//‐-------
+function repl_fm_accom(col){
+  //id="'+DB_STOCK_ACCOM[i].stockno+'_1wm'
+  let fld1=col+'wm';      
+  let fld2=col+'wf';
+  let div='';    
+  for(var i=0;i<DB_STOCK_ACCOM.length;i++){
+    let id1='_'+DB_STOCK_ACCOM[i].stockno+'_wm'; 
+    let id2='_'+DB_STOCK_ACCOM[i].stockno+'_wf'; 
+    div=DB_STOCK_ACCOM[i].stockno+'_'+fld1;     document.getElementById(div).value=document.getElementById(id1).value;
+    div=DB_STOCK_ACCOM[i].stockno+'_'+fld2;     document.getElementById(div).value=document.getElementById(id2).value;
+  }
+  JBE_CLOSEBOX();
+}
+
+
+//‐-------
+function xedit_fm_accom(col){
   JBE_BACK_VIEW(false);
   btn_enabled(col);
   //assign
