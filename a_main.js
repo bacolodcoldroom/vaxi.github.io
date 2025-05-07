@@ -928,24 +928,6 @@ async function refresh_all_data(){
 }
 
 
-function getWednesdaysInMonth(year, month) {
-  // Note: month is 0-indexed (0 = January, 11 = December)
-  const wednesdays = [];
-  const date = new Date(year, month, 1);
-  
-  // Find first Wednesday of the month
-  while (date.getDay() !== 3) {
-      date.setDate(date.getDate() + 1);
-  }
-  
-  // Add all Wednesdays in the month
-  while (date.getMonth() === month) {
-      wednesdays.push(new Date(date));
-      date.setDate(date.getDate() + 7);
-  }
-  
-  return wednesdays;
-}
 /*
 // Example usage for current month
 const today = new Date();

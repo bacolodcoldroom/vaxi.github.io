@@ -19,7 +19,8 @@ async function api_readfile(cloud,path) {
     } catch (error) {
         showProgress(false);
         //console.error("Error fetching file:", error);
-        snackBar("Error fetching file: "+error);
+        //snackBar("Error fetching file: "+error);
+        MSG_SHOW(vbOk,"ERROR:",error,function(){},function(){});
     }
   }else{    
     try {
@@ -29,7 +30,8 @@ async function api_readfile(cloud,path) {
        return { content: tbl };
     } catch (error) {
         showProgress(false);
-        snackBar("Error fetching file: "+error);
+        //snackBar("Error fetching file: "+error);
+        MSG_SHOW(vbOk,"ERROR:",error,function(){},function(){});
     }
   }
 }
@@ -54,7 +56,8 @@ async function updateFile(path,updatedContent, message, sha) {
     if (!response.ok) throw new Error(`Failed to update file: ${response.status}`);
     console.log("File updated successfully");
   } catch (error) {
-    snackBar("Error updating file: "+error);
+    //snackBar("Error updating file: "+error);
+    MSG_SHOW(vbOk,"ERROR updating file:",error,function(){},function(){});
   }
 }
 
@@ -79,15 +82,15 @@ async function api_save(cloud,fileName,newData,cond){
       // Commit the updated array back to the file with a commit message.
       await updateFile(fileName,finalData, ``, sha);
       console.log('finalData',finalData);    
-      speakText(msg);
+      //speakText(msg);
     } catch (error) {
-      //MSG_SHOW(vbOk,"ERROR:",error.message,function(){},function(){});
+      MSG_SHOW(vbOk,"ERROR:",error.message,function(){},function(){});
       console.log(error);
     }
   }else{
     let n=get_ndx_JBE_STORE_IDX(fileName);
     await saveDataToIDX(newData,n);
-    speakText('Data updated to Indexed DB.');
+    //speakText('Data updated to Indexed DB.');
   }
 }
 

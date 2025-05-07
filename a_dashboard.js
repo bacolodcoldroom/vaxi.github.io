@@ -208,32 +208,6 @@ function fm_dashboard(f_clear){
   
 }
 
-function update_accom_buttons(date){
-  // Example usage for current month
-  const today = new Date(date);
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth(); // 0-11
-
-  const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
-
-  // Format and display the dates
-  //console.log("All Wednesdays in the current month:"+wednesdays.length);
-  /*
-  wednesdays.forEach(wed => {
-    //console.log('---->>>> dates wed:',wed.toDateString());
-    document.getElementById('btn1'+)
-  });
-  */
-
-  for(var i=0;i<5;i++){   
-    document.getElementById('btn1'+i).textContent='';
-  }
-  for(var i=0;i<wednesdays.length;i++){
-    let wed=JBE_DATE_FORMAT(wednesdays[i].toDateString(),'MMM DD, YYYY');
-    //console.log('---->>>> dates wed:',wed);
-    document.getElementById('btn1'+i).textContent=wed;
-  }
-}
 
 function mnu_invty_brgy(){
   var jmenu=
@@ -315,8 +289,8 @@ function disp_invty_brgy(areano){
   curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
   clear_invty_brgy();
   for(var i=0;i<DB_INVTY.length;i++){
-    if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
     if(DB_INVTY[i].areano !== areano){ continue; }
+    if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
 
     let div;
     for(var k=0;k<5;k++){
@@ -397,6 +371,10 @@ function subtractDates(date1, date2) {
 
 async function save_invty_brgy(areano){
   showProgress(true);
+  let n=new Date();
+  let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
+  let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
+
   let curdate=document.getElementById('id_date').value;
   let arr=[];arr_ctr=0;
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
@@ -415,6 +393,7 @@ async function save_invty_brgy(areano){
     let obj={
       "areano":areano,
       "stockno":DB_STOCK_INVTY[i].stockno,
+      "date_save":date_save,"time_save":time_save,
       "date":curdate,
       "1w1":row1[0],"1w2":row1[1],"1w3":row1[2],"1w4":row1[3],"1w5":row1[4], "1lotno":row1[5],"1expiry":row1[6],"1req":row1[7],
       "2w1":row2[0],"2w2":row2[1],"2w3":row2[2],"2w4":row2[3],"2w5":row2[4], "2lotno":row2[5],"2expiry":row2[6],"2req":row2[7]
@@ -424,7 +403,7 @@ async function save_invty_brgy(areano){
     arr_ctr++;
   }
   await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== areano || record.date !== curdate);  
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   console.log('data new:',data.length);
   showProgress(false);
   disp_invty_brgy(areano);
@@ -498,6 +477,10 @@ function clear_accom_brgy(){
 
 async function save_accom_brgy(areano){
   showProgress(true);
+  let n=new Date();
+  let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
+  let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
+  
   let curdate=document.getElementById('date_accom').value;  
   let arr=[];arr_ctr=0;
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
@@ -506,6 +489,7 @@ async function save_accom_brgy(areano){
     let obj={
       "areano":areano,
       "stockno":DB_STOCK_ACCOM[i].stockno,
+      "date_save":date_save,"time_save":time_save,
       "date":document.getElementById('date_accom').value,
       "1wm":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'1wm').value,
       "1wf":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'1wf').value,
@@ -524,7 +508,7 @@ async function save_accom_brgy(areano){
     arr[arr_ctr]=obj; arr_ctr++;
   }  
   await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== areano || record.date !== curdate);  
-  let data=await api_getfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   showProgress(false);
   disp_accom_brgy(areano);
 }
