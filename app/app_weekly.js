@@ -270,7 +270,8 @@ async function save_fm_weekly(){
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'invty.json'); DB_INVTY=data.content;
   await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
-  make_log(CURR_AREANO,'Updated Weekly Inventory...');
+  speakText('Data Uploaded successfully');
+  make_log(CURR_AREANO,'invty');
   showProgress(false);
   disp_fm_weekly();
   JBE_CLOSEBOX();

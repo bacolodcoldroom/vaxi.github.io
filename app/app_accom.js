@@ -280,7 +280,8 @@ async function save_fm_accom(){
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'accom.json'); DB_ACCOM=data.content;
   await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
-  make_log(CURR_AREANO,'Updated Weekly Accomplishment...');
+  speakText('Data Uploaded successfully');
+  make_log(CURR_AREANO,'accom');
   console.log('arr:',arr);
   showProgress(false);
   disp_fm_accom();
