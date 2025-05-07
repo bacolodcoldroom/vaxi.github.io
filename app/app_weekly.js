@@ -130,7 +130,18 @@ function edit_weekly(col){
   let v_val1='';    let v_val2='';    
 
   var dtl=       
-    '<div id="div_edit_weekly" style="width:100%;height:'+vheight+'px;text-align:center;padding:0px;background-color:none;">';
+    '<div id="div_edit_weekly" style="width:100%;height:'+vheight+'px;text-align:center;padding:0px;background-color:none;">'+
+      '<div style="width:100%;height:30px;border:1px solid gray;font-size:12px;font-weight:bold;padding:5px 0 0 0;color:black;background:none;">'+
+        '<div style="float:left;width:40%;">Vaccine</div>'+
+        '<div style="float:left;width:60%;">'+
+          '<div style="float:left;width:20%;">Qty</div>'+
+          '<div style="float:left;width:40%;">Lot No.</div>'+
+          '<div style="float:left;width:20%;">Exp.</div>'+
+          '<div style="float:left;width:20%;">Req.</div>'+
+        '</div>'+    
+      '</div>'+
+
+      '<div style="width:100%;height:'+(vheight-30-2-10)+'px;border:0px solid brown;font-size:12px;font-weight:bold;overflow:auto;padding:5px 0 0 0;color:black;background:none;">';
       let vdtl='';
       for(var i=0;i<DB_STOCK_INVTY.length;i++){
         div=DB_STOCK_INVTY[i].stockno+'_'+fld1;            v_val1=document.getElementById(div).value;
@@ -142,10 +153,10 @@ function edit_weekly(col){
         let v_1req=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1req').innerHTML;
         let v_2req=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2req').innerHTML;
         vdtl+=
-        '<div id="div_row" class="dtls" style="width:100%;height:60px;border:1px solid black;color:black;background:none;">'+
-          '<div style="float:left;width:30%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
+        '<div id="div_row" class="dtls" style="width:100%;height:60px;border:1px solid gray;color:black;background:none;">'+
+          '<div style="float:left;width:40%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
 
-          '<div style="float:left;width:70%;height:100%;border:0px solid black;">'+
+          '<div style="float:left;width:60%;height:100%;border:0px solid black;">'+
             '<div style="width:100%;height:50%;border:0px solid black;">'+
               '<input type="number" id="_'+DB_STOCK_INVTY[i].stockno+'_1w" class="cls_weekly_row" style="width:20%;height:100%;pointer-events:auto;font-weight:bold;background:yellow;" value='+v_val1+' />'+
               '<div class="cls_weekly_row" style="width:40%;background:'+clor_lotno+';">'+v_1lotno+'</div>'+
@@ -163,6 +174,7 @@ function edit_weekly(col){
         '</div>';
       }
       dtl+=vdtl+    
+      '</div>'+
      
     '</div>';
 

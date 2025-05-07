@@ -32,19 +32,19 @@ async function fm_accom(){
 
     '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:white;">'+
 
-      '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid lightgray;padding:5px;">'+
+      '<div disabled id="div_hd" style="width:100%;height:60px;border:1px solid lightgray;padding:5px;">'+
         '<div style="float:left;width:13%;height:100%;padding:5px;">Vax</div>'+
         '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_fm_accom(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_fm_accom(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_fm_accom(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_fm_accom(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="edit_fm_accom(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+     
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_fm_accom(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn11" onclick="edit_fm_accom(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn12" onclick="edit_fm_accom(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn13" onclick="edit_fm_accom(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn14" onclick="edit_fm_accom(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+     
           '<div class="cls_accom_row" style="width:22.8%;border:1px solid lightgray;padding:7px 0 0 0;margin-left:1.1%;font-weight:bold;text-align:center">TOTALS</div>'+     
         '</div>'+
       '</div>'+
 
-      '<div id="div_dtls" style="width:100%;height:'+(pa_height-40-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
+      '<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
         let vdtl='';
         for(var i=0;i<DB_STOCK_ACCOM.length;i++){
           vdtl+=
@@ -99,10 +99,11 @@ function do_total_accom(id){
 
 //‐-------
 function disp_fm_accom(){  
-  //alert('act disp_fm_accom');
+  //alert('act disp_fm_accom');  
   JBE_BACK_VIEW(true);
   let curdate=document.getElementById('date_accom').value;  
-  clear_fm_accom();
+  update_accom_buttons(curdate);
+  clear_fm_accom();  
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== curdate){ continue; }
     if(DB_ACCOM[i].areano !== CURR_AREANO){ continue; }
@@ -125,7 +126,13 @@ function disp_fm_accom(){
 }
 
 //‐-------
-function edit_fm_accom(col){
+function edit_fm_accom(col){  
+  let txtContent=document.getElementById('btn1'+(col-1)).textContent;
+  //alert('col:'+col+'\nContent:'+dvbtn);
+  if(!txtContent){
+    //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
+    return;
+  }
   let vheight=H_BODY-100;
   let fld1=col+'wm';      
   let fld2=col+'wf';
@@ -134,7 +141,7 @@ function edit_fm_accom(col){
 
   var dtl=       
     '<div id="div_edit_fm_accom" style="width:100%;height:'+vheight+'px;text-align:center;padding:0px;background-color:none;">'+
-      '<div style="width:100%;height:30px;border:1px solid black;font-size:12px;font-weight:bold;padding:5px 0 0 0;color:black;background:none;">'+
+      '<div style="width:100%;height:30px;border:1px solid gray;font-size:12px;font-weight:bold;padding:5px 0 0 0;color:black;background:none;">'+
         '<div style="float:left;width:50%;">Vaccine</div>'+
         '<div style="float:left;width:50%;">'+
           '<div style="float:left;width:33%;">Male</div>'+
@@ -150,7 +157,7 @@ function edit_fm_accom(col){
         div=DB_STOCK_ACCOM[i].stockno+'_'+fld2;            v_val2=document.getElementById(div).value;        
         let v_total=Number(v_val1)+Number(v_val2);
         vdtl+=
-        '<div id="div_row" class="dtls" style="width:100%;height:60px;margin-top:2px;border:1px solid green;color:black;background:none;">'+
+        '<div id="div_row" class="dtls" style="width:100%;height:60px;margin-top:2px;border:1px solid gray;color:black;background:none;">'+
           '<div style="float:left;width:50%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_ACCOM[i].descrp+'</div>'+
 
           '<div style="float:left;width:50%;height:100%;border:0px solid black;">'+            
@@ -169,7 +176,7 @@ function edit_fm_accom(col){
 
   var dtl2=   
     '<div style="width:100%;height:100%;">'+           
-      '<div onclick="repl_fm_accom('+col+');save_fm_accom();" style="float:left;width:25%;height:100%;background:none;">'+
+      '<div onclick="repl_fm_accom('+col+')" style="float:left;width:25%;height:100%;background:none;">'+
       //'<div onclick="repl_fm_accom('+col+');" style="float:left;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jsave.png"  alt="home image" />'+
@@ -204,22 +211,10 @@ function repl_fm_accom(col){
     div=DB_STOCK_ACCOM[i].stockno+'_'+fld1;     document.getElementById(div).value=document.getElementById(id1).value;
     div=DB_STOCK_ACCOM[i].stockno+'_'+fld2;     document.getElementById(div).value=document.getElementById(id2).value;
   }
+  save_fm_accom();
   JBE_CLOSEBOX();
 }
 
-
-//‐-------
-function xedit_fm_accom(col){
-  JBE_BACK_VIEW(false);
-  btn_enabled(col);
-  //assign
-  for(var i=0;i<DB_STOCK_ACCOM.length;i++){
-    let div=DB_STOCK_ACCOM[i].stockno+'_'+col+'wm';  document.getElementById(div).style.borderLeft='2px solid red'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_ACCOM[i].stockno+'_'+col+'wf';      document.getElementById(div).style.borderRight='2px solid red'; document.getElementById(div).style.pointerEvents='auto';
-  }
-  document.getElementById('btn'+col).disabled=false;
-  mnu_save_fm_accom();
-}
 
 function clear_fm_accom(){
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
@@ -232,12 +227,12 @@ function clear_fm_accom(){
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_totF').value=''; 
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_total').value=''; 
 
-    document.getElementById('btn'+(i+1)).style.color='white'; 
-    document.getElementById('btn'+(i+1)).disabled=false;
-    document.getElementById('btn'+(i+1)).style.opacity='1';
+    document.getElementById('btn1'+(i)).style.color='white'; 
+    document.getElementById('btn1'+(i)).disabled=false;
+    document.getElementById('btn1'+(i)).style.opacity='1';
   }  
   for(var y=0;y<5;y++){
-    document.getElementById('btn'+(y+1)).style.color='white'; document.getElementById('btn'+(y+1)).style.opacity='1'; document.getElementById('btn'+(y+1)).disabled=false;
+    //document.getElementById('btn'+(y+1)).style.color='white'; document.getElementById('btn'+(y+1)).style.opacity='1'; document.getElementById('btn'+(y+1)).disabled=false;
   }
 }
 
@@ -246,14 +241,14 @@ async function save_fm_accom(){
   let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
   let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
 
-  let curdate=document.getElementById('date_accom').value;  
+  //let curdate=document.getElementById('date_accom').value;  
   console.clear();
   console.log('JBE_CLOUD',JBE_CLOUD);
   console.log('JBE_API',JBE_API);
   let arr=[];arr_ctr=0;
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
-    let totals=Number(document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'total').value);
-    if(!totals){ continue; }
+    //let totals=Number(document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'total').value);
+    //if(!totals){ console.log('wala totals #',i);continue; }
     let obj={
       "areano":CURR_AREANO,
       "stockno":DB_STOCK_ACCOM[i].stockno,
@@ -276,9 +271,10 @@ async function save_fm_accom(){
     arr[arr_ctr]=obj; arr_ctr++;
   }
   showProgress(true);
+  console.log('<<<<arr',arr);
   //await jeff_update_File(JBE_CLOUD,JBE_API+'accom.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'accom.json'); DB_ACCOM=data.content;
-  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
+  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== CURR_AREANO);// || record.date !== curdate);  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   speakText('Data Uploaded successfully');
   make_log(CURR_AREANO,'accom');
