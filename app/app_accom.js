@@ -209,6 +209,7 @@ function repl_fm_accom(col){
     let id2='_'+DB_STOCK_ACCOM[i].stockno+'_wf'; 
     div=DB_STOCK_ACCOM[i].stockno+'_'+fld1;     document.getElementById(div).value=document.getElementById(id1).value;
     div=DB_STOCK_ACCOM[i].stockno+'_'+fld2;     document.getElementById(div).value=document.getElementById(id2).value;
+    do_total_accom(DB_STOCK_ACCOM[i].stockno);
   }
   save_fm_accom();
   JBE_CLOSEBOX();
