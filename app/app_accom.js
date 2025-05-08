@@ -35,11 +35,11 @@ async function fm_accom(){
       '<div disabled id="div_hd" style="width:100%;height:60px;border:1px solid lightgray;padding:5px;">'+
         '<div style="float:left;width:13%;height:100%;padding:5px;">Vax</div>'+
         '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_fm_accom(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn11" onclick="edit_fm_accom(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn12" onclick="edit_fm_accom(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn13" onclick="edit_fm_accom(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn14" onclick="edit_fm_accom(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+     
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_fm_accom(1)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn11" onclick="edit_fm_accom(2)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn12" onclick="edit_fm_accom(3)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn13" onclick="edit_fm_accom(4)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn14" onclick="edit_fm_accom(5)" style="background:'+JBE_CLOR+';"></button></div>'+     
           '<div class="cls_accom_row" style="width:22.8%;border:1px solid lightgray;padding:7px 0 0 0;margin-left:1.1%;font-weight:bold;text-align:center">TOTALS</div>'+     
         '</div>'+
       '</div>'+
@@ -160,8 +160,8 @@ function edit_fm_accom(col){
           '<div style="float:left;width:50%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_ACCOM[i].descrp+'</div>'+
 
           '<div style="float:left;width:50%;height:100%;border:0px solid black;">'+            
-            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wm" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-weight:bold;border-left:2px solid black;background:'+clor_male+';" value='+v_val1+' />'+
-            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wf" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-weight:bold;border-right:1px solid black;background:'+clor_female+';" value='+v_val2+' />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wm" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-size:14px;font-weight:bold;border-left:2px solid black;background:'+clor_male+';" value='+v_val1+' />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wf" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-size:14px;font-weight:bold;border-right:1px solid black;background:'+clor_female+';" value='+v_val2+' />'+
             '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_total" class="cls_accom_row" style="width:34%;pointer-events:none;font-weight:bold;border-right:1px solid black;background:white;" value='+v_total+' />'+
           '</div>'+
 

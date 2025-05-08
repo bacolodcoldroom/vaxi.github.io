@@ -36,11 +36,11 @@ async function fm_weekly(){
       '<div disabled id="div_hd" style="width:100%;height:60px;border:1px solid lightgray;padding:5px;">'+
         '<div style="float:left;width:15%;height:100%;padding:5px;">Vaccine</div>'+
         '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn0" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_weekly(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_weekly(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_weekly(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn0" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(2)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_weekly(3)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_weekly(4)" style="background:'+JBE_CLOR+';"></button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_weekly(5)" style="background:'+JBE_CLOR+';"></button></div>'+
           '<div class="cls_weekly_row" style="width:18%;padding:6px 0 0 0;border:0px;background:'+clor_lotno+';">Lot No.</div>'+
           '<div class="cls_weekly_row" style="width:11%;padding:6px 0 0 0;border:0px;background:'+clor_expiry+';">Exp.</div>'+
           '<div class="cls_weekly_row" style="width:11%;padding:6px 0 0 0;border:0px;background:'+clor_req+';">Req.</div>'+
