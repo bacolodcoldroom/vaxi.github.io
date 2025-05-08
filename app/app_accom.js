@@ -102,7 +102,7 @@ function disp_fm_accom(){
   //alert('act disp_fm_accom');  
   JBE_BACK_VIEW(true);
   let curdate=document.getElementById('date_accom').value;  
-  update_accom_buttons(curdate);
+  update_week_buttons(curdate,'accom');
   clear_fm_accom();  
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== curdate){ continue; }
@@ -128,7 +128,6 @@ function disp_fm_accom(){
 //‐-------
 function edit_fm_accom(col){  
   let txtContent=document.getElementById('btn1'+(col-1)).textContent;
-  //alert('col:'+col+'\nContent:'+dvbtn);
   if(!txtContent){
     //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
     return;

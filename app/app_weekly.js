@@ -33,21 +33,21 @@ async function fm_weekly(){
 
     '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:white;">'+
 
-      '<div disabled id="div_hd" style="width:100%;height:40px;border:1px solid lightgray;padding:5px;">'+
+      '<div disabled id="div_hd" style="width:100%;height:60px;border:1px solid lightgray;padding:5px;">'+
         '<div style="float:left;width:15%;height:100%;padding:5px;">Vaccine</div>'+
         '<div style="float:left;width:85%;height:100%;border:0px solid black;">'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_weekly(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_weekly(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn5" onclick="edit_weekly(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn0" onclick="edit_weekly(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_weekly(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_weekly(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_weekly(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
+          '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_weekly(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
           '<div class="cls_weekly_row" style="width:18%;padding:6px 0 0 0;border:0px;background:'+clor_lotno+';">Lot No.</div>'+
           '<div class="cls_weekly_row" style="width:11%;padding:6px 0 0 0;border:0px;background:'+clor_expiry+';">Exp.</div>'+
           '<div class="cls_weekly_row" style="width:11%;padding:6px 0 0 0;border:0px;background:'+clor_req+';">Req.</div>'+
         '</div>'+
       '</div>'+
 
-      '<div id="div_dtls" style="width:100%;height:'+(pa_height-40-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
+      '<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
         let vdtl='';
         for(var i=0;i<DB_STOCK_INVTY.length;i++){
           vdtl+=
@@ -99,6 +99,7 @@ function disp_fm_weekly(){
   
   let curdate=document.getElementById('date_weekly').value;  
   clear_fm_weekly();
+  update_week_buttons(curdate,'invty');
   for(var i=0;i<DB_INVTY.length;i++){
     if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
     if(DB_INVTY[i].areano !== CURR_AREANO){ continue; }
@@ -123,6 +124,11 @@ function disp_fm_weekly(){
 
 //‐-------
 function edit_weekly(col){
+  let txtContent=document.getElementById('btn'+(col-1)).textContent;
+  if(!txtContent){
+    //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
+    return;
+  }
   let vheight=H_BODY-100;
   let fld1='1w'+(col);      
   let fld2='2w'+(col);
@@ -230,7 +236,7 @@ function clear_fm_weekly(){
     document.getElementById('btn'+(i+1)).style.opacity='1';
   }  
   for(var y=0;y<5;y++){
-    document.getElementById('btn'+(y+1)).style.color='white'; document.getElementById('btn'+(y+1)).style.opacity='1'; document.getElementById('btn'+(y+1)).disabled=false;
+    document.getElementById('btn'+(y)).style.color='white'; document.getElementById('btn'+(y)).style.opacity='1'; document.getElementById('btn'+(y)).disabled=false;
   }
 }
 
