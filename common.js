@@ -67,29 +67,26 @@ function getWednesdaysInMonth(year, month) {
   return wednesdays;
 }
 
-function update_accom_buttons(date){
+function update_week_buttons(date,tran){
   // Example usage for current month
   const today = new Date(date);
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth(); // 0-11
-
   const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
 
-  // Format and display the dates
-  //console.log("All Wednesdays in the current month:"+wednesdays.length);
-  /*
-  wednesdays.forEach(wed => {
-    //console.log('---->>>> dates wed:',wed.toDateString());
-    document.getElementById('btn1'+)
-  });
-  */
+  let vbtn;
+  if(tran=='invty'){
+    vbtn='btn';
+  }else if(tran=='accom'){
+    vbtn='btn1';
+  }
 
   for(var i=0;i<5;i++){   
-    document.getElementById('btn1'+i).textContent='';
+    document.getElementById(vbtn+i).textContent='';
   }
   for(var i=0;i<wednesdays.length;i++){
     let wed=JBE_DATE_FORMAT(wednesdays[i].toDateString(),'MMM DD, YYYY');
     //console.log('---->>>> dates wed:',wed);
-    document.getElementById('btn1'+i).textContent=wed;
+    document.getElementById(vbtn+i).textContent=wed;
   }
 }

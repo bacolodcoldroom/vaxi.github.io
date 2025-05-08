@@ -71,11 +71,11 @@ function fm_dashboard(f_clear){
           '<div disabled id="div_hd" style="width:100%;height:30px;border:0px solid black;border-top:0px;padding:4px;background:#FFD900;">'+
             '<div style="float:left;width:23%;height:100%;padding:0px;">Vaccines</div>'+
             '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn5" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
               '<div class="cls_weekly_row" style="width:20%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
               '<div class="cls_weekly_row" style="width:12%;padding:2px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
               '<div class="cls_weekly_row" style="width:11%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
@@ -87,9 +87,9 @@ function fm_dashboard(f_clear){
             for(var i=0;i<DB_STOCK_INVTY.length;i++){
               vdtl+=
               '<div id="div_row" style="width:100%;height:35px;border:1px solid black;color:black;background:none;">'+
-                '<div style="float:left;width:23%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
+                '<div style="float:left;width:20%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
 
-                '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
+                '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
                   '<div style="width:100%;height:50%;border:0px solid black;">'+
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
@@ -279,7 +279,7 @@ function clear_invty_brgy(){
     document.getElementById('btn'+(i+1)).style.opacity='1';
   }  
   for(var y=0;y<5;y++){
-    document.getElementById('btn'+(y+1)).style.color='white'; document.getElementById('btn'+(y+1)).style.opacity='1'; document.getElementById('btn'+(y+1)).disabled=false;
+    document.getElementById('btn'+(y)).style.color='white'; document.getElementById('btn'+(y)).style.opacity='1'; document.getElementById('btn'+(y)).disabled=false;
   }
 }
 
@@ -288,6 +288,7 @@ function disp_invty_brgy(areano){
   let curdate=document.getElementById('id_date').value;
   curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
   clear_invty_brgy();
+  update_week_buttons(curdate,'invty');
   for(var i=0;i<DB_INVTY.length;i++){
     if(DB_INVTY[i].areano !== areano){ continue; }
     if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
@@ -415,7 +416,7 @@ async function save_invty_brgy(areano){
 //‐-------
 function disp_accom_brgy(areano){  
   let curdate=document.getElementById('date_accom').value;  
-  update_accom_buttons(curdate);
+  update_week_buttons(curdate);
   clear_accom_brgy();
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== curdate){ continue; }

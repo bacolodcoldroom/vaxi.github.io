@@ -18,9 +18,9 @@ async function api_readfile(cloud,path) {
         return { content: finalData, sha: data.sha };
     } catch (error) {
         showProgress(false);
-        //console.error("Error fetching file:", error);
+        console.error("Error fetching file:", error);
         //snackBar("Error fetching file: "+error);
-        MSG_SHOW(vbOk,"ERROR:",error,function(){},function(){});
+        //MSG_SHOW(vbOk,"ERROR:",error,function(){},function(){});
     }
   }else{    
     try {
@@ -31,7 +31,7 @@ async function api_readfile(cloud,path) {
     } catch (error) {
         showProgress(false);
         //snackBar("Error fetching file: "+error);
-        MSG_SHOW(vbOk,"ERROR:",error,function(){},function(){});
+        //MSG_SHOW(vbOk,"ERROR:",error,function(){},function(){});
     }
   }
 }
@@ -131,3 +131,73 @@ async function get_all_db_from_json(){
   await fetch(dir+'stock_accom.json').then(res => res.json()).then(data => { DB_STOCK_ACCOM=data; saveDataToIDX(data,4); })
   await fetch(dir+'user.json').then(res => res.json()).then(data => { DB_USER=data; saveDataToIDX(data,5); }) 
 }
+
+
+//===========================================================
+async function updateField(path,targetField,newValue) {
+  // GitHub configuration
+  const owner = 'your-username';
+  const repo = 'your-repo';
+  //const path = 'path/to/file.json'; // Path to your JSON file in the repo
+  const branch = 'main'; // or your branch name
+  const token = 'your-github-personal-access-token'; // Needs repo scope
+
+  // Field to update
+  //const targetField = 'fieldName'; // Field you want to update
+  //const newValue = 'newValue'; // New value for the field
+
+  try {
+      // 1. Get current file content and SHA
+      const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
+      const getResponse = await fetch(getUrl, {
+          headers: {
+              'Authorization': `token ${token}`,
+              'User-Agent': 'JavaScript Client'
+          }
+      });
+
+      if (!getResponse.ok) throw new Error('Failed to fetch file');
+      
+      const fileData = await getResponse.json();
+      const sha = fileData.sha;
+      
+      // 2. Decode and modify content
+      const content = atob(fileData.content.replace(/\s/g, ''));
+      const jsonContent = JSON.parse(content);
+      
+      // Update the specific field
+      jsonContent[targetField] = newValue;
+
+      // 3. Encode new content
+      const updatedContent = btoa(JSON.stringify(jsonContent, null, 2));
+
+      // 4. Update file on GitHub
+      const putUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      const putResponse = await fetch(putUrl, {
+          method: 'PUT',
+          headers: {
+              'Authorization': `token ${token}`,
+              'User-Agent': 'JavaScript Client',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              message: `Update ${targetField} in ${path}`,
+              content: updatedContent,
+              sha: sha,
+              branch: branch
+          })
+      });
+
+      if (!putResponse.ok) throw new Error('Failed to update file');
+      
+      const result = await putResponse.json();
+      console.log('File updated successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error:', error);
+      throw error;
+  }
+}
+
+// Usage
+//updateField();
