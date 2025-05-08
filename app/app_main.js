@@ -384,35 +384,60 @@ function openPage(m){
 }
 
 function show_credits(){    
-  var h=330;
+  var h=380;
   var dtl=     
     '<div id="main_credit" data-zoom=0 data-close="" style="width:100%;height:'+h+'px;text-align:center;background-color:white;">'+     
-      '<div style="width:100%;height:100%;padding:2px;background:none">'+
-        '<div style="height:60px;width:100%;background:lightgray;text-align:center;padding:10px 0 0 0;font-size:30px;">*** C R E D I T S ***</div>'+
+      '<div style="width:100%;height:100%;padding:2px;overflow:auto;background:none">'+
+        '<div style="height:40px;width:100%;background:lightgray;text-align:center;padding:7px 0 0 0;font-size:25px;">*** C R E D I T S ***</div>'+
         //'<hr style="margin-top:20px;">'+
-        
+
         '<div class="cls_sidenav">'+
-          '<div>Paulynne Rojo-Sustento</div>'+
-          '<p>Chief System Analyst</p>'+
-        '</div>'+
-              
-        '<div class="cls_sidenav">'+
-          '<div>Irene I. Mojica</div>'+
-          '<div>Dax H. Parreño</div>'+
-          '<p>System UI/UX Designers</p>'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/pau.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Paulynne Rojo-Sustento</h4>'+
+            '<p>Chief System Analyst</p>'+
+          '</div>'+
         '</div>'+
 
         '<div class="cls_sidenav">'+
-          '<div>Jeffrey B. Enad</div>'+
-          '<p>System Developer/Programmer</p>'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/yen.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Irene I. Mojica</h4>'+
+            '<p>System UI/UX Designers</p>'+
+          '</div>'+
         '</div>'+
+
+        '<div class="cls_sidenav">'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/dax.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Dax H. Parreño</h4>'+
+            '<p>Software Architect</p>'+
+          '</div>'+
+        '</div>'+
+
+        '<div class="cls_sidenav">'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/jeff.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Jeffrey B. Enad</h4>'+
+            '<p>System Developer/Programmer</p>'+
+          '</div>'+
+        '</div>'+
+
       '</div>'+        
     '</div>';
   var dtl2=     
     '<div style="width:100%;height:100%;padding:0px 0 0 0;text-align:center;color:'+JBE_TXCLOR1+';background:none;">'+
       '<input type="button" onclick="JBE_CLOSEBOX()" style="width:100px;height:100%;" value="Close" />'+     
     '</div>';  
-  JBE_OPENBOX('main_credit','Men & Women of Coldroom',dtl,dtl2);
+  JBE_OPENBOX('main_credit','Software Development Team',dtl,dtl2);
 }
 
 function show_download(){    
