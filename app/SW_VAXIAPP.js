@@ -1,4 +1,4 @@
-const cacheName='01.01';
+const cacheName='01.02';
 const staticAssets = [
   './',
   './index.html',
@@ -44,6 +44,7 @@ const staticAssets = [
   '../gfx/landmark.png',  '../gfx/qrcode.png',  
 
   '../gfx/blackball.png',  '../gfx/jorg.png', '../gfx/logo.png',  '../gfx/logoCHO.png',  
+  './gfx/credits/pau.jpg',  './gfx/credits/yen.jpg',  './gfx/credits/dax.jpg',  './gfx/credits/jeff.jpg',
     
   './manifest.webmanifest'
 ];
