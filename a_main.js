@@ -41,8 +41,10 @@ async function start_app(){
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
   console.log('JBE_API',JBE_API);
   await get_app_default();
+  console.log('********************************');
   console.log('JBE_CLOUD',JBE_CLOUD);
   console.log('CURR_USER',CURR_USER);
+  console.log('********************************');
     
   if(!JBE_CLOUD){
     if(DB_USER.length==0){
@@ -92,6 +94,8 @@ async function get_app_default(){
   data=await api_readfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content;
   showProgress(false);
   show_log();
+  DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
+  DB_STOCK_ACCOM.sort(JBE_SORT_ARRAY(['rank']));
 }
 
 //=================================================================================

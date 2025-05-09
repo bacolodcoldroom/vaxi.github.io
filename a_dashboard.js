@@ -47,7 +47,8 @@ function fm_dashboard(f_clear){
         '<div style="width:100%;height:100%;padding:5px;overflow:auto;">';
           let vdtl='';          
           for(var i=0;i<DB_AREA.length;i++){
-            vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="JBE_HL_ROW('+i+',&quot;black&quot;,&quot;gray&quot;, &quot;.class_brgy&quot;, &quot;id_&quot;,  &quot;red&quot;, &quot;black&quot;); sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;);" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
+            //vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="JBE_HL_ROW('+i+',&quot;black&quot;,&quot;gray&quot;, &quot;.class_brgy&quot;, &quot;id_&quot;,  &quot;red&quot;, &quot;black&quot;); sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;);" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
+            vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
           }
           dtl+=vdtl+
         '</div>'+
@@ -61,24 +62,24 @@ function fm_dashboard(f_clear){
         '</div>'+
 
         //invty
-        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid darkgray;background:green;">'+
+        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid darkgray;background:#FFD900;">'+
 
           '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
             '<div style="float:left;width:50%;height:100%;">Weekly Inventory</div>'+
             '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="id_date" onchange="chgdate_invty_brgy()"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
           '</div>'+
 
-          '<div disabled id="div_hd" style="width:100%;height:30px;border:0px solid black;border-top:0px;padding:4px;background:#FFD900;">'+
-            '<div style="float:left;width:23%;height:100%;padding:0px;">Vaccines</div>'+
-            '<div style="float:left;width:77%;height:100%;border:0px solid black;">'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';">W1</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';">W2</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';">W3</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';">W4</button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';">W5</button></div>'+
-              '<div class="cls_weekly_row" style="width:20%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
-              '<div class="cls_weekly_row" style="width:12%;padding:2px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
-              '<div class="cls_weekly_row" style="width:11%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
+          '<div disabled id="div_hd_invty" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:4px;background:#FFD900;">'+
+            '<div style="float:left;width:20%;height:100%;padding:0px;">Vaccines</div>'+
+            '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';"></button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';"></button></div>'+
+              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';"></button></div>'+
+              '<div class="cls_weekly_row" style="width:15%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
+              '<div class="cls_weekly_row" style="width:10%;padding:2px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
+              '<div class="cls_weekly_row" style="width:8%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
             '</div>'+
           '</div>'+
           
@@ -97,9 +98,9 @@ function fm_dashboard(f_clear){
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
 
-                    '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:20%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-                    '<input type="month" id="'+DB_STOCK_INVTY[i].stockno+'_1expiry'+'" class="cls_weekly_row" style="width:12%;background:'+clor_expiry+';" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:11%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />'+
+                    '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
+                    '<input type="month" id="'+DB_STOCK_INVTY[i].stockno+'_1expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
+                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />'+
                   '</div>'+
                   '<div style="width:100%;height:50%;border:0px solid black;">'+
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
@@ -108,9 +109,9 @@ function fm_dashboard(f_clear){
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
                     '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
 
-                    '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_2lotno'+'"   class="cls_weekly_row" style="width:20%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-                    '<input type="month" id="'+DB_STOCK_INVTY[i].stockno+'_2expiry'+'" class="cls_weekly_row" style="width:12%;background:'+clor_expiry+';" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2req'+'"   class="cls_weekly_row" style="width:11%;margin-left:1%;border:1px solid black;border-bottom:0px;border-right:0px;background:'+clor_req+';" value="" />'+
+                    '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_2lotno'+'"   class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
+                    '<input type="month" id="'+DB_STOCK_INVTY[i].stockno+'_2expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
+                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2req'+'"   class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-bottom:0px;border-right:0px;background:'+clor_req+';" value="" />'+
                   '</div>'+
                 '</div>'+
 
@@ -132,9 +133,9 @@ function fm_dashboard(f_clear){
             '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="date_accom" onchange="chgdate_accom_brgy(this.value)"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
           '</div>'+
 
-          '<div style="width:100%;height:30px;border:0px solid lightgray;padding:0px;background:white;">'+
+          '<div style="width:100%;height:30px;border:0px solid lightgray;padding:0px;background:#FFD900;">'+
 
-            '<div disabled id="div_hd" style="width:100%;height:100%;border:0px solid red;padding:3px;background:#FFD900;">'+
+            '<div id="div_hd_accom" style="width:100%;height:100%;border:0px solid red;padding:3px;background:#FFD900;">'+
               '<div style="float:left;width:13%;height:100%;padding:0px;">Vax</div>'+
               '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
                 '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_accom_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
@@ -147,7 +148,7 @@ function fm_dashboard(f_clear){
             '</div>'+
             
 
-            '<div id="div_dtls" style="width:100%;height:'+(h_mainbox_accom-(30+30+35+2))+'px;;border:0px solid red;overflow:auto;padding:5px;background:none;">';
+            '<div id="dtls_accom" style="width:100%;height:'+(h_mainbox_accom-(30+30+35+2))+'px;;border:0px solid red;overflow:auto;padding:5px;background:none;">';
               let vdtl2='';
               for(var i=0;i<DB_STOCK_ACCOM.length;i++){
                 vdtl2+=
@@ -205,7 +206,18 @@ function fm_dashboard(f_clear){
     document.getElementById('div_body').setAttribute('data-row',0);
     document.getElementById('div_body').setAttribute('data-row2',0);
   }
-  
+  /*
+  document.querySelectorAll('.menu_class').forEach(function(el) {
+    el.style.display = 'none'; 
+  });
+  */
+  let dv_hd=document.getElementById('div_hd_invty');
+  let dv_dt=document.getElementById('dtls_invty');
+  dv_hd.style.width=dv_dt.clientWidth+'px';
+
+  dv_hd=document.getElementById('div_hd_accom');
+  dv_dt=document.getElementById('dtls_accom');
+  dv_hd.style.width=dv_dt.clientWidth+'px';
 }
 
 
@@ -251,7 +263,16 @@ function sel_brgy(areano){
   document.getElementById('date_accom').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
   document.getElementById('date_accom').disabled=false;
   disp_accom_brgy(areano);
-
+  //hightlight select barangay
+  let ndx=0;
+  let len_dtls=document.querySelectorAll('.class_brgy').length;
+  for(var i=0;i<len_dtls;i++){
+    let vname=document.getElementById('id_'+i).innerHTML;
+    if(vname==name){
+      ndx=i; break;
+    }
+  }
+  JBE_HL_ROW(ndx,'black','gray', '.class_brgy', 'id_',  'red', 'black');
 }
 
 function chgdate_invty_brgy(){
@@ -273,13 +294,12 @@ function clear_invty_brgy(){
     div=DB_STOCK_INVTY[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
     div=DB_STOCK_INVTY[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
     div=DB_STOCK_INVTY[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-
-    document.getElementById('btn'+(i+1)).style.color='white'; 
-    document.getElementById('btn'+(i+1)).disabled=false;
-    document.getElementById('btn'+(i+1)).style.opacity='1';
   }  
-  for(var y=0;y<5;y++){
-    document.getElementById('btn'+(y)).style.color='white'; document.getElementById('btn'+(y)).style.opacity='1'; document.getElementById('btn'+(y)).disabled=false;
+  for(var i=0;i<5;i++){
+    document.getElementById('btn'+(i)).style.color='white';
+    document.getElementById('btn'+(i)).disabled=false;
+    document.getElementById('btn'+(i)).style.opacity='1';
+    document.getElementById('btn'+(i)).style.color='white'; document.getElementById('btn'+(i)).style.opacity='1'; document.getElementById('btn'+(i)).disabled=false;
   }
 }
 
@@ -314,13 +334,18 @@ function disp_invty_brgy(areano){
 
 //‐-------
 function edit_invty_brgy(col){
+  let txtContent=document.getElementById('btn'+(col-1)).textContent;
+  if(!txtContent){
+    //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
+    return;
+  }
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   if(!areano){
     snackBar('Select a Barangay...');
     return;
   }
   //JBE_BACK_VIEW(false);
-  btn_enabled(col);
+  btn_enabled(col,'invty');
   //assign
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
     let div=DB_STOCK_INVTY[i].stockno+'_1w'+col;  document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
@@ -336,14 +361,16 @@ function edit_invty_brgy(col){
   mnu_save_invty_brgy();
 }
 
-function btn_enabled(col){
+function btn_enabled(col,tran){
   let x=true;
   let c='white';
+  let vbtn='btn';
+  if(tran=='accom'){ vbtn='btn1'; }
   for(var i=0;i<5;i++){     
     //if(col==(i+1)){ x=true; c='red'; document.getElementById('btn'+(i+1)).style.color=c; document.getElementById('btn'+(i+1)).disabled=x; }
-    document.getElementById('btn'+(i+1)).style.color='white'; document.getElementById('btn'+(i+1)).style.opacity='0.5'; document.getElementById('btn'+(i+1)).disabled=true;
+    document.getElementById(vbtn+i).style.color='white'; document.getElementById(vbtn+i).style.opacity='0.5'; document.getElementById(vbtn+i).disabled=true;
   }
-  document.getElementById('btn'+col).style.color='red'; document.getElementById('btn'+col).style.opacity='1'; document.getElementById('btn'+col).disabled=false;
+  document.getElementById(vbtn+col).style.color='red'; document.getElementById(vbtn+col).style.opacity='1'; document.getElementById(vbtn+col).disabled=false;
 }
 
 function subtractDates(date1, date2) {
@@ -415,9 +442,9 @@ async function save_invty_brgy(areano){
 //=========================================================================================================================================================================
 //‐-------
 function disp_accom_brgy(areano){  
-  let curdate=document.getElementById('date_accom').value;  
-  update_week_buttons(curdate);
+  let curdate=document.getElementById('date_accom').value;    
   clear_accom_brgy();
+  update_week_buttons(curdate,'accom');
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== curdate){ continue; }
     if(DB_ACCOM[i].areano !== areano){ continue; }
@@ -440,13 +467,18 @@ function disp_accom_brgy(areano){
 
 //‐-------
 function edit_accom_brgy(col){
+  let txtContent=document.getElementById('btn1'+(col-1)).textContent;
+  if(!txtContent){
+    //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
+    return;
+  }
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   if(!areano){
     snackBar('Select a Barangay...');
     return;
   }
   //JBE_BACK_VIEW(false);
-  btn_enabled(col);
+  btn_enabled(col,'accom');
   //assign
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
     let div=DB_STOCK_ACCOM[i].stockno+'_'+col+'wm';  document.getElementById(div).style.borderLeft='2px solid red'; document.getElementById(div).style.pointerEvents='auto';
@@ -465,14 +497,13 @@ function clear_accom_brgy(){
     }   
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_totM').value='';   
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_totF').value=''; 
-    document.getElementById(DB_STOCK_ACCOM[i].stockno+'_total').value=''; 
-
-    document.getElementById('btn'+(i+1)).style.color='white'; 
-    document.getElementById('btn'+(i+1)).disabled=false;
-    document.getElementById('btn'+(i+1)).style.opacity='1';
+    document.getElementById(DB_STOCK_ACCOM[i].stockno+'_total').value='';
   }  
-  for(var y=0;y<5;y++){
-    document.getElementById('btn'+(y+1)).style.color='white'; document.getElementById('btn'+(y+1)).style.opacity='1'; document.getElementById('btn'+(y+1)).disabled=false;
+  for(var i=0;i<5;i++){
+    document.getElementById('btn1'+(i)).style.color='white'; 
+    document.getElementById('btn1'+(i)).disabled=false;
+    document.getElementById('btn1'+(i)).style.opacity='1';
+    document.getElementById('btn1'+(i)).style.color='white'; document.getElementById('btn1'+(i)).style.opacity='1'; document.getElementById('btn1'+(i)).disabled=false;    
   }
 }
 

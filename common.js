@@ -28,7 +28,7 @@ async function show_log(){
     let aname=get_area(DB_LOG[i].areano);
     let posted=DB_LOG[i].post;
     dtl+=
-    '<div style="width:100%;height:40px;margin-top:5px;padding:2px;border:1px solid lightgray;">'+
+    '<div onclick="sel_brgy(&quot;'+DB_LOG[i].areano+'&quot;)" style="width:100%;height:40px;margin-top:5px;padding:2px;border:1px solid lightgray;">'+
       '<div style="width:100%;height:50%;">'+
         '<div style="float:left;width:70%;height:100%;font-weight:bold;">'+aname+'</div>'+
         '<div style="float:right;width:auto;height:100%;">'+DB_LOG[i].time+'</div>'+
@@ -74,15 +74,16 @@ function update_week_buttons(date,tran){
   const currentMonth = today.getMonth(); // 0-11
   const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
 
-  let vbtn;
+  let vbtn='';
   if(tran=='invty'){
     vbtn='btn';
   }else if(tran=='accom'){
     vbtn='btn1';
   }
 
-  for(var i=0;i<5;i++){   
-    document.getElementById(vbtn+i).textContent='';
+  for(var i=0;i<4;i++){   
+    console.log(tran,vbtn,(vbtn+i));
+    document.getElementById((vbtn+i)).textContent='';
   }
   for(var i=0;i<wednesdays.length;i++){
     let wed=JBE_DATE_FORMAT(wednesdays[i].toDateString(),'MMM DD, YYYY');
