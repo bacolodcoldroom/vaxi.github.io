@@ -226,14 +226,15 @@ function clear_fm_accom(){
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_totM').value='';   
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_totF').value=''; 
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_total').value=''; 
-
+  }  
+  /*
+  for(var y=0;y<5;y++){
     document.getElementById('btn1'+(i)).style.color='white'; 
     document.getElementById('btn1'+(i)).disabled=false;
     document.getElementById('btn1'+(i)).style.opacity='1';
-  }  
-  for(var y=0;y<5;y++){
     //document.getElementById('btn'+(y+1)).style.color='white'; document.getElementById('btn'+(y+1)).style.opacity='1'; document.getElementById('btn'+(y+1)).disabled=false;
   }
+  */
 }
 
 async function save_fm_accom(){
@@ -281,16 +282,6 @@ async function save_fm_accom(){
   console.log('arr:',arr);
   showProgress(false);
   disp_fm_accom();
-}
-
-function btn_enabled(col){
-  let x=true;
-  let c='white';
-  for(var i=0;i<5;i++){     
-    //if(col==(i+1)){ x=true; c='red'; document.getElementById('btn'+(i+1)).style.color=c; document.getElementById('btn'+(i+1)).disabled=x; }
-    document.getElementById('btn'+(i+1)).style.color='white'; document.getElementById('btn'+(i+1)).style.opacity='0.5'; document.getElementById('btn'+(i+1)).disabled=true;
-  }
-  document.getElementById('btn'+col).style.color='red'; document.getElementById('btn'+col).style.opacity='1'; document.getElementById('btn'+col).disabled=false;
 }
 
 function chg_accom_month(v){

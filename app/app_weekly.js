@@ -231,26 +231,15 @@ function clear_fm_weekly(){
     div=DB_STOCK_INVTY[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).innerHTML='';
     div=DB_STOCK_INVTY[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).innerHTML='';
 
-    document.getElementById('btn'+(i+1)).style.color='white'; 
-    document.getElementById('btn'+(i+1)).disabled=false;
-    document.getElementById('btn'+(i+1)).style.opacity='1';
+    
   }  
   for(var y=0;y<5;y++){
+    document.getElementById('btn'+(y)).style.color='white'; 
+    document.getElementById('btn'+(y)).disabled=false;
+    document.getElementById('btn'+(y)).style.opacity='1';
     document.getElementById('btn'+(y)).style.color='white'; document.getElementById('btn'+(y)).style.opacity='1'; document.getElementById('btn'+(y)).disabled=false;
   }
 }
-
-function btn_enabled(col){
-  let x=true;
-  let c='white';
-  for(var i=0;i<5;i++){     
-    //if(col==(i+1)){ x=true; c='red'; document.getElementById('btn'+(i+1)).style.color=c; document.getElementById('btn'+(i+1)).disabled=x; }
-    document.getElementById('btn'+(i+1)).style.color='white'; document.getElementById('btn'+(i+1)).style.opacity='0.5'; document.getElementById('btn'+(i+1)).disabled=true;
-  }
-  document.getElementById('btn'+col).style.color='red'; document.getElementById('btn'+col).style.opacity='1'; document.getElementById('btn'+col).disabled=false;
-}
-
-
 
 async function save_fm_weekly(){
   console.clear();

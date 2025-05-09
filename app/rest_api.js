@@ -22,6 +22,10 @@ async function rest_api_start(){
   data=await api_readfile(JBE_CLOUD,JBE_API+'accom');  DB_ACCOM=data.content;
   data=await api_readfile(JBE_CLOUD,JBE_API+'log');  DB_LOG=data.content;  
   console.log('CURR_USER',CURR_USER);
+  
+  //DB_LOGGER.sort(JBE_SORT_ARRAY(['*date','*time','trano']));
+  DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
+  DB_STOCK_ACCOM.sort(JBE_SORT_ARRAY(['rank']));
  
   if(!JBE_CLOUD){
     if(DB_USER.length==0){
