@@ -200,7 +200,7 @@ function edit_weekly(col){
       '</div>'+
     '</div>';
 
-  JBE_OPENBOX('div_edit_weekly','Edit Week # '+col,dtl,dtl2,'close_edit_dtr');
+  JBE_OPENBOX('div_edit_weekly','Edit Week #'+col+'  ('+txtContent+')',dtl,dtl2,'close_edit_dtr');
 }
 
 //‐-------

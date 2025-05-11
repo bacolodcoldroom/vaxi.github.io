@@ -190,7 +190,7 @@ function edit_fm_accom(col){
       '</div>'+
     '</div>';
 
-  JBE_OPENBOX('div_edit_fm_accom','Edit Week # '+col,dtl,dtl2,'close_edit_dtr');
+  JBE_OPENBOX('div_edit_fm_accom','Edit Week #'+col+'  ('+txtContent+')',dtl,dtl2,'close_edit_dtr');
 }
 function get_total_accom(id){
   let tot=0;

@@ -126,7 +126,7 @@ function showMainPage(){
     f_reload=false;
   }
  
-  console.log('mainpage '+f_MainPage);
+  //console.log('mainpage '+f_MainPage);
   openPage('page_main');  
 
   vmenu='mnu_main_owner';
