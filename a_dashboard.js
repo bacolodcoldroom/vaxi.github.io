@@ -29,7 +29,7 @@ function fm_dashboard(f_clear){
   let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
   //alert(curdate);
   //alert(DB_STOCK_INVTY.length);
-  let h_mainbox_invty=378;
+  let h_mainbox_invty=(h_box1-94)/2;
   let h_mainbox_accom=h_mainbox_invty;
   let dtl=
   '<div style="display:block;width:100%;height:100%;font-size:18px;text-align:center;padding:10px;border:0px solid orange;background:	lightgray;">'+  
@@ -44,25 +44,21 @@ function fm_dashboard(f_clear){
 
       //left brgy
       '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:1%;border:0px solid red;background:white;">'+
-        '<div style="width:100%;height:100%;padding:5px;overflow:auto;">';
-          let vdtl='';          
-          for(var i=0;i<DB_AREA.length;i++){
-            //vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="JBE_HL_ROW('+i+',&quot;black&quot;,&quot;gray&quot;, &quot;.class_brgy&quot;, &quot;id_&quot;,  &quot;red&quot;, &quot;black&quot;); sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;);" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
-            vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
-          }
-          dtl+=vdtl+
+        '<div id="brgy_list" style="width:100%;height:100%;padding:5px;overflow:auto;">'+
         '</div>'+
       '</div>'+
 
       //right
-      '<div style="float:left;margin-left:1%;width:59%;height:100%;margin-top:0px;text-align:center;padding:0px;border:1px solid gray;overflow:auto;background:white;">'+
+      '<div style="float:left;margin-left:1%;width:59%;height:100%;margin-top:0px;text-align:center;padding:0px;border:0px solid red;background:none;">'+
 
         '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:white;background:'+JBE_CLOR+';">'+
           '<div style="width:100%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
         '</div>'+
 
+        //'<div style="width:100%;height:'+h_mainbox+'px;;margin-top:10px;text-align:center;padding:0px;overflow:auto;border:1px solid yellow;background:none;">'+
+
         //invty
-        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid darkgray;background:#FFD900;">'+
+        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid black;background:#FFD900;">'+
 
           '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
             '<div style="float:left;width:50%;height:100%;">Weekly Inventory</div>'+
@@ -83,11 +79,11 @@ function fm_dashboard(f_clear){
             '</div>'+
           '</div>'+
           
-          '<div id="dtls_invty" style="width:100%;height:'+(h_mainbox_invty-(30+30+35+2))+'px;border:0px solid blue;overflow:auto;padding:5px;background:white;">';              
-            vdtl='';
+          '<div id="dtls_invty" style="width:100%;height:'+(h_mainbox_invty-(30+30+2))+'px;border:0px solid blue;overflow:auto;padding:5px;background:white;">';              
+            let vdtl='';
             for(var i=0;i<DB_STOCK_INVTY.length;i++){
               vdtl+=
-              '<div id="div_row" style="width:100%;height:35px;border:1px solid black;color:black;background:none;">'+
+              '<div id="div_row" style="width:100%;height:35px;font-size:14px;border:1px solid black;color:black;background:none;">'+
                 '<div style="float:left;width:20%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
 
                 '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
@@ -120,13 +116,10 @@ function fm_dashboard(f_clear){
             dtl+=vdtl+        
           '</div>'+
 
-          '<div id="div_menu" class="cls_dispMenu">'+           
-          '</div>'+
-
         '</div>'+
-//=====================================================================================================================
+        //=====================================================================================================================
         //accom
-        '<div id="div_accom" style="display:block;width:100%;height:'+h_mainbox_accom+'px;margin-top:20px;font-size:14px;text-align:center;padding:0px;border:1px solid darkgray;background:white;">'+
+        '<div id="div_accom" style="display:block;width:100%;height:'+h_mainbox_accom+'px;margin-top:10px;font-size:14px;text-align:center;padding:0px;border:1px solid black;background:white;">'+
 
           '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
             '<div style="float:left;width:50%;height:100%;">Accomplishment</div>'+
@@ -148,7 +141,7 @@ function fm_dashboard(f_clear){
             '</div>'+
             
 
-            '<div id="dtls_accom" style="width:100%;height:'+(h_mainbox_accom-(30+30+35+2))+'px;;border:0px solid red;overflow:auto;padding:5px;background:none;">';
+            '<div id="dtls_accom" style="width:100%;height:'+(h_mainbox_accom-(30+30+2))+'px;;border:0px solid red;overflow:auto;padding:5px;background:none;">';
               let vdtl2='';
               for(var i=0;i<DB_STOCK_ACCOM.length;i++){
                 vdtl2+=
@@ -179,13 +172,16 @@ function fm_dashboard(f_clear){
               dtl+=vdtl2+        
               
             '</div>'+ 
-            
-            '<div id="div_menu2" class="cls_dispMenu">'+            
-            '</div>'+
 
-          '</div>'+          
+            //menu
+            '<div id="div_menu" class="cls_dispMenu" style="width:100%;height:35px;margin-top:10px;background:#3A3B3C;">'+            
+            '</div>'+            
+
+          '</div>'+   
           
         '</div>'+
+
+        //'</div>'+
 
       '</div>'+
 
@@ -201,6 +197,7 @@ function fm_dashboard(f_clear){
 
   '</div>';
   document.getElementById('div_right').innerHTML=dtl;
+  disp_brgy_list();
 
   if(f_clear){
     document.getElementById('div_body').setAttribute('data-row',0);
@@ -218,13 +215,13 @@ function fm_dashboard(f_clear){
   dv_hd=document.getElementById('div_hd_accom');
   dv_dt=document.getElementById('dtls_accom');
   dv_hd.style.width=dv_dt.clientWidth+'px';
+  mnu_brgy();
 }
 
-
-function mnu_invty_brgy(){
+function mnu_brgy(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
-      '<div style="float:left;width:75%;height:100%;padding:3px;font-size:16px;text-align:left;color:white;background:none;">'+
+      '<div style="float:left;width:75%;height:100%;padding:2px 0 0 0;font-size:16px;text-align:left;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
       '</div>'+
     '</div>';  
@@ -232,17 +229,18 @@ function mnu_invty_brgy(){
   dispMenu('div_menu',jmenu);
 }
 
-function mnu_save_invty_brgy(){
+function mnu_save_brgy(){
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
       '<div onclick="save_invty_brgy(&quot;'+areano+'&quot;)" style="float:left;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jsave.png"  alt="home image" />'+
-          '<span style="padding:0 0 0 5px;color:white;">Save</span>'+
+          '<span style="height:100%;padding:0 0 0 5px;color:white;">Save</span>'+
         '</div>'+
       '</div>'+
-      '<div onclick="disp_invty_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
+      //'<div onclick="disp_invty_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
+      '<div onclick="disp_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jclose.png"  alt="home image" />'+
           '<span style="padding:0px;color:white;">Cancel</span>'+
@@ -250,6 +248,12 @@ function mnu_save_invty_brgy(){
       '</div>'+
     '</div>';
   dispMenu('div_menu',jmenu);
+}
+
+function disp_brgy(areano){
+  disp_invty_brgy(areano);
+  disp_accom_brgy(areano);
+  mnu_brgy();
 }
 
 function sel_brgy(areano){
@@ -263,6 +267,7 @@ function sel_brgy(areano){
   document.getElementById('date_accom').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
   document.getElementById('date_accom').disabled=false;
   disp_accom_brgy(areano);
+  mnu_brgy();
   //hightlight select barangay
   let ndx=0;
   let len_dtls=document.querySelectorAll('.class_brgy').length;
@@ -295,12 +300,15 @@ function clear_invty_brgy(){
     div=DB_STOCK_INVTY[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
     div=DB_STOCK_INVTY[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
   }  
-  for(var i=0;i<5;i++){
-    document.getElementById('btn'+(i)).style.color='white';
-    document.getElementById('btn'+(i)).disabled=false;
-    document.getElementById('btn'+(i)).style.opacity='1';
-    document.getElementById('btn'+(i)).style.color='white'; document.getElementById('btn'+(i)).style.opacity='1'; document.getElementById('btn'+(i)).disabled=false;
+}
+
+//‐-------
+function disp_brgy_list(){  
+  let vdtl='';          
+  for(var i=0;i<DB_AREA.length;i++){            
+    vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
   }
+  document.getElementById('brgy_list').innerHTML=vdtl;
 }
 
 //‐-------
@@ -308,6 +316,7 @@ function disp_invty_brgy(areano){
   let curdate=document.getElementById('id_date').value;
   curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
   clear_invty_brgy();
+  btn_enabled(0);
   update_week_buttons(curdate,'invty');
   for(var i=0;i<DB_INVTY.length;i++){
     if(DB_INVTY[i].areano !== areano){ continue; }
@@ -328,7 +337,7 @@ function disp_invty_brgy(areano){
     div=DB_INVTY[i].stockno+'_2expiry';       document.getElementById(div).value=DB_INVTY[i]['2expiry'];
     div=DB_INVTY[i].stockno+'_2req';          document.getElementById(div).value=DB_INVTY[i]['2req'];
   }  
-  mnu_invty_brgy();
+  //mnu_invty_brgy();
 }
 
 
@@ -357,20 +366,25 @@ function edit_invty_brgy(col){
     div=DB_STOCK_INVTY[i].stockno+'_2expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
     div=DB_STOCK_INVTY[i].stockno+'_2req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
   }
-  document.getElementById('btn'+col).disabled=false;
-  mnu_save_invty_brgy();
+  //document.getElementById('btn'+col).disabled=false;
+  mnu_save_brgy();
 }
 
 function btn_enabled(col,tran){
-  let x=true;
-  let c='white';
   let vbtn='btn';
   if(tran=='accom'){ vbtn='btn1'; }
-  for(var i=0;i<5;i++){     
-    //if(col==(i+1)){ x=true; c='red'; document.getElementById('btn'+(i+1)).style.color=c; document.getElementById('btn'+(i+1)).disabled=x; }
-    document.getElementById(vbtn+i).style.color='white'; document.getElementById(vbtn+i).style.opacity='0.5'; document.getElementById(vbtn+i).disabled=true;
+  let vcolor='white';let vopacity='0.5'; let vdisabled=true;
+  if(col==0){
+    vcolor='white'; vopacity='1'; vdisabled=false;
   }
-  document.getElementById(vbtn+col).style.color='red'; document.getElementById(vbtn+col).style.opacity='1'; document.getElementById(vbtn+col).disabled=false;
+  for(var i=0;i<5;i++){    
+    //document.getElementById(vbtn+i).style.color='white'; document.getElementById(vbtn+i).style.opacity='0.5'; document.getElementById(vbtn+i).disabled=true;
+    document.getElementById('btn'+i).style.color=vcolor; document.getElementById('btn'+i).style.opacity=vopacity; document.getElementById('btn'+i).disabled=vdisabled;
+    document.getElementById('btn1'+i).style.color=vcolor; document.getElementById('btn1'+i).style.opacity=vopacity; document.getElementById('btn1'+i).disabled=vdisabled;    
+  }
+  if(col != 0){
+    document.getElementById(vbtn+(col-1)).style.color='red'; document.getElementById(vbtn+(col-1)).style.opacity='1'; document.getElementById(vbtn+(col-1)).disabled=false;
+  }
 }
 
 function subtractDates(date1, date2) {
@@ -430,7 +444,7 @@ async function save_invty_brgy(areano){
     arr[arr_ctr]=obj; 
     arr_ctr++;
   }
-  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== areano || record.date !== curdate);  
+  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === areano || record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   console.log('data new:',data.length);
   showProgress(false);
@@ -444,6 +458,7 @@ async function save_invty_brgy(areano){
 function disp_accom_brgy(areano){  
   let curdate=document.getElementById('date_accom').value;    
   clear_accom_brgy();
+  btn_enabled(0);
   update_week_buttons(curdate,'accom');
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== curdate){ continue; }
@@ -462,7 +477,7 @@ function disp_accom_brgy(areano){
     document.getElementById(DB_ACCOM[i].stockno+'_totF').value=DB_ACCOM[i]['totF'];  
     document.getElementById(DB_ACCOM[i].stockno+'_total').value=DB_ACCOM[i]['total'];         
   }    
-  mnu_accom_brgy();
+  //mnu_accom_brgy();
 }
 
 //‐-------
@@ -484,8 +499,9 @@ function edit_accom_brgy(col){
     let div=DB_STOCK_ACCOM[i].stockno+'_'+col+'wm';  document.getElementById(div).style.borderLeft='2px solid red'; document.getElementById(div).style.pointerEvents='auto';
     div=DB_STOCK_ACCOM[i].stockno+'_'+col+'wf';      document.getElementById(div).style.borderRight='2px solid red'; document.getElementById(div).style.pointerEvents='auto';
   }
-  document.getElementById('btn'+col).disabled=false;
-  mnu_save_accom_brgy();
+  //document.getElementById('btn'+col).disabled=false;
+  //mnu_save_accom_brgy();
+  mnu_save_brgy();
 }
 
 function clear_accom_brgy(){
@@ -499,12 +515,6 @@ function clear_accom_brgy(){
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_totF').value=''; 
     document.getElementById(DB_STOCK_ACCOM[i].stockno+'_total').value='';
   }  
-  for(var i=0;i<5;i++){
-    document.getElementById('btn1'+(i)).style.color='white'; 
-    document.getElementById('btn1'+(i)).disabled=false;
-    document.getElementById('btn1'+(i)).style.opacity='1';
-    document.getElementById('btn1'+(i)).style.color='white'; document.getElementById('btn1'+(i)).style.opacity='1'; document.getElementById('btn1'+(i)).disabled=false;    
-  }
 }
 
 async function save_accom_brgy(areano){
@@ -539,7 +549,7 @@ async function save_accom_brgy(areano){
     }
     arr[arr_ctr]=obj; arr_ctr++;
   }  
-  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== areano || record.date !== curdate);  
+  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === areano || record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   showProgress(false);
   disp_accom_brgy(areano);
@@ -577,7 +587,8 @@ function mnu_save_accom_brgy(){
           '<span style="padding:0 0 0 5px;color:white;">Save</span>'+
         '</div>'+
       '</div>'+
-      '<div onclick="disp_accom_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
+      //'<div onclick="disp_accom_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
+      '<div onclick="disp_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jclose.png"  alt="home image" />'+
           '<span style="padding:0px;color:white;">Cancel</span>'+
