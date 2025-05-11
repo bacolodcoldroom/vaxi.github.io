@@ -407,7 +407,7 @@ function show_credits(){
           '</div>'+
           '<div style="width:70%;">'+ //right
             '<h4>Irene I. Mojica</h4>'+
-            '<p>System UI/UX Designers</p>'+
+            '<p>System UI/UX Designer</p>'+
           '</div>'+
         '</div>'+
 
