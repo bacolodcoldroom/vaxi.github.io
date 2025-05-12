@@ -40,7 +40,7 @@ async function start_app(){
   JBE_API='';
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
   console.log('JBE_API',JBE_API);
-  await get_app_default();
+  await get_main_all_db();
   console.log('********************************');
   console.log('JBE_CLOUD',JBE_CLOUD);
   console.log('CURR_USER',CURR_USER);
@@ -81,7 +81,7 @@ function jeff(){
 }
 
 //=======APP DB AND DISPLAY==========================================================
-async function get_app_default(){   
+async function get_main_all_db(){   
   showProgress(true);
   let data;  
   data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
@@ -355,35 +355,60 @@ function openPage(m){
 }
 
 function show_credits(){    
-  var h=330;
+  var h=380;
   var dtl=     
     '<div id="main_credit" data-zoom=0 data-close="" style="width:100%;height:'+h+'px;text-align:center;background-color:white;">'+     
-      '<div style="width:100%;height:100%;padding:2px;background:none">'+
-        '<div style="height:60px;width:100%;background:lightgray;text-align:center;padding:10px 0 0 0;font-size:30px;">*** C R E D I T S ***</div>'+
+      '<div style="width:100%;height:100%;padding:2px;overflow:auto;background:none">'+
+        '<div style="height:40px;width:100%;background:lightgray;text-align:center;padding:7px 0 0 0;font-size:25px;">*** C R E D I T S ***</div>'+
         //'<hr style="margin-top:20px;">'+
-        
+
         '<div class="cls_sidenav">'+
-          '<div>Paulynne Rojo-Sustento</div>'+
-          '<p>Chief System Analyst</p>'+
-        '</div>'+
-              
-        '<div class="cls_sidenav">'+
-          '<div>Irene I. Mojica</div>'+
-          '<div>Dax H. Parreño</div>'+
-          '<p>System UI/UX Designers</p>'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/pau.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Paulynne Rojo-Sustento</h4>'+
+            '<p>Chief System Analyst</p>'+
+          '</div>'+
         '</div>'+
 
         '<div class="cls_sidenav">'+
-          '<div>Jeffrey B. Enad</div>'+
-          '<p>System Developer/Programmer</p>'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/yen.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Irene I. Mojica</h4>'+
+            '<p>System UI/UX Designer</p>'+
+          '</div>'+
         '</div>'+
+
+        '<div class="cls_sidenav">'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/dax.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Dax H. Parreño</h4>'+
+            '<p>Software Architect</p>'+
+          '</div>'+
+        '</div>'+
+
+        '<div class="cls_sidenav">'+
+          '<div style="width:30%;text-align:right;">'+ //left
+            '<img src="gfx/credits/jeff.jpg" />'+
+          '</div>'+
+          '<div style="width:70%;">'+ //right
+            '<h4>Jeffrey B. Enad</h4>'+
+            '<p>System Developer/Programmer</p>'+
+          '</div>'+
+        '</div>'+
+
       '</div>'+        
     '</div>';
   var dtl2=     
     '<div style="width:100%;height:100%;padding:0px 0 0 0;text-align:center;color:'+JBE_TXCLOR1+';background:none;">'+
       '<input type="button" onclick="JBE_CLOSEBOX()" style="width:100px;height:100%;" value="Close" />'+     
     '</div>';  
-  JBE_OPENBOX('main_credit','Men & Women of Coldroom',dtl,dtl2);
+  JBE_OPENBOX('main_credit','Software Development Team',dtl,dtl2);
 }
 
 function show_download(){    
@@ -449,21 +474,11 @@ function show_sidenav(){
         '<span>Reports</span>'+
       '</div>'+
       '<div class="dropdown-content">'+
-        '<a href="javascript:rp_daily()">Daily Inventory</a>'+
-        '<a href="javascript:rp_stockcard()">Stock Card</a>'+
-        '<a href="javascript:rp_bincard()">BIN Card</a>'+
-        '<a href="javascript:rp_location()">Vaccines Location</a>'+
+        '<a href="javascript:rp_daily()">Daily Inventory</a>'+        
         '<hr>'+
-        '<a href="javascript:rp_ptr_summ(0)">NIP Dispense Summary</a>'+
-        '<a href="javascript:rp_ptr_summ(1)">COVAC Dispense Summary</a>'+        
-        '<a href="javascript:rp_summ(0)">Stock Receiving Summary</a>'+
-        '<a href="javascript:rp_summ(1)">Returned Summary</a>'+
-        '<a href="javascript:rp_summ(2)">Adjustments Summary</a>'+
+        '<a href="javascript:rp_ptr_summ(0)">NIP Dispense Summary</a>'+        
         '<hr>'+
-        '<a href="javascript:prn_tmp_ptr(0)">Print RIS Template (NIP)</a>'+
-        '<a href="javascript:prn_tmp_ptr(1)">Print RIS Template (COVAC)</a>'+
-        '<a href="javascript:prn_tmp_ptr(3)">Print RIS Template (Regular)</a>'+
-        '<a href="javascript:prn_tmp_ret()">Print Return Slip Template</a>'+
+        '<a href="javascript:prn_tmp_ptr(0)">Print RIS Template (NIP)</a>'+        
       '</div>'+
     '</div>'+
 
@@ -474,23 +489,12 @@ function show_sidenav(){
         '<span>Master Files</span>'+
       '</div>'+
       '<div class="dropdown-content">'+
-        '<a href="javascript:fm_product()">Product</a>'+
-        '<a href="javascript:fm_stock()">Stock</a>'+
+        '<a href="javascript:fm_stock()">Vaccine (Inventory)</a>'+
+        '<a href="javascript:fm_stock2()">Vaccine (Accomplishment)</a>'+
         '<a href="javascript:fm_area()">Area</a>'+
-        '<a href="javascript:fm_supplier()">Supplier</a>'+
-        '<a href="javascript:fm_wh()">Storage/Location</a>'+
+        '<a href="javascript:fm_user()">User</a>'+
       '</div>'+
-    '</div>'+
-
-    '<div class="dropdown">'+
-      '<div class="dropbtn"></div>'+
-      '<div class="nw_menu" onclick="fm_invty()">'+
-        '<img src="gfx/jedit.png"/>'+
-        '<span>Inventory</span>'+
-      '</div>'+
-    '</div>'+
-
-    
+    '</div>'+  
     
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
@@ -916,18 +920,25 @@ async function refresh_all_now(){
   //JBE_AUDIO('gfx/snd/insight',5);
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   console.log(areano);
-  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     disp_invty_brgy(areano);
-  let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   disp_accom_brgy(areano);
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     
+  let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   
+  let brgy=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=brgy.content;  
+  if(areano){
+    disp_invty_brgy(areano);
+    disp_accom_brgy(areano);
+    disp_brgy_list(areano);
+  }
   show_log();
 }
 
 async function refresh_all_data(){
   showProgress(true);
-  await get_app_default();
+  await get_main_all_db();
   if(CURR_PAGE=='invty'){
     let areano=document.getElementById('id_brgy').getAttribute('data-areano');
     disp_invty_brgy(areano);
   }
+  disp_brgy();
   showProgress(false);
 }
 

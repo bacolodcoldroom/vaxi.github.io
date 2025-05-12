@@ -16,7 +16,7 @@ let clor_male='#d9e2f3';
 let clor_female='#ffccff';
 
 function fm_dashboard(f_clear){   
-  get_app_default();
+  //get_main_all_db();
   let h_dashboard=22;
   let h_box1=280;
   h_box1=350;
@@ -81,6 +81,7 @@ function fm_dashboard(f_clear){
           
           '<div id="dtls_invty" style="width:100%;height:'+(h_mainbox_invty-(30+30+2))+'px;border:0px solid blue;overflow:auto;padding:5px;background:white;">';              
             let vdtl='';
+            DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
             for(var i=0;i<DB_STOCK_INVTY.length;i++){
               vdtl+=
               '<div id="div_row" style="width:100%;height:35px;font-size:14px;border:1px solid black;color:black;background:none;">'+
@@ -143,6 +144,7 @@ function fm_dashboard(f_clear){
 
             '<div id="dtls_accom" style="width:100%;height:'+(h_mainbox_accom-(30+30+2))+'px;;border:0px solid red;overflow:auto;padding:5px;background:none;">';
               let vdtl2='';
+              DB_STOCK_ACCOM.sort(JBE_SORT_ARRAY(['rank']));
               for(var i=0;i<DB_STOCK_ACCOM.length;i++){
                 vdtl2+=
                 '<div id="div_row" style="width:100%;height:40px;border:1px solid black;color:black;background:none;">'+
@@ -304,6 +306,8 @@ function clear_invty_brgy(){
 
 //‐-------
 function disp_brgy_list(){  
+  DB_AREA.sort(JBE_SORT_ARRAY(['rank']));
+  console.log('disp_brgy_list',DB_AREA);
   let vdtl='';          
   for(var i=0;i<DB_AREA.length;i++){            
     vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
