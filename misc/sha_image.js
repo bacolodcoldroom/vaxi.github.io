@@ -138,3 +138,123 @@ function getMimeType(filePath) {
     default: return 'application/octet-stream';
   }
 }
+
+function isJpegDataUrl(str) {
+  const pattern = /^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/;
+  return (typeof str === 'string') && pattern.test(str);
+}
+
+/**
+ * Resizes an image file to fit within maxWidth and maxHeight while preserving aspect ratio.
+ * @param {File} file - The original image file.
+ * @param {number} maxWidth - Maximum width of the resized image.
+ * @param {number} maxHeight - Maximum height of the resized image.
+ * @returns {Promise<Blob>} - A promise that resolves to the resized image as a Blob.
+ */
+function resizeImage(file, maxWidth = 1024, maxHeight = 1024) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    
+    reader.onload = event => {
+      const img = new Image();
+      
+      img.onload = () => {
+        let { width, height } = img;
+
+        // Calculate the scaling factor to maintain aspect ratio
+        const scale = Math.min(maxWidth / width, maxHeight / height, 1);
+        width *= scale;
+        height *= scale;
+
+        // Create a canvas and draw the resized image
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Convert the canvas to a Blob
+        canvas.toBlob(
+          blob => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('Canvas is empty'));
+            }
+          },
+          'image/jpeg',
+          0.8 // Quality parameter (0.0 to 1.0)
+        );
+      };
+
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = event.target.result;
+    };
+
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+
+/**
+ * Resizes an image from a div's background or img tag.
+ * @param {HTMLElement} div - The div containing the image.
+ * @param {number} maxWidth - Maximum width for the resized image.
+ * @param {number} maxHeight - Maximum height for the resized image.
+ * @returns {Promise<Blob>} - A promise that resolves to the resized image as a Blob.
+ */
+function resizeImageFromDiv(div, maxWidth = 800, maxHeight = 800) {
+  return new Promise((resolve, reject) => {
+    let imageUrl = '';
+
+    // Check for background-image
+    const bgImage = window.getComputedStyle(div).backgroundImage;
+    if (bgImage && bgImage !== 'none') {
+      imageUrl = bgImage.slice(5, -2); // Remove url("...") wrapper
+    } else {
+      // Check for img tag inside the div
+      const img = div.querySelector('img');
+      if (img && img.src) {
+        imageUrl = img.src;
+      } else {
+        return reject(new Error('No image found in the provided div.'));
+      }
+    }
+
+    const img = new Image();
+    img.crossOrigin = 'Anonymous'; // To handle cross-origin images
+
+    img.onload = () => {
+      let { width, height } = img;
+
+      // Calculate scaling factor to maintain aspect ratio
+      const scale = Math.min(maxWidth / width, maxHeight / height, 1);
+      width *= scale;
+      height *= scale;
+
+      // Create a canvas and draw the resized image
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convert the canvas to a Blob
+      canvas.toBlob(
+        blob => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Canvas is empty'));
+          }
+        },
+        'image/jpeg',
+        0.8 // Quality parameter (0.0 to 1.0)
+      );
+    };
+
+    img.onerror = () => reject(new Error('Failed to load image'));
+    img.src = imageUrl;
+  });
+}
