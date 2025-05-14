@@ -727,13 +727,41 @@ function xxexit_app(){
   }
 }
 
-function exit_app(){
+function aaexit_app(){
   let msg='Click the Upper Right [X] button of your browser';
   if(isMobileDevice()) {
     msg='Click the phone Back button';
   }
   MSG_SHOW(vbOk,'EXIT APP','<center>'+msg+'</center>', function(){},function(){});
 }
+
+/**
+ * Attempts to quit a PWA installed in standalone mode.
+ *
+ * Only top‑level windows whose session history length is 1
+ * can be closed by script (per HTML spec). In those cases,
+ * `window.close()` will actually exit the PWA.
+ */
+function exit_app() {
+  // 1. Check for standalone display-mode
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  if (!isStandalone) {
+    console.warn('exitPWA(): Not in standalone mode—cannot close window.');  
+    MSG_SHOW(vbOk,'EXIT APP','exitPWA(): Not in standalone mode—cannot close window.', function(){},function(){});
+    return;
+  }
+
+  // 2. Only windows with a single history entry are script‑closable :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+  if (window.history.length === 1) {
+    window.close();
+  } else {
+    console.warn(
+      `exitPWA(): Session history length is ${window.history.length}; must be 1 to close.`
+    );
+    MSG_SHOW(vbOk,'EXIT APP',`exitPWA(): Session history length is ${window.history.length}; must be 1 to close.`, function(){},function(){});
+  }
+}
+
 
 
 function get_bal_stock(v_loc,v_stockno,v_lotno,v_rundate){ 
