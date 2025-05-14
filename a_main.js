@@ -340,7 +340,7 @@ function addAnimation(body) {
 }
 
 function clear_THISFILE(){
-  snackBar('clear thisfile');
+  //snackBar('clear thisfile');
   for(var i=0;i<25;i++){
     THISFILE[i]=null;
   }
@@ -605,7 +605,7 @@ function showLocks_dtl(){
   JBE_OPENBOX('main_lockers','Record Lockers',dtl,dtl2);
 }
 
-function quit_app(){
+function xquit_app(){
   if(f_MainPage){               
     //refreshIDX();
     MSG_SHOW(vbYesNo,"CONFIRM: ","Close the App?",function(){                   

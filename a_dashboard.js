@@ -43,15 +43,19 @@ function fm_dashboard(f_clear){
     '<div style="display:block;width:100%;height:'+h_box1+'px;margin-top:5px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
 
       //left brgy
-      '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:1%;border:0px solid red;background:white;">'+
-        '<div id="brgy_list" style="width:100%;height:100%;padding:5px;overflow:auto;">'+
+      
+      '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:white;">'+
+        '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:center;border:0px solid black;color:white;background:'+JBE_CLOR2+';">'+
+          '<div style="width:100%;height:100%;" style="font-weight:bold;">Barangay</div>'+
+        '</div>'+
+        '<div id="brgy_list" style="width:100%;height:'+(h_box1-30)+'px;padding:10px;overflow:auto;">'+
         '</div>'+
       '</div>'+
 
       //right
       '<div style="float:left;margin-left:1%;width:59%;height:100%;margin-top:0px;text-align:center;padding:0px;border:0px solid red;background:none;">'+
 
-        '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:white;background:'+JBE_CLOR+';">'+
+        '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:white;background:'+JBE_CLOR2+';">'+
           '<div style="width:100%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
         '</div>'+
 
@@ -176,7 +180,7 @@ function fm_dashboard(f_clear){
             '</div>'+ 
 
             //menu
-            '<div id="div_menu" class="cls_dispMenu" style="width:100%;height:35px;margin-top:10px;background:#3A3B3C;">'+            
+            '<div id="div_menu" data-saveMode="" class="cls_dispMenu" style="width:100%;height:35px;margin-top:10px;padding:2px;border:2px solid black;background:#3A3B3C;background:'+JBE_CLOR+';">'+            
             '</div>'+            
 
           '</div>'+   
@@ -189,7 +193,7 @@ function fm_dashboard(f_clear){
 
       //
       '<div style="float:right;width:19%;height:100%;margin-left:1%;text-align:left;border:0px solid red;background:white;">'+
-        '<div style="width:100%;height:30px;padding:5px;text-align:center;color:white;background:'+JBE_CLOR+';">Log</div>'+
+        '<div style="width:100%;height:30px;padding:5px;text-align:center;color:white;background:'+JBE_CLOR2+';">Log</div>'+
         '<div id="id_log" style="width:100%;height:'+(H_BODY-40-35-2)+'px;font-size:12px;padding:5px;overflow:auto;background:white;">'+
 
         '</div>'+        
@@ -223,7 +227,7 @@ function fm_dashboard(f_clear){
 function mnu_brgy(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
-      '<div style="float:left;width:75%;height:100%;padding:2px 0 0 0;font-size:16px;text-align:left;color:white;background:none;">'+
+      '<div style="float:left;width:75%;height:100%;padding:5px;font-size:16px;text-align:left;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
       '</div>'+
     '</div>';  
@@ -231,11 +235,11 @@ function mnu_brgy(){
   dispMenu('div_menu',jmenu);
 }
 
-function mnu_save_brgy(){
+function mnu_save_brgy(){  
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
-      '<div onclick="save_invty_brgy(&quot;'+areano+'&quot;)" style="float:left;width:25%;height:100%;background:none;">'+
+      '<div onclick="save_brgy(&quot;'+areano+'&quot;)" style="float:left;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jsave.png"  alt="home image" />'+
           '<span style="height:100%;padding:0 0 0 5px;color:white;">Save</span>'+
@@ -346,7 +350,7 @@ function disp_invty_brgy(areano){
 
 
 //‐-------
-function edit_invty_brgy(col){
+function edit_invty_brgy(col){  
   let txtContent=document.getElementById('btn'+(col-1)).textContent;
   if(!txtContent){
     //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
@@ -357,7 +361,7 @@ function edit_invty_brgy(col){
     snackBar('Select a Barangay...');
     return;
   }
-  //JBE_BACK_VIEW(false);
+  document.getElementById('div_menu').setAttribute('data-saveMode','invty');
   btn_enabled(col,'invty');
   //assign
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
@@ -413,6 +417,18 @@ function subtractDates(date1, date2) {
   }
 
   return { months: totalMonths, days: remainingDays };
+}
+//save
+function save_brgy(areano){
+  let saveMode=document.getElementById('div_menu').getAttribute('data-saveMode');  
+  if(saveMode=='invty'){
+    save_invty_brgy(areano);
+  }else if(saveMode=='accom'){
+    save_accom_brgy(areano);
+  }else{
+    snackBar('ERROR: Select Inventory or Accomplishment mode.');
+    return;    
+  }
 }
 
 async function save_invty_brgy(areano){
@@ -491,12 +507,13 @@ function edit_accom_brgy(col){
     //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
     return;
   }
+  
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   if(!areano){
     snackBar('Select a Barangay...');
     return;
   }
-  //JBE_BACK_VIEW(false);
+  document.getElementById('div_menu').setAttribute('data-saveMode','accom');
   btn_enabled(col,'accom');
   //assign
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
@@ -574,14 +591,14 @@ function close_accom_brgy(){
 function mnu_accom_brgy(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
-      '<div style="float:left;width:75%;height:100%;padding:3px;font-size:16px;text-align:left;color:white;background:none;">'+
+      '<div style="float:left;width:75%;height:100%;padding:5px;font-size:16px;text-align:left;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
       '</div>'+      
     '</div>';
   dispMenu('div_menu2',jmenu);
 }
 
-function mnu_save_accom_brgy(){
+function xmnu_save_accom_brgy(){
   let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
