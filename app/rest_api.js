@@ -125,7 +125,7 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
   showProgress(false);  
   document.getElementById('admin_avatar').src=photo;
   document.getElementById('bar_avatar').src=photo;
-  document.getElementById('owner').src=photo;
+  //document.getElementById('owner').src=photo;
   
   let data=await api_readfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;
   console.log('save profile:',DB_USER);

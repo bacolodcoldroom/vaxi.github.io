@@ -136,6 +136,7 @@ function showMainPage(){
 async function dispHeaderMode(){
   //var n = new Date().toLocaleTimeString('it-IT');
   let v_mphoto='../gfx/avatar.png'; 
+  let v_mphoto_brgy='../gfx/avatar.png'; 
   if(!CURR_USER){    
     document.getElementById('logger').innerHTML="Please Log In";
     document.getElementById("page_login").style.display="none";     
@@ -144,10 +145,12 @@ async function dispHeaderMode(){
     document.getElementById("page_login").style.display="none";    
     if(JBE_CLOUD){
       v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
+      v_mphoto_brgy=await jeff_getImage('vaxi/images/'+CURR_AREANO+'.jpg');
     }else{        
       const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
       if(ndx > -1){
         v_mphoto='data:image/png;base64,' + btoa(DB_USER[ndx]['photo']);
+        v_mphoto_brgy='data:image/png;base64,' + btoa(DB_USER[ndx]['photo_brgy']);
       }
     }
     if(!v_mphoto){
@@ -155,7 +158,7 @@ async function dispHeaderMode(){
     }
   }
   document.getElementById('bar_avatar').src=v_mphoto;
-  document.getElementById('owner').src=v_mphoto;
+  document.getElementById('owner').src=v_mphoto_brgy;
   document.getElementById('brgyname').innerHTML=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
 }
 
@@ -678,7 +681,7 @@ function showLocks_dtl(){
   JBE_OPENBOX('main_lockers','Record Lockers',dtl,dtl2);
 }
 
-function quit_app(){
+function xquit_app(){
   if(f_MainPage){               
     //refreshIDX();
     MSG_SHOW(vbYesNo,"CONFIRM: ","Close the App?",function(){                   
@@ -687,6 +690,33 @@ function quit_app(){
     },function(){});                 
   }
 }
+
+/**
+ * Attempts to close the current window if running as a standalone PWA
+ * and if the window is script‑closable (i.e. only one history entry).
+ */
+//function quitPWA() {
+function exit_app(){
+  // 1. Detect standalone display mode
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  
+  if (!isStandalone) {
+    console.warn('quitPWA(): Not running in standalone mode, cannot close.');  
+    return;
+  }
+
+  // 2. Only top‑level windows with a single document can be closed by script
+  //    “This method can only be called on … top-level windows that have a single history entry.” :contentReference[oaicite:2]{index=2}
+  if (window.history.length === 1) {
+    window.close();  
+    // In Chrome/Edge, window.close() will succeed here and the PWA window will exit.
+  } else {
+    console.warn(
+      `quitPWA(): Cannot close—history length is ${window.history.length}, must be 1.`  
+    );
+  }
+}
+
 
 function get_bal_stock(v_loc,v_stockno,v_lotno,v_rundate){ 
   let v_in=0;
@@ -775,13 +805,26 @@ if (isMobileDevice()) {
   console.log("User is not using a mobile device.");
 }
 */
-function exit_app(){
+function xexit_app(){
+  /*
   let msg='Click the Upper Right [X] button of your browser';
   if(isMobileDevice()) {
     msg='Click the phone Back button';
   }
   MSG_SHOW(vbOk,'EXIT APP','<center>'+msg+'</center>', function(){},function(){});
+  */
+ 
+  if (window.history.length <= 1) {
+    window.close();
+  } else {
+    console.warn('Cannot close the PWA: multiple entries in session history.');
+    // Optionally, navigate to the initial page or prompt the user
+    // window.location.href = '/';
+  }
+
 }
+
+
 
 function formatPhoneNumber(phoneNumber) {
   // Remove non-digit characters from the input
