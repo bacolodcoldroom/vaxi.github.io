@@ -440,7 +440,7 @@ function show_credits(){
     '<div style="width:100%;height:100%;padding:0px 0 0 0;text-align:center;color:'+JBE_TXCLOR1+';background:none;">'+
       '<input type="button" onclick="JBE_CLOSEBOX()" style="width:100px;height:100%;" value="Close" />'+     
     '</div>';  
-  JBE_OPENBOX('main_credit','Software Development Team',dtl,dtl2);
+  JBE_OPENBOX('main_credit',CURR_APPNAME+' Software Development Team',dtl,dtl2);
 }
 
 function show_download(){    
@@ -1064,7 +1064,7 @@ function callText(){
   
   var dtl=      
     //'<div id="div_calltext" data-zoom=0 style="width:100%;height:'+(H_BODY-350)+'px;overflow:auto;text-align:center;padding:0px;background-color:white;">'+
-    '<div id="div_calltext" data-zoom=0 style="width:100%;height:'+(H_BODY-100)+'px;overflow:auto;text-align:center;padding:0px;background-color:white;">';
+    '<div id="div_calltext" data-zoom=0 style="width:100%;height:'+(H_BODY-200)+'px;overflow:auto;text-align:center;padding:0px;background-color:white;">';
       
       for(var i=0;i<DB_USER.length;i++){
         
