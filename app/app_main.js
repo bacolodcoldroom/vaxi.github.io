@@ -681,7 +681,17 @@ function showLocks_dtl(){
   JBE_OPENBOX('main_lockers','Record Lockers',dtl,dtl2);
 }
 
-function xquit_app(){
+function xxxquit_app(){
+  if(f_MainPage){               
+    //refreshIDX();
+    MSG_SHOW(vbYesNo,"CONFIRM: ","Close the App?",function(){                   
+      window.history.go(0);
+      f_reload=true;
+    },function(){});                 
+  }
+}
+
+function quit_app(){
   if(f_MainPage){               
     //refreshIDX();
     MSG_SHOW(vbYesNo,"CONFIRM: ","Close the App?",function(){                   
@@ -696,7 +706,7 @@ function xquit_app(){
  * and if the window is script‑closable (i.e. only one history entry).
  */
 //function quitPWA() {
-function exit_app(){
+function xxexit_app(){
   // 1. Detect standalone display mode
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
   
@@ -715,6 +725,14 @@ function exit_app(){
       `quitPWA(): Cannot close—history length is ${window.history.length}, must be 1.`  
     );
   }
+}
+
+function exit_app(){
+  let msg='Click the Upper Right [X] button of your browser';
+  if(isMobileDevice()) {
+    msg='Click the phone Back button';
+  }
+  MSG_SHOW(vbOk,'EXIT APP','<center>'+msg+'</center>', function(){},function(){});
 }
 
 

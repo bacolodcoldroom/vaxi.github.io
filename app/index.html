@@ -759,10 +759,15 @@
     if (event.state) {      
       if(f_MainPage){                
         //refreshIDX();
+        /*
         MSG_SHOW(vbYesNo,"CONFIRM: ","Close this App?",function(){                    
           window.history.go(0);
           f_reload=true;
         },function(){});                  
+        */
+        window.history.go(0);
+        f_reload=true;
+        exit_app();
       }
     }
   })
