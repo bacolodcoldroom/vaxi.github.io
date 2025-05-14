@@ -747,7 +747,7 @@ function exit_app() {
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
   if (!isStandalone) {
     console.warn('exitPWA(): Not in standalone mode—cannot close window.');  
-    MSG_SHOW(vbOk,'EXIT APP','exitPWA(): Not in standalone mode—cannot close window.', function(){},function(){});
+    MSG_SHOW(vbCancel,'EXIT APP','exitPWA(): Not in standalone mode—cannot close window.', function(){},function(){});
     return;
   }
 
@@ -755,10 +755,8 @@ function exit_app() {
   if (window.history.length === 1) {
     window.close();
   } else {
-    console.warn(
-      `exitPWA(): Session history length is ${window.history.length}; must be 1 to close.`
-    );
-    MSG_SHOW(vbOk,'EXIT APP',`exitPWA(): Session history length is ${window.history.length}; must be 1 to close.`, function(){},function(){});
+    //console.warn(`exitPWA(): Session history length is ${window.history.length}; must be 1 to close.`);
+    MSG_SHOW(vbCancel,'EXIT APP','Again, click the phone BACK Button', function(){},function(){});
   }
 }
 
