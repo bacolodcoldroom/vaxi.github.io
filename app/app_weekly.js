@@ -150,8 +150,8 @@ function edit_weekly(col){
       '<div style="width:100%;height:'+(vheight-30-2-10)+'px;border:0px solid brown;font-size:12px;font-weight:bold;overflow:auto;padding:5px 0 0 0;color:black;background:none;">';
       let vdtl='';
       for(var i=0;i<DB_STOCK_INVTY.length;i++){
-        div=DB_STOCK_INVTY[i].stockno+'_'+fld1;            v_val1=document.getElementById(div).value;
-        div=DB_STOCK_INVTY[i].stockno+'_'+fld2;            v_val2=document.getElementById(div).value;
+        div=DB_STOCK_INVTY[i].stockno+'_'+fld1; v_val1=document.getElementById(div).value;
+        div=DB_STOCK_INVTY[i].stockno+'_'+fld2; v_val2=document.getElementById(div).value;
         let v_1lotno=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1lotno').innerHTML;
         let v_2lotno=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2lotno').innerHTML;
         let v_1expiry=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1expiry').innerHTML;
@@ -164,13 +164,13 @@ function edit_weekly(col){
 
           '<div style="float:left;width:60%;height:100%;border:0px solid black;">'+
             '<div style="width:100%;height:50%;border:0px solid black;">'+
-              '<input type="number" id="_'+DB_STOCK_INVTY[i].stockno+'_1w" class="cls_weekly_row" style="width:20%;height:100%;pointer-events:auto;font-weight:bold;background:yellow;" value='+v_val1+' />'+
+              '<input type="number" id="_'+DB_STOCK_INVTY[i].stockno+'_1w" class="cls_weekly_row" style="width:20%;height:100%;pointer-events:auto;font-weight:bold;background:yellow;" value="'+v_val1+'" />'+
               '<div class="cls_weekly_row" style="width:40%;background:'+clor_lotno+';">'+v_1lotno+'</div>'+
               '<div class="cls_weekly_row" style="width:20%;background:'+clor_expiry+';">'+v_1expiry+'</div>'+
               '<div class="cls_weekly_row" style="width:20%;background:'+clor_req+';">'+v_1req+'</div>'+
             '</div>'+
             '<div style="width:100%;height:50%;border:0px solid black;">'+
-              '<input type="number" id="_'+DB_STOCK_INVTY[i].stockno+'_2w" class="cls_weekly_row" style="width:20%;height:100%;pointer-events:auto;font-weight:bold;background:yellow;" value='+v_val2+' />'+
+              '<input type="number" id="_'+DB_STOCK_INVTY[i].stockno+'_2w" class="cls_weekly_row" style="width:20%;height:100%;pointer-events:auto;font-weight:bold;background:yellow;" value="'+v_val2+'" />'+
               '<div class="cls_weekly_row" style="width:40%;background:'+clor_lotno+';">'+v_2lotno+'</div>'+
               '<div class="cls_weekly_row" style="width:20%;background:'+clor_expiry+';">'+v_2expiry+'</div>'+
               '<div class="cls_weekly_row" style="width:20%;background:'+clor_req+';">'+v_2req+'</div>'+
@@ -199,7 +199,9 @@ function edit_weekly(col){
         '</div>'+
       '</div>'+
     '</div>';
-
+    //dtl=
+//'<div id="div_edit_weekly" style="width:100%;height:'+vheight+'px;text-align:center;padding:0px;background-color:none;">999'+
+//'</div>';
   JBE_OPENBOX('div_edit_weekly','Edit Week #'+col+'  ('+txtContent+')',dtl,dtl2,'close_edit_dtr');
 }
 

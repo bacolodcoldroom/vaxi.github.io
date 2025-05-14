@@ -1052,3 +1052,75 @@ async function fetchTextPortion(url, start, end) {
       throw error; // Re-throw for caller to handle
   }
 }
+
+function callText(){
+  if(!JBE_ONLINE){
+    //snackBar('OFFLINE');
+    //return;
+  }
+  var tilt='Call/Text Contact';
+  var vimgCall='gfx/jcall.png';
+  var vimgSms='gfx/jsms.png';
+  
+  var dtl=      
+    //'<div id="div_calltext" data-zoom=0 style="width:100%;height:'+(H_BODY-350)+'px;overflow:auto;text-align:center;padding:0px;background-color:white;">'+
+    '<div id="div_calltext" data-zoom=0 style="width:100%;height:'+(H_BODY-100)+'px;overflow:auto;text-align:center;padding:0px;background-color:white;">';
+      
+      for(var i=0;i<DB_USER.length;i++){
+        
+        if(DB_USER[i]['usertype']=='0') { continue; }
+        //alert(DB_USER[i]['username']);
+        dtl+=
+          '<div style="width:100%;height:40px;margin-top:5px;padding:5px;text-align:left;font-size:12px;background-color:lightgray;">'+
+            '<div style="float:left;width:35%;height:100%;padding:8px 0 0 5px;background-color:none;">'+DB_USER[i]['username']+'</div>'+
+            '<div style="float:left;width:35%;height:100%;padding:8px 0 0 5px;background-color:none;">'+DB_USER[i]['celno']+'</div>'+
+            '<input onclick="callTextGO(&quot;call&quot;,&quot;'+DB_USER[i]['celno']+'&quot;)" type="image" src="'+vimgCall+'" style="float:right;text-align:right;padding:0px 5px 0 0;height:100%;margin-left:10px;background:none;" />'+
+            '<input onclick="callTextGO(&quot;txt&quot;,&quot;'+DB_USER[i]['celno']+'&quot;)" type="image" src="'+vimgSms+'" style="float:right;text-align:right;padding:0px 5px 0 0;height:100%;background:none;" />'+
+          '</div>'; 
+      }
+      
+      /*
+      '<div style="width:100%;height:40px;margin-top:5px;padding:5px;text-align:left;font-size:12px;background-color:lightgray;">'+
+            '<div style="float:left;width:35%;height:100%;padding:8px 0 0 5px;background-color:none;">Telephone</div>'+            
+            '<div style="float:left;width:35%;height:100%;padding:8px 0 0 5px;background-color:none;">'+DB_SYS[0]['telno']+'</div>'+
+            '<input onclick="callTextGO(&quot;call&quot;,&quot;'+DB_SYS[0]['telno']+'&quot;)" type="image" src="'+vimgCall+'" style="float:right;text-align:right;padding:0px 5px 0 0;height:100%;margin-left:10px;background:none;" />'+
+            '<input onclick="callTextGO(&quot;txt&quot;,&quot;'+DB_SYS[0]['telno']+'&quot;)" type="image" src="'+vimgSms+'" style="float:right;text-align:right;padding:0px 5px 0 0;height:100%;background:none;" />'+
+      '</div>'+ 
+      '<div style="width:100%;height:40px;margin-top:5px;padding:5px;text-align:left;font-size:12px;background-color:lightgray;">'+
+            '<div style="float:left;width:35%;height:100%;padding:8px 0 0 5px;background-color:none;">Mobile</div>'+
+            '<div style="float:left;width:35%;height:100%;padding:8px 0 0 5px;background-color:none;">'+DB_SYS[0]['celno']+'</div>'+
+            '<input onclick="callTextGO(&quot;call&quot;,&quot;'+DB_SYS[0]['celno']+'&quot;)" type="image" src="'+vimgCall+'" style="float:right;text-align:right;padding:0px 5px 0 0;height:100%;margin-left:10px;background:none;" />'+
+            '<input onclick="callTextGO(&quot;txt&quot;,&quot;'+DB_SYS[0]['celno']+'&quot;)" type="image" src="'+vimgSms+'" style="float:right;text-align:right;padding:0px 5px 0 0;height:100%;background:none;" />'+
+      '</div>';
+      */
+          
+    dtl+='</div>';
+  
+  var dtl2=      
+    '<div style="width:100%;height:100%;padding:11px 0 0 0;text-align:center;color:'+JBE_TXCLOR1+';background:none;">'+
+      tilt+      
+    '</div>';   
+
+  JBE_OPENBOX('div_calltext',tilt,dtl,dtl2); 
+  //showMenu('mnu_callText');
+}
+function callTextGO(m,celno){  
+  //alert(m+' vs '+celno);  
+  if(celno.substring(0,1)=='0'){
+    celno='+63'+celno.substring(1);
+  }
+  
+  var vhref='';
+  if(m=='call') {      
+    //window.location.href="tel:+63-948-952-3337";
+    vhref='tel:'+celno;
+  }else if(m=='txt') {
+    //window.location.href="sms://+639489523337?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."
+    vhref='sms://'+celno+'?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me.';
+  }  
+  window.location.href=vhref;
+  //window.location.href="sms://+639489523337?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."
+}
+function close_calltext(){
+  //showMenu('mnu_main');    
+}

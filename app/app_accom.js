@@ -160,9 +160,9 @@ function edit_fm_accom(col){
           '<div style="float:left;width:50%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_ACCOM[i].descrp+'</div>'+
 
           '<div style="float:left;width:50%;height:100%;border:0px solid black;">'+            
-            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wm" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-size:14px;font-weight:bold;border-left:2px solid black;background:'+clor_male+';" value='+v_val1+' />'+
-            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wf" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-size:14px;font-weight:bold;border-right:1px solid black;background:'+clor_female+';" value='+v_val2+' />'+
-            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_total" class="cls_accom_row" style="width:34%;pointer-events:none;font-weight:bold;border-right:1px solid black;background:white;" value='+v_total+' />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wm" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-size:14px;font-weight:bold;border-left:2px solid black;background:'+clor_male+';" value="'+v_val1+'" />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_wf" class="cls_accom_row" onchange="get_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="width:33%;pointer-events:auto;font-size:14px;font-weight:bold;border-right:1px solid black;background:'+clor_female+';" value="'+v_val2+'" />'+
+            '<input type="number" id="_'+DB_STOCK_ACCOM[i].stockno+'_total" class="cls_accom_row" style="width:34%;pointer-events:none;font-weight:bold;border-right:1px solid black;background:white;" value="'+v_total+'" />'+
           '</div>'+
 
         '</div>';
@@ -176,7 +176,6 @@ function edit_fm_accom(col){
   var dtl2=   
     '<div style="width:100%;height:100%;">'+           
       '<div onclick="repl_fm_accom('+col+')" style="float:left;width:25%;height:100%;background:none;">'+
-      //'<div onclick="repl_fm_accom('+col+');" style="float:left;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jsave.png"  alt="home image" />'+
           '<span>Save</span>'+

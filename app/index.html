@@ -10,31 +10,31 @@
 
 <!-- HTML Meta Tags -->
 <!-- Google / Search Engine Tags -->
-<meta itemprop="name" content="Regent Prints">
+<meta itemprop="name" content="VAXi APP">
 <meta itemprop="description" content="Your Online Printing Store.">
 <meta itemprop="image" content="gfx/icon-192x192.png">
  
 <!-- Facebook Meta Tags -->
 <!--meta property="og:url" content="https://nothing.com"-->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Regent Prints">
+<meta property="og:title" content="VAXi APP">
 <meta property="og:description" content="Your Online Printing Store.">
 <meta property="og:image" content="gfx/icon-192x192.png">
  
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Regent Prints">
+<meta name="twitter:title" content="VAXi APP">
 <meta name="twitter:description" content="Your Online Printing Store.">
 <meta name="twitter:image" content="gfx/icon-192x192.png">
  
-<link rel="shortcut icon" href="gfx/favicon_io/favicon.ico">
-<link rel="icon" href="gfx/favicon_io/favicon.ico">
-<link rel="apple-touch-icon" href="gfx/favicon_io/apple-touch-icon.png">
+<link rel="shortcut icon" href="../gfx/favicon_io/favicon.ico">
+<link rel="icon" href="../gfx/favicon_io/favicon.ico">
+<link rel="apple-touch-icon" href="../gfx/favicon_io/apple-touch-icon.png">
 
 <link rel="manifest" href="./manifest.webmanifest">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<script type='text/javascript'  src='app_main.js'></script>
 <!--script type='text/javascript' src='html2pdf.jeffbundle.min.js'></script-->
-<script type='text/javascript'  src='a_main.js'></script>
 
 <style>
 
@@ -47,7 +47,7 @@
         }
     }
  
-    #wrapper {
+    #container {
       width: 100%;
       height: 400px;
       background-color: #333;
@@ -75,6 +75,35 @@
       user-select: none;
     }
 
+    .loading-balls {
+      display: flex;
+      gap: 20px;
+      justify-content: center;      
+      background-color: none;
+    }
+
+    .bounce-ball {
+      width: 80px;
+      height: 80px;
+      animation: bounce 1s infinite;
+    }
+
+    .bounce-ball:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .bounce-ball:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+/* Same animation as before */
+
+
     /*
     .cl_item:active {
       background-color: rgba(168, 218, 220, 1.00);
@@ -89,36 +118,36 @@
 </style>
 
 <!-- ****************************************************************** -->
-<title>VAXIMAIN App</title>
-<!--script src="./js/eruda.min.js"></script-->
+<title>VAXi App</title>
+<!--script src="../js/eruda.min.js"></script-->
 <!-- ****************************************************************** -->
-
 <script>  
-  var CURR_APPNAME="VAXIMAIN APP v3.3"; 
-  var CURR_CLIENT='VAXIMAIN';
-  var CURR_SITE='http://192.168.0.109:5500';
-  var CURR_VER="3.3 build 0.33";
-  var CURR_CLIENTNAME="Bacolod City Cold Chain Facility";
+  var CURR_APPNAME="VAXi APP"; 
+  var CURR_CLIENT='VAXIAPP';
+  var CURR_SITE='http://192.168.0.199:4440';
+  var CURR_VER="1.001";
+  var CURR_CLIENTNAME="Bacolod Cold Chain Facility";
   var CURR_CLIENTADDRESS="Annex Bldg., Bacolod New Gov't Center, Bacolod City";
   var CURR_TELNO="410-4810"; 
-
-  var CURR_PAGE='';
-  var CURR_DATE=new Date();
-  
-  var JBE_CLOUD=true;
-  var JBE_ONLINE=true;
-  var JBE_ONLINE_NAVI=true;
+  var CURR_AREANO=''; 
+  var JBE_CLOUD=false;
   var JBE_API='';
   console.log('window',window.location.origin.substring(0,26));
 
   if(window.location.origin.substring(0,26) == 'http://localhost:8080') { 
-    JBE_API=window.location.origin+'/vaxi/';  
-    JBE_CLOUD=false;
+    JBE_API=window.location.origin+'/vaxi/app/';  
+    //JBE_CLOUD=false;
     eruda.init();   
   }else if(window.location.origin.substring(0,16) == 'http://localhost') { 
-    JBE_API=window.location.origin+'/vaxi/';   
-    JBE_CLOUD=false;
-  }    
+    JBE_API=window.location.origin+'/vaxi/app/';   
+    //JBE_CLOUD=false;
+  }
+  console.log(JBE_API,'JBE_CLOUD',JBE_CLOUD);
+  
+  var JBE_ONLINE=true;
+  var JBE_ONLINE_NAVI=true;
+  //alert(JBE_API);
+  //alert(pathloc);
 </script>
 <!-- ****************************************************************** -->
 <!-- ****************************************************************** -->
@@ -127,8 +156,8 @@
 <body style="color:#252526;background:#E8E8E8;padding:0px;" onresize="myResizeFunction()">
 
 <audio id="myAudio">
-  <source src="gfx/snd/chimes.ogg" type="audio/ogg">
-  <source src="gfx/snd/chimes.mp3" type="audio/mpeg">
+  <source src="../gfx/snd/chimes.ogg" type="audio/ogg">
+  <source src="../gfx/snd/chimes.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
@@ -136,7 +165,7 @@
 <!--************************* blocker-->
 <div id="je_msg" tabindex="0" data-rval="SAGBAYAN" class="modal" style="display:none;z-index:1100;" onkeydown="javascript:if(event.keyCode==27) closeModal()">
   <div class="modal-content">
-    <div id="modal-header" class="modal-header head_color" style="background:none;">
+    <div id="modal-header" class="modal-header color_head" style="background:none;">
       <!--span class="closeBtn" onclick="closeModal()">&times;</span-->
       <span id="DivPrompt">
         <h1>Modal Header</h1>
@@ -160,19 +189,22 @@
         </div>
       </div>				
     </div>
-    <div id="modal-footer" class="modal-footer head_color" style="color:white;text-align:right;height:auto;">
+    <div id="modal-footer" class="modal-footer color_head" style="color:white;text-align:right;height:auto;">
       ENADSYS Dialog Ver 1.01 Copyright (c) 2018
     </div>
   </div>	
 </div>  
 
-<div id="myJBox" class="modal_box" style="bottom:0px;"></div>
-
 <div id="loading" class="modal" style="display:block;z-index:1450;">      
   <div style="width:150px;height:150px;background:none;
           position: absolute;  z-index: 1000;  top: 50%;  left: 50%;  
           -webkit-transform: translate(-50%, -50%);  transform: translate(-50%, -50%);">      
-    <img src="gfx/proc_logo.gif" alt="proc image" style="float:right;height:100%;width:100%;background:none;" />
+    <!--img src="gfx/balls.webp" alt="proc image" style="float:right;height:100%;width:100%;background:none;" /-->
+    <div class="loading-balls">
+      <img src="../gfx/blackball.png" class="bounce-ball" alt="">
+      <img src="../gfx/blackball.png" class="bounce-ball" alt="">
+      <img src="../gfx/blackball.png" class="bounce-ball" alt="">
+    </div>
   </div>
 </div>
 
@@ -190,7 +222,7 @@
           color:white;background:black;" onclick="closeLogin()">x</div>
       </div>
       <div id="dv_avatar" style="position:relative;width:100%;height:65px;text-align:center;background:none;">
-        <img id="img_avatar" data-img="" name="img_avatar" src="gfx/avatar.png" style="border-radius:50%;height:65px;width:65px;border:1px solid gray;"/>
+        <img id="img_avatar" data-img="" name="img_avatar" src="../gfx/avatar.png" style="border-radius:50%;height:65px;width:65px;border:1px solid gray;"/>
         <div id="div_avatar" style="display:none;position:absolute;top:50%;left:50%;cursor:pointer;border-radius:50%;border:1px solid black;
               height:30px;width:30px;padding:3px;background:#434343;">              
           
@@ -225,7 +257,7 @@
       <div id="log_1" style="display:block;margin-top:1px;text-align:center;height:30px;width:100%;background:none;">
         <input id="lognow" type="button" onclick="chk_lognow()" style="width:48%;height:100%;color:white;background:#039be5;border:1px solid gray;border-radius:5px;cursor:pointer;" value="Log In"/>        
       </div>
-      <div style="width:100%;height:auto;margin-top:9px;text-align:center;background:none;">Not a member yet? <span id="signUp" onclick="fm_profile(1)" style="font-weight:bold;cursor:pointer;color:red;"><u>Sign Up</u></span></div>        
+      <div style="display:none;width:100%;height:auto;margin-top:9px;text-align:center;background:none;">Not a member yet? <span id="signUp" onclick="fm_profile(1)" style="font-weight:bold;cursor:pointer;color:red;"><u>Sign Up</u></span></div>        
     </div>
 
   </div>  
@@ -233,72 +265,167 @@
 </div>
 
 <!--  *************************PAGES***************************************************
-************************************************************************** -->
-<div id="wrapper" class="head_color" style="display:flex;position:relative;width:100%;height:100%;margin:0;background:dimgray;">  
+      ************************************************************************** -->
+<div id="wrapper" style="position:relative;display:none;height:100%;background-color:white;padding:0px;">  
+    <!--div id="app-logo"  style="width:100%;height:100px;text-align:center;">
+      <img  src="./gfx/icon-192x192.png" style="height:100%;" alt="first_logo image" >      
+    </div--> 
+    <!--  ************************* PERMANENT *************************************************** -->
 
-  <div id="page_main" class="page_class" style="display:block;width:100%;height:auto;border:0px solid red;">
+   
 
-    <div id="div_header" style="display:block;width:100%;height:100px;text-align:center;border:1px solid gray;padding:0px;color:white;">        
+  <div id="page_main" class="page_class" style="display:none;position:relative;width:100%;height:100%;background-color:none;">
+    
+    <div id="div_header" class="jheader color_head" style="width:100%;height:54px;opacity:1;z-index:5;text-align:center;padding:0px;border:0px solid gray;">              
+      <div id="div_tilt" style="display:block;width:auto;height:60%;font-size:24px;font-weight:bold;padding:8px 0 0 0;text-align:center;color:white;background:none;"></div>        
+      <div id="div_sysdate" style="display:block;width:auto;height:40%;font-size:14px;font-weight:bold;padding:0px 0 0 0;text-align:center;color:black;background:none;"></div>        
+    </div>
+        
+    <div id="user_main" style="display:block;width:100%;height:300px;padding:0px;background:none;">
+      <div id="online_stat" class="color_head2" style="width:100%;height:25px;background:whitesmoke;">
+        <div id="online_status" style="float:left;width:50%;height:100%;font-size:14px;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset: 5px;font-weight:bold;padding:3px;color:red;border:0px solid red;">O F F L I N E</div>
+        <div id="logger" style="float:right;text-decoration:none;text-decoration-thickness:3px;text-underline-offset: 5px;cursor:pointer;text-align:right;width:50%;height:100%;font-size:14px;font-weight:bold;padding:3px 10px 0 0;color:lightgray;background:none;"></div>      
+      </div>  
 
-      <div id="div_logo">
-        <img src="gfx/favicon_io/android-chrome-192x192.png" onclick="location.href='index.html'" title="Refresh" style="cursor:pointer;float:left;height:100%;border:0px solid white;"/> 
-        <!--img src="gfx/icon-192x192.png" onclick="openNav()" title="Refresh" style="cursor:pointer;float:left;height:100%;border:0px solid white;"/-->               
+      <div id="user_hd" style="width:96%;height:75px;margin:2% auto;font-weight:bold;text-align:center;padding:5px;border-radius:10px;border:2px solid navy;background:whitesmoke;">
+              <!--font-weight:bold;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;border:2px solid navy;background:whitesmoke;"-->        
+        <div style="width:100%;height:25px;font-size:14px;font-weight:900;text-align:center;border:0px solid red;">BARANGAY VACCINE INVENTORY SYSTEM</div>
+        <div id="heeding1" style="font-size:14px;font-weight:bold;color:navy;">1</div>
+        <div id="heeding2">2</div>
+        <div id="heeding3"></div>
       </div>
 
-      <div id="hd_area" style="display:none;float:left;height:100%;text-align:left;background:red;">     
-        <div id="sys_tilt" onclick="jeff()"></div>  
-        <div id="sys_tilt1"></div>  
-        <div id="sys_tilt2"></div>  
+      <div id="user_body" style="margin-top:0px;width:100%;height:200px;text-align:center;border:0px solid red;background:none;">                
+        <div style="position:relative;width:100%;height:160px;text-align:center;padding:10px;background:none;">                
+          <div style="width:100%;height:100%;top:0px;text-align:center;border:0px solid yellow;"><img id="owner" src="gfx/logo.png" style="height:100%;" /></div>
+          <div style="position:absolute;width:100%;height:100%;top:0px;left:0px;opacity:0.9;border:0px solid green;"><img src="../gfx/screenx.png" style="height:100%;" /></div>           
+        </div>  
+        <div style="width:100%;height:45px;text-align:center;font-size:16px;padding:10px 50px 10px 50px;background:none;">                
+          <div style="width:100%;height:100%;border-radius:5px;padding:2px;border:1px solid darkgray;">Barangay: <span id="brgyname" style="font-weight:bold;"></span></div>
+        </div> 
       </div>
 
-      <div id="hd_datetime" style="float:left;width:60%;height:100%;margin:0 auto;background:none;">
-        <div style="width:100%;height:55%;padding:5px 0 0 0;font-size:25px;font-weight:bold;background:none;">BARANGAY VACCINE INVENTORY SYSTEM</div>
-        <div style="width:100%;height:45%;padding:5px 0 0 0;font-size:16px;background:none;">
-          <div id="hd_date" style="float:left;width:50%;height:100%;text-align:right;padding:0px 5px 0 0;background:none;"></div> 
-          <div id="hd_time" style="float:left;width:50%;height:100%;text-align:left;padding:0px 0 0 5px;background:none;"></div>       
+      <div id="user_foot" style="width:100%;height:220px;text-align:center;border:0px solid blue;padding:10px; background:none;">
+        <div style="width:100%;height:125px;text-align:center;border:0px solid blue;padding:0px; background:none;">               
+          <input type="button" class="cls_button_round color_head2" onclick="fm_weekly()" style="width:80%;height:50px;color:white;" value="Weekly Inventory" />
+          <input type="button" class="cls_button_round color_head2" onclick="fm_accom()" style="margin-top:10px;width:80%;height:50px;color:white;" value="NIP Weekly Accomplishment" />
         </div> 
-      </div> 
 
-      <div id="hd_notif" style="display:none;position:absolute;top:0px;text-align:left;padding:2px;width:90px;background:none;">
-        <div style="position:relative;width:100%;height:100%;text-align:center;padding:0px 0 0 0;border:0px solid green;background:none;">
-          <img src="gfx/jbell.png" style="height:100%;" />
-          <div id="hd_num1" title="Today" style="cursor:move;position:absolute;top:12px;left:29px;width:28px;height:28px;text-align:left;padding:3.2px 1.2px 0px 0px;border-radius:50%;border:2px solid black;font-size:15px;font-weight:bold;text-align:center;color:white;background:red;">1</div>          
-          <div id="hd_num2" title="Tomorrow" style="cursor:move;position:absolute;top:3px;left:3px;width:28px;height:28px;text-align:left;padding:3.2px 1.2px 0px 0px;border-radius:50%;border:2px solid black;font-size:15px;font-weight:bold;text-align:center;color:white;background:orange;">8</div>
-          <div id="hd_num3" title="within 7 Days" style="cursor:move;position:absolute;top:3px;left:55px;width:28px;height:28px;text-align:left;padding:3.2px 1.2px 0px 0px;border-radius:50%;border:2px solid black;font-size:15px;font-weight:bold;text-align:center;color:white;background:lightgreen;">11</div>          
-        </div> 
-      </div> 
-
-      <div id="hd_user" style="float:right;z-index:100;width:20%;height:100%;background:none;">                  
-        <div onclick="main_login()" style="float:right;width:auto;height:100%;text-align:right;border:0px solid red;background:none;">            
-          <img id="bar_avatar" style="display:block;float:right;cursor:pointer;height:100%;border-radius:50%;border:2px solid white;background:white;" src="gfx/avatar.png" />                         
+        <div style="margin-top:5px;width:100%;height:60px;border-radius:5px;border:1px solid gray;padding:5px;background:whitesmoke;">
+          <div style="float:left;width:20%;height:100%;background:none;">
+            <img src="../gfx/logoCHO.png" style="float:left;height:100%;" />
+          </div> 
+          <div style="float:left;width:60%;height:100%;padding:0px;font-style:italic;font-size:11px;">            
+            <div style="width:100%;height:33%;">VAXi App ver. <span id="ver_sion"></span></div>            
+            <div style="width:100%;height:33%;">Bacolod City Health Office (CHO)</div>
+            <div style="width:100%;height:34%;">Version Build: <span id="ver_build"></span> Copyright &COPY; 2024</div>
+          </div>
+          <div style="float:right;width:20%;height:100%;background:none;">
+            <img src="../gfx/logo.png" style="float:right;height:100%;" />
+          </div>  
         </div>
-        <div id="logger" style="float:right;height:100%;margin-right:5px;background:green;"></div>
-      </div>
+
+      </div>  
       
     </div>
 
-    <!--  ************************* BODY *************************************************** -->
-    <div id="div_body" data-mode="" data-code="" data-lotno="" data-row="" data-row2="" data-invty=0 style="display:flex;position:relative;width:100%;height:400px;border:0px solid red;background:dimgray;">
-
-      <div id="div_left" data-open=0 style="float:left;height:100%;font-size:9px;pointer-events:auto; background:darkslategray;">
-      </div> <!--div left-->     
-            
-      <div id="div_right" style="float:left;width:100%;height:100%;border:0px solid red;color:black;background:lightgray;">        
-      </div> <!--div right--> 
-
-    </div>  <!--body--> 
-
-  </div> <!--main div-->
-
-  <div id="mySidenav" class="sidenav" style="display:none;height:100%;margin-top:0px;font-size:9px;background:black;">    
   </div>
 
+  <div id="div_bar" style="display:block;position:absolute;left:0px;top:0px;height:55px;width:100%;padding:2px;background-color: rgba(255,255,255,0.1);z-index:6;background:none;">
+        
+    <div id="menu_open" onclick="openNav()" class="class_notif" style="float:left;display:block;left:0px;width:auto;height:50px;background:black;">
+      <img id="hd_img" src="gfx/jham.png" style="height:100%;border:2px solid black;background:none;" alt="notif new hd image" >      
+    </div> 
+    
 
-  <!--  *************************PAGES***************************************************  -->
+    <div class="class_notif" style="display:block;float:right;right:10px;width:auto;height:50px;background:none;">      
+      <div style="float:right;height:50px;width:50px;border-radius:50%;border:2px solid white;background:none;" alt="ai" >
+        <img id="bar_avatar" src="../gfx/avatar.png" onclick="main_login()" onerror="imgOnError(this)" 
+            style="float:right;height:100%;width:100%;border-radius:50%;border:1px solid black;background:none;" alt="ai" >
+      </div>
+      <div id="xlogger" style="display:none;float:right;width:100%;height:auto;text-align:right;padding:2px 0 0 0;font-size:11px;color:black;background:red;
+                              font-weight:bold;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
+      </div>
+    </div> 
+    
+    <div id="div_notifs" style="position:absolute;display:block;right:65px;width:auto;height:100%;background:none;">
+
+      <div id="notif_bell" onclick="show_notif_bell(0)" class="class_notif" style="right:0px;">
+        <img src="gfx/jbell.png" style="height:100%;background:none;" alt="notif new hd image" >
+        <div id="ntf_bell" class="class_notif2" style="left:35%;"></div>
+      </div> 
+      <div id="notif_chat" onclick="fm_chat('')" class="class_notif" style="position:relative;">
+        <img src="gfx/jnotif.png" style="height:100%;background:none;" alt="notif new hd image" >
+        <div id="ntf_chat" class="class_notif2" style="left:35%;"></div>
+      </div>       
+      <div id="notif_cart" onclick="fm_cart()" class="class_notif">
+        <img src="gfx/jcart.png" style="height:100%;background:none;" alt="notif order image" >
+        <div id="ntf_cart" class="class_notif2" style="left:35%;"></div>
+      </div>
+
+    </div>
+
+    <div id="jtime" onclick="" style="position:absolute;top:0px;left:0px;height:100%;;width:auto;color:red;padding:6px;
+          font-weight:bold;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+          font-size:14px;background:none;">   
+    </div>
+
+    <div id="div_nobar" style="display:none;height:100%;width:100%;top:0px;left:0px;position:absolute;background-color: rgba(0,0,0,0.4);">
+      
+    </div>
+
+    <div id="div_search" style="display:none;position:absolute;top:30px;left:10px;width:auto;height:100%;padding:2px;border-radius:5px;border:1px solid white;background:none;">
+        <input type="image" onclick="showUL(false)"  id="img_search" src="gfx/jsearch.png" style="float:left;width:auto;height:100%;background:none;" alt="seek image" />
+        <input id="inp_search" onclick="showUL(true)" onkeyup="mySearch()" type="text" style="float:left;height:100%;margin-left:2px;border:1px solid lightgray;text-align:center;opacity:0.6;color:black;background:white;" value=""/>
+    </div>   
+  </div> 
+  <div>
+  <!--h1>PWA Exit App</h1>
+    <button id="exitBtn">Exit Application</button>
+  </div-->
+  
+  <div id="mySidenav" class="sidenav" style="height:100%;margin-top:0px;font-size:9px;">
+    <div id="mySidenav_box" style="height:100%;width:90%;margin-top:0px;font-size:9px;border:1px solid black;padding:20px 0 0 0;background:darkgray;">
+    
+      <a id="id_setting" href="javascript:fm_setting()" class="nav_menu" style="display:none;margin-bottom:0px;">
+        <div style="width:100%;">
+          <img src="gfx/jsetting.png" alt="fm admin image"/>
+          <span>Setting</span>
+        </div>      
+      </a> 
+
+      <a href="javascript:show_credits()" class="nav_menu" style="margin-bottom:0px;">
+        <div style="width:100%;">
+          <img src="../gfx/jorg.png" alt="fm admin image"/>
+          <span>Credits</span>
+        </div>      
+      </a>      
+          
+    </div>      
+  </div>
+
+  <div id="myJBox" class="modal_box" style="bottom:0px;">
+  </div>
+
+  <div id="myBox" class="modal_box">
+    
+    <div id="myBox_main" data-open=0 data-close='' data-meter=0 class="bottom_box"> 
+      <div id="hd_box" class="hd_box" style="width:100%;height:30px;font-size:15px;border:1px solid black;background:none;">
+        <div id="cap_box" style="float:left;width:90%;height:100%;padding:5px;background:none;">Title Box A</div>
+        <div style="float:right;width:10%;height:100%;background:none;">
+          <input type="button" onclick="closeBox()" style="float:right;width:30px;height:100%;font-size:14px;color:white;background:red;" value="X" />
+        </div>  
+      </div>  
+      <div id="dtl_box" style="width:100%;height:80px;bottom:0px;padding:5px;overflow:auto;border:1px solid black;color:black;background:none;">      
+      </div>   
+    </div>
+  
+  </div>
+
   <div id="myView1" data-page=0 data-open=0 data-close="" data-JBEpage=0 class="page_class myView" style="display:none;">
     <div style="width:100%;height:0px;"></div>
     <div class="back_main">      
-      <div id="back_view1" onclick="JBE_CLOSE_VIEW(1)" class="back_class">
+      <div id="back_view1" onclick="JBE_CLOSE_VIEW()" class="back_class">
         <img id="back_view_img1" src="gfx/jback.png" style="height:100%;" />
         <span>Back</span>
       </div>      
@@ -306,13 +433,13 @@
       <div id="cap_viewMid1" class="cap_mid_class"></div>
     </div>
     <div id="dtl_myView1" class="myView_dtl">
-    </div>        
-  </div>  
+    </div>
+  </div>
     
   <div id="myView2" data-page=0 data-open=0 data-close="" class="page_class myView" style="display:none;">
     <div style="width:100%;height:0px;"></div>
     <div class="back_main">
-      <div id="back_view2" onclick="JBE_CLOSE_VIEW(2)" class="back_class">
+      <div id="back_view2" onclick="JBE_CLOSE_VIEW()" class="back_class">
         <img id="back_view_img2" src="gfx/jback.png" style="height:100%;" />
         <span>Back</span>
       </div>
@@ -323,11 +450,11 @@
       <!--dtl-->
     </div>       
   </div>
-
+  
   <div id="myView3" data-page=0 data-open=0 data-close="" class="page_class myView" style="display:none;">
     <div style="width:100%;height:0px;"></div>    
     <div class="back_main">
-      <div id="back_view3" onclick="JBE_CLOSE_VIEW(3)" class="back_class">
+      <div id="back_view3" onclick="JBE_CLOSE_VIEW()" class="back_class">
         <img id="back_view_img3" src="gfx/jback.png" style="height:100%;" />
         <span>Back</span>
       </div>
@@ -338,11 +465,11 @@
       <!--dtl-->
     </div>       
   </div>
-
+  
   <div id="myView4" data-page=0 data-open=0 data-close="" class="page_class myView" style="display:none;">
     <div style="width:100%;height:0px;"></div> 
     <div class="back_main">
-      <div id="back_view4" onclick="JBE_CLOSE_VIEW(4)" class="back_class">
+      <div id="back_view4" onclick="JBE_CLOSE_VIEW()" class="back_class">
         <img id="back_view_img4" src="gfx/jback.png" style="height:100%;" />
         <span>Back</span>
       </div>
@@ -353,11 +480,11 @@
       <!--dtl-->
     </div>       
   </div>
-
+  
   <div id="myView5" data-page=0 data-open=0 data-close="" class="page_class myView" style="display:none;">
     <div style="width:100%;height:0px;"></div> 
     <div class="back_main">
-      <div id="back_view5" onclick="JBE_CLOSE_VIEW(5)" class="back_class">
+      <div id="back_view5" onclick="JBE_CLOSE_VIEW()" class="back_class">
         <img id="back_view_img5" src="gfx/jback.png" style="height:100%;" />
         <span>Back</span>
       </div>
@@ -368,84 +495,122 @@
       <!--dtl-->
     </div>       
   </div>
+  <div id="mnu_main_owner" style="display:none;float:left;width:50%;height:100%;border:1px solid red;"></div>        
 
-  <!--************************* footer -->
-  <div class="head_color" id="main_footer" style="display:block;height:25px;width:100%;background:none;">
-    <div id="copyright" style="width:100%;height:100%;font-size:12px;padding:5px 0 0 0;color:white;background:none;">
-      Bacolod City Health Office | Cold Chain Facility &copy; Copyright 2025. All rights reserved.
-    </div>      
+  <div id="div_footer" class="jfooter color_head" style="display:block;height:50px;width:100%;">
+    <div id="mnu_submenu" class="menu_class" style="display:none;width:100%;height:100%;"></div>
+        
+    <div id="mnu_mainmenu" class="menu_class" style="display:none;width:100%;height:100%;">   
+          
+      <div onclick="location.href='index.html'" style="float:left;width:25%;height:100%;background:none;">
+        <div class="class_footer">
+          <img src="gfx/jhome.png" alt="home image" />
+          <span>Refresh</span>
+        </div>
+      </div>
+        
+      
+       
+      <div onclick="callText('call')" style="float:left;width:25%;height:100%;background:none;">
+        <div class="class_footer">
+          <img src="../gfx/jcall.png" alt="call image" />
+          <span>Call / Text</span>
+        </div>
+      </div>    
+      
+      <div id="mnu_upload" onclick="not_yet()" style="float:left;width:25%;height:100%;background:none;">
+        <div class="class_footer">
+          <img src="../gfx/jchat.png" alt="call image" />
+          <span>Chat</span>
+        </div>
+      </div>
+
+      <div onclick="show_credits()" style="float:left;width:25%;height:100%;background:none;">
+        <div class="class_footer">
+          <img src="../gfx/jorg.png" alt="call image" />
+          <span>Credits</span>
+        </div>
+      </div>   
+
+      <!--div onclick="exit_app()" style="float:right;width:25%;height:100%;background:none;">
+        <div class="class_footer">
+          <img id="log_avatar" src="gfx/jclose.png" onerror="imgOnError(this)" style="height:100%;" alt="admin image" />
+          <span>EXIT</span>
+        </div> 
+      </div-->
+
+    </div> <!--menu-->
+
   </div> <!--footer-->
 
-</div> <!--wrapper div-->
+</div> <!--main div-->
 
-<link rel="stylesheet" href="css_main.css">
-<link rel="stylesheet" href="css_mobile.css">
-<link rel="stylesheet" type="text/css" href="js/leaflet.css" />
-<link rel="stylesheet" href="misc/jbe_fmlibGH.css">
-<script type='text/javascript' src='js/html2pdf.jeffbundle.min.js'></script>
+<link rel="stylesheet" href="main_styles.css">
+<link rel="stylesheet" href="mobile.css">
+
+<!--link rel="stylesheet" href="misc/jbe_fmlib.css"-->
+
+<link rel="stylesheet" type="text/css" href="../js/leaflet.css" />
+<script type='text/javascript' src='../js/html2pdf.jeffbundle.min.js'></script>
+<!--script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script-->
+<script type='text/javascript' src='../js/leaflet.js'></script>
+<script type='text/javascript' src='../js/axios.min.js'></script>
+<script type='text/javascript' src='../js/enadlib.js'></script>
+
+<script type='text/javascript' src='../js/coke.js'></script>
+<script type='text/javascript' src='../js/je_msg.js'></script>
+<script type='text/javascript' src='../js/qrcode.min.js'></script>
+
+<!-- libs -->
+<script type='text/javascript'  src='../api_jefflib.js'></script>
+<!--script type='text/javascript'  src='../misc/jbe_fmlib.js'></script-->
+<!--script type='text/javascript'  src='../misc/sha_api.js'></script-->
+<script type='text/javascript'  src='../misc/sha_image.js'></script>
+<script type='text/javascript'  src='../misc/jbe_map.js'></script>
+
+<script type='text/javascript'  src='../app_db.js'></script>
+<script type='text/javascript'  src='../app_idx.js'></script>
+<script type='text/javascript'  src='../common.js'></script>
 
 
-<script type='text/javascript' src='js/enadlib.js'></script>
-<script type='text/javascript' src='js/coke.js'></script>
-<script type='text/javascript' src='js/je_msg.js'></script>
-<script type='text/javascript' src='js/qrcode.min.js'></script>
+<script type='text/javascript'  src='app_admin.js'></script>
 
-<script type='text/javascript'  src='api_jefflib.js'></script>
-<script type='text/javascript'  src='app_db.js'></script>
-<script type='text/javascript'  src='app_idx.js'></script>
+<script type='text/javascript'  src='app_setting.js'></script>
+<script type='text/javascript'  src='app_weekly.js'></script>
+<script type='text/javascript'  src='app_accom.js'></script>
 
+<script type='text/javascript'  src='rest_api.js'></script>
 
-<script type='text/javascript' src='misc/jbe_fmlibGH.js'></script>
-<script type='text/javascript' src='misc/leaflet.js'></script>
-
-<script type='text/javascript' src='misc/sha_image.js'></script>
-
-<script type='text/javascript'  src='a_admin.js'></script>
-<script type='text/javascript'  src='a_dashboard.js'></script>
-<script type='text/javascript'  src='common.js'></script>
-
-<script type='text/javascript'  src='a_area.js'></script>
-<script type='text/javascript'  src='a_stock.js'></script>
-<script type='text/javascript'  src='a_stock2.js'></script>
-<script type='text/javascript'  src='a_user.js'></script>
 
 <script>
   var THISFILE=[];
   clear_THISFILE();  
 
-  var SYS_TILT='TALLY BOARD SYSTEM';
-
   var jbe_screen_mode=0;
   
+ 
+  var GITHUB_TOKEN='';
+  //039be5
+  //JBE_CLOR='#039be5';
   var JBE_CLOR='#0060aa';
   var JBE_CLOR2='#3474bb'; 
   var JBE_CLOR3='#57a8e7'; 
   var JBE_CLOR4='#8bcdff'; 
-/*
-   JBE_CLOR='#003333';
-   JBE_CLOR2='#006666'; 
-   JBE_CLOR3='#009999'; 
-   JBE_CLOR4='#00cccc'; 
-*/
+
   var JBE_TXCLOR1='#ffffff'; 
   var JBE_TXCLOR2='#000000'; 
   var JBE_TXCLOR3='#ffffff'; 
   var JBE_TXCLOR4='#ffffff'; 
 
-  var JBE_ONLINE=true;
-  var JBE_ONLINE_NAVI=true;
-
   var JBE_DEF_IMG='gfx/jimage.png';
 
-  var DB_LOGGER=[];
-  var DB_LOCKERS=[];
-
   var DB_USER=[];  
-  var DB_CLIENTS=[]; 
-  var DB_INVTY=[];
-  var DB_ACCOM=[];
-  var DB_LOG=[];
+  var DB_DAILY=[];  
+  var DB_MONTHLY=[];  
 
+  var DB_LOGGER=[];
+  var DB_LOCKERS=[];  
+  var DB_PTR=[];
   var DB_AREA=[];
   var DB_SUPPLIER=[];
   var DB_WHOUSE=[];
@@ -460,19 +625,20 @@
   var DB_ADJ=[];
   var DB_ADJ2=[];
   var DB_PRODUCT=[];
+  var DB_STOCK_ACCOM=[];  
   var DB_STOCK_INVTY=[];  
+  var DB_INVTY=[];  
+  var DB_ACCOM=[];
+  var DB_LOG=[];  
   var DB_SIG=[];  
 
   var DB_COMMENT=[];  
   var DB_CHAT=[];  
-  var DB_SYS=[];  
   var DB_CART=[];  
   var DB_ORDER=[];  
   var DB_ORDER2=[];  
   var DB_BELL=[];
   var DB_SLIDER=[];
-  var DB_NOTIF=[];
-  var DB_NOTIF2=[];
 
   var CLIENT_USER=[];
   var CLIENT_TRANS=[];
@@ -480,10 +646,11 @@
   var CLIENT_CHAT=[];  
 
   var CURR_REC='';
-  var CURR_AREANO=''; 
-  var CURR_USER='';   
+  var CURR_USER=''; 
   var CURR_NAME='';    
+  var CURR_NAME2='';    
   var CURR_AXTYPE=0;
+  var CURR_DATE=new Date();
   //var aryServTitle=[]; var aryServImg=[]; aryServClr=[];
 
   var V_DESCRP='';
@@ -535,6 +702,7 @@
 
 */
 
+  
 
   /***************************************************** */
   
@@ -548,6 +716,26 @@
 	} else {
 		console.log('Service workers are not supported.');
 	}
+    
+
+  // Exit App functionality
+  /*
+  document.getElementById('exitBtn').addEventListener('click', () => {
+      if (window.confirm('Are you sure you want to exit the application?')) {
+          // Close the window if possible
+          if (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
+              window.close(); // This works for installed PWAs on some platforms
+              window.location.href = 'about:blank'; // Fallback
+          } else {
+              window.location.href = 'about:blank'; // For browsers
+          }
+      }
+  });*/
+
+  // Track PWA installation
+  window.addEventListener('appinstalled', (evt) => {
+      console.log('PWA installed successfully');
+  });
   
   /***************************************************** */
 	
@@ -565,10 +753,15 @@
     if (event.state) {      
       if(f_MainPage){                
         //refreshIDX();
-        MSG_SHOW(vbYesNo,"CONFIRM: ","Close the App?",function(){                    
+        /*
+        MSG_SHOW(vbYesNo,"CONFIRM: ","Close this App?",function(){                    
           window.history.go(0);
           f_reload=true;
         },function(){});                  
+        */
+        //window.history.go(0);
+        //f_reload=true;
+        exit_app();
       }
     }
   })
@@ -591,21 +784,29 @@
   var COOK_CLIENT=readCookie('cok_client_'+CURR_CLIENT);
   CURR_USER=readCookie('cok_user_'+CURR_CLIENT);
   CURR_NAME=readCookie('cok_name_'+CURR_CLIENT);
+  CURR_NAME2=readCookie('cok_name2_'+CURR_CLIENT);
   CURR_AXTYPE=readCookie('cok_axtype_'+CURR_CLIENT);
-  
+
   var d = new Date();  
   var n = d.toLocaleTimeString('it-IT');
 
   if(!CURR_USER){ CURR_USER=''; }
- 
-  document.getElementById('hd_date').innerHTML = JBE_DATE_FORMAT(new Date(),'MMM DD, YYYY');
-  document.getElementById('hd_time').innerHTML = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
-  JBE_SET_COLOR_BY_CLASS('head_color','white',JBE_CLOR);
-  JBE_SET_COLOR_BY_CLASS('head_color2','white',JBE_CLOR2);
-  JBE_SET_COLOR_BY_CLASS('head_color3','white',JBE_CLOR3);
-  JBE_SET_COLOR_BY_CLASS('head_color4','white',JBE_CLOR4);
+  myResizeFunction();   
+
+  JBE_SET_COLOR_BY_CLASS('color_head','',JBE_CLOR);
+  JBE_SET_COLOR_BY_CLASS('color_head2','white',JBE_CLOR2);
+  JBE_SET_COLOR_BY_CLASS('color_head3','black',JBE_CLOR3);
+  JBE_SET_COLOR_BY_CLASS('color_head4','black',JBE_CLOR4);
+  JBE_SET_COLOR_BY_CLASS('back_main','blue',JBE_CLOR);
   
+  //document.getElementById('divUL').style.height=(H_BODY-H_HEADER)+'px';
+    
+  document.getElementById('heeding1').innerHTML=CURR_CLIENTNAME.toUpperCase();
+  document.getElementById('heeding2').innerHTML=CURR_CLIENTADDRESS;
+  //document.getElementById('heeding3').innerHTML='( EnadSys Node JS App Ver.: '+CURR_VER+' )';
+  document.getElementById('div_tilt').innerHTML=CURR_APPNAME;
+    
   let dd = new Date();
   let formatter = Intl.DateTimeFormat(
       "default", // a locale name; "default" chooses automatically
@@ -618,11 +819,19 @@
           minute: "numeric"
       }
   );
-  //document.getElementById('div_sysdate').innerHTML=formatter.format(dd);
+  document.getElementById('div_sysdate').innerHTML=formatter.format(dd);
 
   window.history.pushState({ noBackExitsApp: true }, '');
   f_MainPage=false;
-  myResizeFunction();  
+
+  // Get the title element
+  var titleElement = document.querySelector('title');
+  // Change the content of the title element
+  titleElement.textContent = CURR_APPNAME;
+  
+  document.getElementById('div_bar').style.display='block';
+  refresh_sidenav();
+
   start_app();  
 
 </script>
