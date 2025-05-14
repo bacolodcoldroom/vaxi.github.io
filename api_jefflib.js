@@ -5,7 +5,7 @@ const REPO_NAME = 'JDB';
 var apiBase = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
 
 async function api_readfile(cloud,path) {    
-  console.log('api_readfile path:',path);
+  //console.log('api_readfile path:',path);
   if(cloud){
     path=path+'.json';
     try {
@@ -134,13 +134,18 @@ async function get_all_db_from_json(){
 
 
 //===========================================================
-async function updateField(path,targetField,newValue) {
+async function updateField(path,cond,targetField,newValue) {
+  /*
+  const API_BASE = 'https://api.github.com';
+  const REPO_OWNER = 'bacolodcoldroom';
+  const REPO_NAME = 'JDB';
+  */
   // GitHub configuration
-  const owner = 'your-username';
-  const repo = 'your-repo';
+  const owner = REPO_OWNER;
+  const repo = REPO_NAME;
   //const path = 'path/to/file.json'; // Path to your JSON file in the repo
   const branch = 'main'; // or your branch name
-  const token = 'your-github-personal-access-token'; // Needs repo scope
+  const token = GITHUB_TOKEN; // Needs repo scope
 
   // Field to update
   //const targetField = 'fieldName'; // Field you want to update
@@ -165,6 +170,11 @@ async function updateField(path,targetField,newValue) {
       const content = atob(fileData.content.replace(/\s/g, ''));
       const jsonContent = JSON.parse(content);
       
+      // 3. Find user by username
+      //const user = users.find(u => u.username === targetUsername);
+      const user = jsonContent.find(cond);
+      if (!user) throw new Error('User not found');
+
       // Update the specific field
       jsonContent[targetField] = newValue;
 
@@ -201,3 +211,71 @@ async function updateField(path,targetField,newValue) {
 
 // Usage
 //updateField();
+
+async function updateRecordField(path,cond,fieldToUpdate,newValue) {
+  // GitHub Configuration
+  const owner = REPO_OWNER;
+  const repo = REPO_NAME;
+  const branch = 'main'; // or your branch name
+  const token = GITHUB_TOKEN; // Needs repo scope
+
+  try {
+      // 1. Get current file content
+      const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
+      const getResponse = await fetch(getUrl, {
+          headers: {
+              'Authorization': `token ${token}`,
+              'User-Agent': 'JS-Client'
+          }
+      });
+
+      if (!getResponse.ok) throw new Error('Failed to fetch file');
+      
+      const fileData = await getResponse.json();
+      const sha = fileData.sha;
+      
+      // 2. Decode and parse JSON
+      const content = atob(fileData.content.replace(/\s/g, ''));
+      const users = JSON.parse(content);
+      
+      if (!Array.isArray(users)) throw new Error('Invalid JSON structure');
+      
+      // 3. Find user by username
+      //const user = users.find(u => u.username === targetUsername);
+      const user = users.find(cond);
+      if (!user) throw new Error('User not found');
+      
+      // 4. Update the field
+      user[fieldToUpdate] = newValue;
+
+      // 5. Encode new content
+      const updatedContent = btoa(JSON.stringify(users, null, 2));
+
+      // 6. Push changes to GitHub
+      const putUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      const putResponse = await fetch(putUrl, {
+          method: 'PUT',
+          headers: {
+              'Authorization': `token ${token}`,
+              'User-Agent': 'JS-Client',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              //message: `Update ${fieldToUpdate} for ${targetUsername}`,
+              message: `Updated`,
+              content: updatedContent,
+              sha: sha,
+              branch: branch
+          })
+      });
+
+      if (!putResponse.ok) throw new Error('Failed to update file');
+      
+      const result = await putResponse.json();
+      console.log('User updated successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error:', error);
+      throw error;
+  }
+}

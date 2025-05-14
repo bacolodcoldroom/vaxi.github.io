@@ -20,31 +20,44 @@ async function show_log(){
   let curdate=JBE_DATE_FORMAT(new Date(),'YYYY-MM-DD');
   
   DB_LOG.sort(sortByMultipleKey(['*time','date','areano']));
+  let arr_post=[]; let ctr=0;
   let dtl='';  
   let areanames='';
   for(var i=0;i<DB_LOG.length;i++){
     if(DB_LOG[i].date != curdate){ continue; }
         
     let aname=get_area(DB_LOG[i].areano);
-    let posted=DB_LOG[i].post;
+    let post=DB_LOG[i].post;
+    let clor='black';
+    if(!post){ 
+      clor='red'; 
+      speakText('New Update! from '+aname);
+      arr_post[ctr]=DB_LOG[i].areano;
+    }
+
     dtl+=
     '<div onclick="sel_brgy(&quot;'+DB_LOG[i].areano+'&quot;)" style="width:100%;height:40px;margin-top:5px;padding:2px;border:1px solid lightgray;">'+
       '<div style="width:100%;height:50%;">'+
-        '<div style="float:left;width:70%;height:100%;font-weight:bold;">'+aname+'</div>'+
+        '<div style="float:left;width:70%;height:100%;font-weight:bold;color:'+clor+';">'+aname+'</div>'+
         '<div style="float:right;width:auto;height:100%;">'+DB_LOG[i].time+'</div>'+
       '</div>'+
       '<div style="width:100%;height:50%;">'+DB_LOG[i].log+'</div>'+
     '</div>';
-    if(!posted){
-      areanames=areanames+aname+', ';
-    }
   }
+
   areanames=areanames.substring(0,areanames.length-1);
+  console.log(areanames);
   document.getElementById('id_log').innerHTML=dtl;
   //JBE_AUDIO('gfx/snd/insight',5);
   if(dtl){
     //speakText('New Update! '+areanames);
   }
+  if(arr_post.length>0){
+    //alert(arr_post.length);
+    //console.log(arr_post);
+    //if(JBE_CLOUD){ updateField(JBE_API+'log.json',record => record.post === false,'post',true); }
+  }
+
 }
 
 
@@ -82,12 +95,10 @@ function update_week_buttons(date,tran){
   }
 
   for(var i=0;i<4;i++){   
-    console.log(tran,vbtn,(vbtn+i));
     document.getElementById((vbtn+i)).textContent='';
   }
   for(var i=0;i<wednesdays.length;i++){
     let wed=JBE_DATE_FORMAT(wednesdays[i].toDateString(),'MMM DD, YYYY');
-    //console.log('---->>>> dates wed:',wed);
     document.getElementById(vbtn+i).textContent=wed;
   }
 }
