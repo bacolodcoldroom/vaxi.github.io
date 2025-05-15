@@ -12,7 +12,7 @@ async function make_log(areano,tran){
     "tran":tran,
     "post":false
   };
-  await api_save(JBE_CLOUD,JBE_API+'log',ob,record => record.areano !== areano || record.tran !== tran);
+  await api_save(JBE_CLOUD,JBE_API+'log',ob,record => !(record.areano === areano && record.tran === tran));
 }
 
 async function show_log(){
@@ -25,14 +25,18 @@ async function show_log(){
   let areanames='';
   for(var i=0;i<DB_LOG.length;i++){
     if(DB_LOG[i].date != curdate){ continue; }
+    //if(DB_LOG[i].post == true){ continue; }
         
-    let aname=get_area(DB_LOG[i].areano);
-    let post=DB_LOG[i].post;
+    let aname=get_area(DB_LOG[i].areano);    
     let clor='black';
-    if(!post){ 
+    if(DB_LOG[i].post==false){ 
       clor='red'; 
       speakText('New Update! from '+aname);
-      arr_post[ctr]=DB_LOG[i].areano;
+      console.log('......... ',get_area(DB_LOG[i].areano));
+      //await updateField(JBE_API+'log.json',record => record.areano ===  DB_LOG[i].areano && record.post === false,'post',true);       
+      DB_LOG[i].post=true;    
+      //await api_save(JBE_CLOUD,JBE_API+'log',DB_LOG,record => !(record.areano === DB_LOG[i].areano));        
+      //await api_save(JBE_CLOUD,JBE_API+'log',DB_LOG,record => record.areano !== DB_LOG[i].areano || record.tran !== DB_LOG[i].tran);        
     }
 
     dtl+=
@@ -43,21 +47,20 @@ async function show_log(){
       '</div>'+
       '<div style="width:100%;height:50%;">'+DB_LOG[i].log+'</div>'+
     '</div>';
-  }
 
-  areanames=areanames.substring(0,areanames.length-1);
-  console.log(areanames);
+  }
   document.getElementById('id_log').innerHTML=dtl;
-  //JBE_AUDIO('gfx/snd/insight',5);
-  if(dtl){
-    //speakText('New Update! '+areanames);
-  }
-  if(arr_post.length>0){
-    //alert(arr_post.length);
-    //console.log(arr_post);
-    //if(JBE_CLOUD){ updateField(JBE_API+'log.json',record => record.post === false,'post',true); }
-  }
 
+  //await updateField(JBE_API+'log.json',record => record.post === false,'post',true); 
+  //await api_save(JBE_CLOUD,JBE_API+'log',arr_post,record => !(record.post === true));  
+  //data=await api_readfile(JBE_CLOUD,JBE_API+'log'); DB_LOG=data.content;
+  
+  //await updateField(JBE_API+'log.json',record => record.areano ===  v_areano && record.post === false,'post',true); 
+  
+  //areanames=areanames.substring(0,areanames.length-1);
+  //console.log(areanames);
+  
+  //JBE_AUDIO('gfx/snd/insight',5);
 }
 
 

@@ -55,6 +55,7 @@ async function start_app(){
   showMainPage();
   show_sidenav();
   fm_dashboard();
+  dispHeaderMode();
   //fm_invty();
   //nowLive();
 }
@@ -114,11 +115,11 @@ function showMainPage(){
  
   console.log('mainpage '+f_MainPage);
   openPage('page_main');  
-
+  fm_dashboard(false);
   //mnu_fm_invty();  
 }
 
-function dispHeaderMode(){
+async function dispHeaderMode(){
   //var n = new Date().toLocaleTimeString('it-IT');
   let v_mphoto='gfx/avatar.png'; 
   if(!CURR_USER){    
@@ -126,7 +127,18 @@ function dispHeaderMode(){
     document.getElementById("page_login").style.display="none";     
   }else{    
     document.getElementById('logger').innerHTML='Hi!, '+CURR_NAME;     
-    document.getElementById("page_login").style.display="none";    
+    document.getElementById("page_login").style.display="none";   
+    if(JBE_CLOUD){
+      v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
+    }else{        
+      const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
+      if(ndx > -1){
+        v_mphoto='data:image/png;base64,' + btoa(DB_USER[ndx]['photo']);
+      }
+    }
+    if(!v_mphoto){
+      v_mphoto='../gfx/avatar.png';
+    } 
   }
   document.getElementById('bar_avatar').src=v_mphoto;
   //document.getElementById('owner').src=v_mphoto;

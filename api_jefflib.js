@@ -36,7 +36,7 @@ async function api_readfile(cloud,path) {
   }
 }
 
-async function updateFile(path,updatedContent, message, sha) {
+async function updateFile_api(path,updatedContent, message, sha) {
   try {
     path=path+'.json';
     const response = await fetch(apiBase+`${path}`, {
@@ -73,14 +73,15 @@ async function api_save(cloud,fileName,newData,cond){
       let finalData;
       let msg='';
       if(cond){
-        filteredData = content.filter(cond);              
+        filteredData = content.filter(cond);                      
         msg='Data updated.';
       }else{
         filteredData = content;
       }
       finalData = filteredData.concat(newData); 
       // Commit the updated array back to the file with a commit message.
-      await updateFile(fileName,finalData, ``, sha);
+      await updateFile_api(fileName,finalData, ``, sha);
+      console.log('filteredData',filteredData);    
       console.log('finalData',finalData);    
       //speakText(msg);
     } catch (error) {
@@ -135,22 +136,12 @@ async function get_all_db_from_json(){
 
 //===========================================================
 async function updateField(path,cond,targetField,newValue) {
-  /*
-  const API_BASE = 'https://api.github.com';
-  const REPO_OWNER = 'bacolodcoldroom';
-  const REPO_NAME = 'JDB';
-  */
   // GitHub configuration
   const owner = REPO_OWNER;
   const repo = REPO_NAME;
   //const path = 'path/to/file.json'; // Path to your JSON file in the repo
   const branch = 'main'; // or your branch name
   const token = GITHUB_TOKEN; // Needs repo scope
-
-  // Field to update
-  //const targetField = 'fieldName'; // Field you want to update
-  //const newValue = 'newValue'; // New value for the field
-
   try {
       // 1. Get current file content and SHA
       const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
@@ -177,7 +168,8 @@ async function updateField(path,cond,targetField,newValue) {
 
       // Update the specific field
       jsonContent[targetField] = newValue;
-
+      console.log('jsonContent',targetField,newValue);
+      console.log('inside jsonContent',jsonContent[targetField]);
       // 3. Encode new content
       const updatedContent = btoa(JSON.stringify(jsonContent, null, 2));
 
@@ -201,16 +193,13 @@ async function updateField(path,cond,targetField,newValue) {
       if (!putResponse.ok) throw new Error('Failed to update file');
       
       const result = await putResponse.json();
-      console.log('File updated successfully:', result);
-      return result;
+      console.log(newValue,' :::File using jbe updated successfully:', result.content);
+      console.log('result',result);
   } catch (error) {
       console.error('Error:', error);
       throw error;
   }
 }
-
-// Usage
-//updateField();
 
 async function updateRecordField(path,cond,fieldToUpdate,newValue) {
   // GitHub Configuration

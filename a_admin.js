@@ -5,6 +5,7 @@ function fm_admin(){
   var profileImg=document.getElementById('bar_avatar').src;
   var username=CURR_NAME;
   let cb='JBE_CLOSE_VIEW2';
+  cb='';
   var dtl=
     '<div id="div_main_admin" data-mode="" data-usercode="'+CURR_USER+'" data-cb="'+cb+'" style="width:800px;height:100%;margin:0 auto;padding:0px;border:1px solid lightgray;overflow-x:hidden;overflow-y:auto;background:none;">'+
       
@@ -86,6 +87,7 @@ function close_admin(){
   //alert('close admin fc: '+fc);
   var fn = window[fc];
   if (typeof fn === "function"){ fn(); }   
+  showMainPage();
 }
 
 function mnu_fm_admin(){
