@@ -16,11 +16,11 @@ function start_app(){
     let msg='offline';
     if (offline) {
       JBE_ONLINE=false;
-      document.getElementById('mnu_upload').style.display='none';      
+      //document.getElementById('mnu_upload').style.display='none';      
     } else {
       JBE_ONLINE=true;
       msg='ONLINE';
-      document.getElementById('mnu_upload').style.display='block';      
+      //document.getElementById('mnu_upload').style.display='block';      
       document.getElementById('online_status').style.display='none';      
     }
     console.log("The app is "+msg);
@@ -745,18 +745,19 @@ function aaexit_app(){
 function exit_app() {
   // 1. Check for standalone display-mode
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  /*
   if (!isStandalone) {
     console.warn('exitPWA(): Not in standalone mode—cannot close window.');  
     MSG_SHOW(vbCancel,'EXIT APP','exitPWA(): Not in standalone mode—cannot close window.', function(){},function(){});
     return;
   }
-
+  */
   // 2. Only windows with a single history entry are script‑closable :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
   if (window.history.length === 1) {
     window.close();
   } else {
     //console.warn(`exitPWA(): Session history length is ${window.history.length}; must be 1 to close.`);
-    MSG_SHOW(vbCancel,'EXIT APP','Again, click the phone BACK Button', function(){},function(){});
+    MSG_SHOW(vbCancel,'EXIT APP','<center>Click the phone BACK Button again to Exit.</center>', function(){},function(){});
   }
 }
 

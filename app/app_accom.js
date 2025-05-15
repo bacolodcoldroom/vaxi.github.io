@@ -44,7 +44,8 @@ async function fm_accom(){
         '</div>'+
       '</div>'+
 
-      '<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
+      //'<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-25)+'px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
+      '<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-30)+'px;margin-top:5px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
         let vdtl='';
         for(var i=0;i<DB_STOCK_ACCOM.length;i++){
           vdtl+=
@@ -296,14 +297,8 @@ function close_fm_accom(){
 function mnu_fm_accom(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
-      '<div style="float:left;width:75%;height:100%;padding:12px;font-size:12px;text-align:left;color:white;background:none;">'+
+      '<div style="width:100%;height:100%;padding:10px;font-size:15px;text-align:center;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
-      '</div>'+
-      '<div onclick="showMainPage()" style="float:right;width:25%;height:100%;background:none;">'+
-        '<div class="class_footer">'+
-          '<img src="gfx/jclose.png"  alt="home image" />'+
-          '<span>Close</span>'+
-        '</div>'+
       '</div>'+
     '</div>';
   dispMenu(false,jmenu);

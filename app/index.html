@@ -761,6 +761,12 @@
         */
         //window.history.go(0);
         //f_reload=true;
+         // Clear session data
+  sessionStorage.clear();
+  localStorage.clear();
+
+  // Redirect to the home page
+  //window.location.href = '/';
         exit_app();
       }
     }
