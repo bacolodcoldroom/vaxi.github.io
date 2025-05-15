@@ -277,7 +277,8 @@ async function save_fm_weekly(){
   let curdate=document.getElementById('date_weekly').value;
   //await jeff_update_File(JBE_CLOUD,JBE_API+'invty.json',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
   //let data=await jeff_getFile(JBE_CLOUD,JBE_API+'invty.json'); DB_INVTY=data.content;
-  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
+  //await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => record.areano !== CURR_AREANO || record.date !== curdate);  
+  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === CURR_AREANO  && record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   speakText('Data Uploaded successfully');
   make_log(CURR_AREANO,'invty');
