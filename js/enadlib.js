@@ -458,7 +458,7 @@ function JBE_OPEN_VIEW2(dtl,cap,xclose) {
 
 function JBE_CLOSE_VIEW2(){
   //alert('XXX JBE_CLOSE_VIEW2');
-  fm_dashboard(false);
+  //fm_dashboard(false);
   document.getElementById("div_left").style.pointerEvents='auto';
   document.getElementById("hd_user").style.pointerEvents='auto';
   document.getElementById("div_left").style.opacity='1';
