@@ -58,7 +58,7 @@ function fm_area(){
           '<input id="lu_stock_photo" type="image" style="display:block;background:dimgray;overflow:auto;width:auto;max-width:100%;height:auto;max-height:100%;" src="gfx/jcam.png" onclick="JBE_PICK_IMAGE(0,inpfile_stock.id,img_stock.id,&quot;putImg_stock&quot;)" />'+
         '</div>'+  
         '<p>'+
-          '<img id="img_stock" data-img="" name="img_stock" src="gfx/avatar.png" onclick="JBE_ZOOM(this.src,&quot;&quot;)" style="height:100%;width:auto;border:1px solid lightgray;"/>'+          
+          '<img id="img_stock" data-img="" name="img_stock" src="gfx/proc_balls.gif" onclick="JBE_ZOOM(this.src,&quot;&quot;)" style="height:100%;width:auto;border:1px solid lightgray;"/>'+          
         '</p>'+   
       '</div>'+       
       
@@ -108,8 +108,7 @@ function init_fm_area(){
   document.getElementById('lu_area_no').style.opacity='1';
   document.getElementById('lu_stock_photo').disabled=true;
   document.getElementById('lu_stock_photo').style.opacity='0.5';
-  document.getElementById('img_stock').src='./gfx/avatar.png'; 
-  
+  document.getElementById('img_stock').src='./gfx/avatar.png';
 }
 //
 function add_fm_area(){
@@ -118,7 +117,7 @@ function add_fm_area(){
   document.getElementById('lu_area_no').style.opacity='0.5';
   document.getElementById('lu_stock_photo').disabled=false;
   document.getElementById('lu_stock_photo').style.opacity='1';
-  document.getElementById('img_stock').src='./gfx/avatar.png'; 
+  document.getElementById('img_stock').src='./gfx/proc_balls.gif'; 
   document.getElementById('tx_areano').focus();
 }
 //edit
@@ -166,7 +165,7 @@ async function disp_fm_area(){
   document.getElementById('lu_stock_photo').disabled=true;
   document.getElementById('lu_stock_photo').style.opacity='0.5';
 
-  document.getElementById('img_stock').src='./gfx/avatar.png';  
+  document.getElementById('img_stock').src='./gfx/proc_balls.gif';  
   let v_mphoto=await jeff_getImage('vaxi/images/'+recno+'.jpg');  
   if(isJpegDataUrl(v_mphoto)){ document.getElementById('img_stock').src=v_mphoto; }
 }
@@ -174,7 +173,7 @@ async function disp_fm_area(){
 //quit
 function quit_fm_area(){   
   console.log('quit_fm_area:',DB_AREA);
-  fm_dashboard(false);
+  showMainPage();
 }
 
 function putImg_stock(){

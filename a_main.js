@@ -54,7 +54,7 @@ async function start_app(){
   
   showMainPage();
   show_sidenav();
-  fm_dashboard();
+  //fm_dashboard();
   dispHeaderMode();
   //fm_invty();
   //nowLive();
@@ -102,6 +102,7 @@ async function get_main_all_db(){
 //=================================================================================
 //=======================show page=================================================
 function showMainPage(){
+  document.getElementById("wrapper").setAttribute('data-brgycode',''); //reset brgy code
   //alert('ako main page:'+CURR_AXTYPE);
   if(CURR_AXTYPE==5){
     //showLocks();
@@ -427,38 +428,15 @@ function show_download(){
   updownForm(2);
 }
 
-function reportHead(tilt,date){
-  let xdtl=
-  '<div style="width:100%;height:60px;border:0px solid green;">'+
-    '<div style="float:left;width:25%;height:100%;text-align:right;"><img src="gfx/logoCHO.png" style="height:100%;" /></div>'+
-    '<div style="float:left;width:50%;height:100%;text-align:center;">'+
-      '<div style="font-size:22px;font-weight:bold;padding:0px 0 0 0;">'+tilt+'</div>'+
-      '<div style="font-size:16px;font-weight:bold;padding:0px 0 0 0;">As of: '+JBE_DATE_FORMAT(new Date(),'DD-MMM-YYYY')+'</div>'+
-      '<div style="font-size:16px;font-weight:bold;padding:0px 0 0 0;">Bacolod Cold Chain Facility</div>'+
-    '</div>'+      
-    '<div style="float:left;width:24%;height:100%;text-align:left;"><img src="gfx/logoNGC.png" style="height:100%;" /></div>'+
-  '</div>';
-
+function reportHead(tilt,areaname){
   let dtl=
-  '<div style="width:100%;height:60px;font-family:Times New Roman, Times, serif;">'+
-    '<div style="float:left;width:auto;height:100%;text-align:left;"><img src="gfx/icon-192x192.png" style="height:100%;" /></div>'+
-    '<div style="float:left;margin-left:20px;width:auto;height:100%;text-align:left;">'+
-      '<div style="font-size:20px;font-weight:bold;padding:5px 0 0 0;">'+tilt+'</div>'+
-      '<div style="font-size:14px;padding:0px 0 0 0;">Bacolod Cold Chain Facility</div>'+
-      '<div style="font-size:14px;font-weight:bold;padding:0px 0 0 0;">As of: <span id="repo_date">'+JBE_DATE_FORMAT(date,'DD-MMM-YYYY')+'</span></div>'+     
-    '</div>'+              
-  '</div>'+
-  '<div style="width:100%;height:10px;border-bottom:2px solid lightgray;"></div>';
+  //'<div style="width:100%;height:60px;font-family:Times New Roman, Times, serif;">'+      
+  '<div style="width:100%;height:60px;text-align:center;background:none;">'+
+    '<div style="font-size:22px;font-weight:bold;padding:0px 0 0 0;">'+tilt+'</div>'+
+    '<div style="font-size:16px;font-weight:bold;padding:0px 0 0 0;">'+areaname+'</div>'+
+    '<div style="font-size:12px;font-weight:normal;padding:0px 0 0 0;">Name of Barangay</div>'+     
+  '</div>';
   return dtl;
-}
-
-function repl_fld_data(db,fld,val,cond_fld,cond_val){
-  axios.put('/api/upd_repl_fld_data', {headers: { 'Content-Type': 'application/json' }}, { params: { db:db,fld:fld,data:val,fld2:cond_fld,data2:cond_val } })
-  .then(function (response) {
-    db=response.data;
-    console.log('upd_repl_fld_data: '+db.length);
-  })
-  .catch(function (error) { console.log(error); });
 }
 
 function show_sidenav(){
@@ -473,7 +451,7 @@ function show_sidenav(){
 
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
-      '<div class="nw_menu" onclick="fm_dashboard(true);snackBar(&quot;Dashboard Refreshed...&quot;)">'+
+      '<div class="nw_menu" onclick="showMainPage();snackBar(&quot;Dashboard Refreshed...&quot;)">'+
         '<img src="gfx/jhome.png"/>'+
         '<span>Dashboard</span>'+
       '</div>'+

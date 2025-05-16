@@ -70,7 +70,7 @@ function fm_user(){
           '<input id="lu_stock_photo" type="image" style="display:block;background:dimgray;overflow:auto;width:auto;max-width:100%;height:auto;max-height:100%;" src="gfx/jcam.png" onclick="JBE_PICK_IMAGE(0,inpfile_stock.id,img_user.id,&quot;putimg_user&quot;)" />'+
         '</div>'+  
         '<p>'+
-          '<img id="img_user" data-img="" name="img_user" src="gfx/avatar.png" onclick="JBE_ZOOM(this.src,&quot;&quot;)" style="height:100%;width:auto;border:1px solid lightgray;"/>'+          
+          '<img id="img_user" data-img="" name="img_user" src="gfx/proc_balls.gif" onclick="JBE_ZOOM(this.src,&quot;&quot;)" style="height:100%;width:auto;border:1px solid lightgray;"/>'+          
         '</p>'+   
       '</div>'+      
       '<div class="cls_fm_dtl">'+        
@@ -154,7 +154,8 @@ function look_usercode(){
   //{ "title":"Product Name", "width":"60%", "align":"left" },
   var flds=[
     { title:"User Code", fld:"usercode", type:"text", width:"20%", align:"left" },
-    { title:"Username", fld:"username", type:"text", width:"40%", align:"left" },
+    { title:"Username", fld:"username", type:"text", width:"30%", align:"left" },
+    { title:"Uset Type", fld:"usertype", type:"text", width:"10%", align:"left" },
     { title:"User ID", fld:"userid", type:"text", width:"20%", align:"center" },
     { title:"Password", fld:"pword", type:"text", width:"20%", align:"center" }
   ];
@@ -227,7 +228,7 @@ function add_fm_user(){
   document.getElementById('lu_usercode').style.opacity='0.5';
   document.getElementById('lu_stock_photo').disabled=false;
   document.getElementById('lu_stock_photo').style.opacity='1';
-  document.getElementById('img_user').src='./gfx/avatar.png'; 
+  document.getElementById('img_user').src='./gfx/proc_balls.gif'; 
   document.getElementById('tx_username').focus();
 }
 //edit
@@ -283,7 +284,7 @@ async function disp_fm_user(){
   document.getElementById('lu_stock_photo').disabled=true;
   document.getElementById('lu_stock_photo').style.opacity='0.5';
 
-  document.getElementById('img_user').src='./gfx/avatar.png';  
+  document.getElementById('img_user').src='./gfx/proc_balls.gif';  
   let v_mphoto=await jeff_getImage('vaxi/images/'+recno+'.jpg');  
   if(isJpegDataUrl(v_mphoto)){ document.getElementById('img_user').src=v_mphoto; }
 }
@@ -291,6 +292,6 @@ async function disp_fm_user(){
 //quit
 function quit_fm_user(){   
   console.log('quit_fm_user:',DB_USER);
-  fm_dashboard(false);
+  showMainPage();
 }
 

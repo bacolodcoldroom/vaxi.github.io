@@ -154,6 +154,6 @@ function disp_fm_stock2(){
 //quit
 function quit_fm_stock2(){   
   console.log('quit_fm_stock2:',DB_STOCK_ACCOM);
-  fm_dashboard(false);
+  showMainPage();
 }
 

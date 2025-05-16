@@ -63,23 +63,38 @@ function fm_dashboard(f_clear){
 
         //invty
         '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid black;background:#FFD900;">'+
-
+          /*
           '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
             '<div style="float:left;width:50%;height:100%;">Weekly Inventory</div>'+
             '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="id_date" onchange="chgdate_invty_brgy()"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
           '</div>'+
+          */
+
+          '<div style="width:100%;height:30px;font-size:12px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
+            '<div style="float:left;width:25%;height:100%;background:none;">'+
+              '<div onclick="prn_brgy(1)" style="width:60px;height:100%;cursor:pointer;background:none;">'+
+                '<img src="gfx/jprn.png" style="float:left;height:100%;width:auto;" />'+
+                '<input type="text" value="Print" class="cls_inputlabel" style="float:left;width:35px;"/>'+
+              '</div>'+
+            '</div>'+
+            '<div style="float:left;width:50%;height:100%;text-align:center;font-size:17px;">Weekly Inventory</div>'+
+            '<div style="float:left;width:25%;height:100%;text-align:right;background:none;">'+
+              '<input type="text" value="Date: " class="cls_inputlabel" style="float:left;width:50%;text-align:right;" />'+
+              '<input type="month" id="id_date" onchange="chgdate_invty_brgy(this.value)"  style="float:right;width:50%;height:100%;font-weight:bold;" disabled value='+curdate+' />'+
+            '</div>'+
+          '</div>'+
 
           '<div disabled id="div_hd_invty" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:4px;background:#FFD900;">'+
-            '<div style="float:left;width:20%;height:100%;padding:0px;">Vaccines</div>'+
+            '<div style="float:left;width:20%;height:100%;padding:3px;">Vaccines</div>'+
             '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
               '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
               '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
               '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';"></button></div>'+
               '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';"></button></div>'+
               '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';"></button></div>'+
-              '<div class="cls_weekly_row" style="width:15%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
-              '<div class="cls_weekly_row" style="width:10%;padding:2px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
-              '<div class="cls_weekly_row" style="width:8%;margin-left:1%;padding:2px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
+              '<div class="cls_weekly_row" style="width:15%;margin-left:1%;padding:4px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
+              '<div class="cls_weekly_row" style="width:10%;padding:4px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
+              '<div class="cls_weekly_row" style="width:8%;margin-left:1%;padding:4px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
             '</div>'+
           '</div>'+
           
@@ -126,15 +141,24 @@ function fm_dashboard(f_clear){
         //accom
         '<div id="div_accom" style="display:block;width:100%;height:'+h_mainbox_accom+'px;margin-top:10px;font-size:14px;text-align:center;padding:0px;border:1px solid black;background:white;">'+
 
-          '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
-            '<div style="float:left;width:50%;height:100%;">Accomplishment</div>'+
-            '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="date_accom" onchange="chgdate_accom_brgy(this.value)"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
+          '<div style="width:100%;height:30px;font-size:12px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
+            '<div style="float:left;width:25%;height:100%;background:none;">'+
+              '<div onclick="prn_brgy(2,date_accom.value)" style="width:60px;height:100%;cursor:pointer;background:none;">'+
+                '<img src="gfx/jprn.png" style="float:left;height:100%;width:auto;" />'+
+                '<input type="text" value="Print" class="cls_inputlabel" style="float:left;width:35px;"/>'+
+              '</div>'+
+            '</div>'+
+            '<div style="float:left;width:50%;height:100%;text-align:center;font-size:17px;background:none;">Weekly Accomplishment</div>'+
+            '<div style="float:right;width:25%;height:100%;text-align:right;background:none;">'+
+              '<input type="text" value="Date: " class="cls_inputlabel" style="float:left;width:50%;text-align:right;" />'+
+              '<input type="month" id="date_accom" onchange="chgdate_accom_brgy(this.value)"  style="float:right;width:50%;height:100%;font-weight:bold;" disabled value='+curdate+' />'+
+            '</div>'+
           '</div>'+
 
           '<div style="width:100%;height:30px;border:0px solid lightgray;padding:0px;background:#FFD900;">'+
 
             '<div id="div_hd_accom" style="width:100%;height:100%;border:0px solid red;padding:3px;background:#FFD900;">'+
-              '<div style="float:left;width:13%;height:100%;padding:0px;">Vax</div>'+
+              '<div style="float:left;width:13%;height:100%;padding:3px;">Vaccine</div>'+
               '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
                 '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_accom_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
                 '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn11" onclick="edit_accom_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
@@ -263,6 +287,7 @@ function disp_brgy(areano){
 }
 
 function sel_brgy(areano){
+  document.getElementById('wrapper').setAttribute('data-brgycode',areano);
   let name=JBE_GETFLD('name',DB_AREA,'areano',areano);
   document.getElementById('id_brgy').setAttribute('data-areano',areano);
   document.getElementById('id_brgy').innerHTML=name;    
