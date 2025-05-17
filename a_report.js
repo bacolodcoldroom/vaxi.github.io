@@ -105,7 +105,7 @@ function rp_accom(areano,date){
     '<div style="float:left;width:100%;height:50%;">TARGET POP/ ELIGIBLE POP : <span style="text-decoration:underline;">45</span></div>'+    
   '</div>';
   let hd1=
-  '<div style="width:100%;height:25px;margin-top:10px;font-size:14px;font-weight:bold;text-align:center;border:2px solid black;border-bottom:0px;background:yellow;">'+      
+  '<div style="width:100%;height:25px;margin-top:10px;font-size:14px;font-weight:bold;text-align:center;border:1px solid black;border-bottom:0px;background:yellow;">'+      
     '<div style="float:left;width:'+(wd_date-0)+'%;height:100%;border-right:1px solid black;background:white;"><div style="padding:3px 0 0 0;">DATE</div></div>';    
     let vdtl='';
     let px=1;
@@ -126,7 +126,7 @@ function rp_accom(areano,date){
   hd1+=vdtl;
 
   let hd2=
-  '<div style="width:100%;height:25px;margin-top:0px;font-size:14px;font-weight:bold;text-align:center;border:2px solid black;">'+      
+  '<div style="width:100%;height:25px;margin-top:0px;font-size:14px;font-weight:bold;text-align:center;border:1px solid black;">'+      
     '<div style="float:left;width:'+(wd_date-0)+'%;height:100%;border-right:1px solid black;"><div style="padding:3px 0 0 0;">INDICATORS</div></div>';
     let f_male=true;
     vdtl='';
@@ -153,7 +153,7 @@ function rp_accom(areano,date){
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
     dtl+=
     '<div style="width:100%;height:20px;margin-top:0px;font-size:14px;font-weight:normal;text-align:left;border:1px solid black;">'+      
-      '<div style="float:left;width:'+(wd_date-0)+'%;height:100%;border-right:1px solid black;"><div style="padding:2px;">'+DB_STOCK_ACCOM[i].descrp+'</div></div>';
+      '<div style="float:left;width:'+(wd_date)+'%;height:100%;border-right:1px solid black;"><div style="padding:2px;">'+DB_STOCK_ACCOM[i].descrp+'</div></div>';
       let f_male=true;
       vdtl='';
       px=1;
@@ -164,10 +164,10 @@ function rp_accom(areano,date){
         if(k==len_wed){ wd_box--; px=0; vbold='bold'; }
         let div=DB_STOCK_ACCOM[i].stockno+'_'+k;
         vdtl+=
-        '<div style="float:left;width:'+wd_box+'%;height:100%;text-align:center;font-size:10px;border-right:'+px+'px solid black;">'+
-          '<div style="float:left;width:33%;height:100%;border-right:1px solid black;background:'+clor_male+';"><div id="'+div+'wm'+'" style="height:100%;padding:5px 0 0 0;font-weight:'+vbold+';">'+k+'</div></div>'+
-          '<div style="float:left;width:33%;height:100%;border-right:1px solid black;background:'+clor_female+';"><div id="'+div+'wf'+'" style="height:100%;padding:5px 0 0 0;font-weight:'+vbold+';">'+k+'</div></div>'+
-          '<div style="float:left;width:32%;height:100%;border-right:px solid black;background:white;"><div id="'+div+'total'+'" style="height:100%;padding:5px 0 0 0;font-weight:bold;">0</div></div>'+
+        '<div style="float:left;width:'+(wd_box)+'%;height:100%;text-align:center;font-size:12px;border-right:'+px+'px solid black;">'+
+          '<div style="float:left;width:33%;height:100%;border-right:1px solid black;background:'+clor_male+';"><div id="'+div+'wm'+'" style="height:100%;padding:3px;font-weight:'+vbold+';"></div></div>'+
+          '<div style="float:left;width:33%;height:100%;border-right:1px solid black;background:'+clor_female+';"><div id="'+div+'wf'+'" style="height:100%;padding:3px;font-weight:'+vbold+';"></div></div>'+
+          '<div style="float:left;width:32%;height:100%;border-right:px solid black;background:white;"><div id="'+div+'total'+'" style="height:100%;padding:3px;font-weight:bold;">0</div></div>'+
         '</div>';
         f_male=!f_male;
         console.log('>>>>> ',div);

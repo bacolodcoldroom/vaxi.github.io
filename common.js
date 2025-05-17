@@ -35,7 +35,7 @@ async function show_log(){
       console.log('......... ',get_area(DB_LOG[i].areano));
       //await updateField(JBE_API+'log.json',record => record.areano ===  DB_LOG[i].areano && record.post === false,'post',true);       
       DB_LOG[i].post=true;    
-      //await api_save(JBE_CLOUD,JBE_API+'log',DB_LOG,record => !(record.areano === DB_LOG[i].areano));        
+      //await api_save(JBE_CLOUD,JBE_API+'log',DB_LOG,record => !(record.areano === DB_LOG[i].areano && record.tran !== DB_LOG[i].tran));        
       //await api_save(JBE_CLOUD,JBE_API+'log',DB_LOG,record => record.areano !== DB_LOG[i].areano || record.tran !== DB_LOG[i].tran);        
     }
 

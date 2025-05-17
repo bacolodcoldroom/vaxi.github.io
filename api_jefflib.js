@@ -62,6 +62,7 @@ async function updateFile_api(path,updatedContent, message, sha) {
 }
 
 async function api_save(cloud,fileName,newData,cond){
+  console.clear();
   console.log('api_save filename',fileName);
   console.log(newData);
   console.log('=================================');
