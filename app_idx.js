@@ -73,7 +73,7 @@ async function readRecord(id,tbl) {
 async function readAllRecords(tbl) {
   return openDatabase(tbl).then(db => {
     return new Promise((resolve, reject) => {
-      console.log('>>>>>>>> ',tbl);
+      //console.log('>>>>>>>> ',tbl);
       const transaction = db.transaction(tbl, "readonly");
       const store = transaction.objectStore(tbl);
       const request = store.getAll();

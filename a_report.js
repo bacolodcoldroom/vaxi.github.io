@@ -170,7 +170,7 @@ function rp_accom(areano,date){
           '<div style="float:left;width:32%;height:100%;border-right:px solid black;background:white;"><div id="'+div+'total'+'" style="height:100%;padding:3px;font-weight:bold;">0</div></div>'+
         '</div>';
         f_male=!f_male;
-        console.log('>>>>> ',div);
+        //console.log('>>>>> ',div);
       }
       vdtl+=   
     '</div>';
