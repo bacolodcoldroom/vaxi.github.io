@@ -16,6 +16,7 @@ let clor_male='#d9e2f3';
 let clor_female='#ffccff';
 
 function fm_dashboard(f_clear){   
+  //if(!JBE_CHK_USER(0)){ return; };
   //get_main_all_db();
   let h_dashboard=22;
   let h_box1=280;
@@ -44,11 +45,14 @@ function fm_dashboard(f_clear){
 
       //left brgy
       
-      '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:white;">'+
+      '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
         '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:center;border:0px solid black;color:white;background:'+JBE_CLOR2+';">'+
           '<div style="width:100%;height:100%;" style="font-weight:bold;">Barangay</div>'+
         '</div>'+
-        '<div id="brgy_list" style="width:100%;height:'+(h_box1-30)+'px;padding:10px;overflow:auto;">'+
+        '<div id="brgy_list" style="width:100%;height:'+(h_box1-30-200)+'px;padding:10px;border:0px solid black;overflow:auto;background:white;">'+
+        '</div>'+
+        '<div style="width:100%;height:190px;margin-top:10px;border:0px solid black;padding:10px;background:white;">'+
+          '<img id="brgy_logo" src="gfx/avatar.png" style="height:100%;" />'+
         '</div>'+
       '</div>'+
 
@@ -219,7 +223,6 @@ function fm_dashboard(f_clear){
       '<div style="float:right;width:19%;height:100%;margin-left:1%;text-align:left;border:0px solid red;background:white;">'+
         '<div style="width:100%;height:30px;padding:5px;text-align:center;color:white;background:'+JBE_CLOR2+';">Log</div>'+
         '<div id="id_log" style="width:100%;height:'+(H_BODY-40-35-2)+'px;font-size:12px;padding:5px;overflow:auto;background:white;">'+
-
         '</div>'+        
       '</div>'+
 
@@ -286,13 +289,17 @@ function disp_brgy(areano){
   mnu_brgy();
 }
 
-function sel_brgy(areano){
+async function sel_brgy(areano){
+  if(!JBE_CHK_USER(0)){ return; };
   document.getElementById('wrapper').setAttribute('data-brgycode',areano);
   let name=JBE_GETFLD('name',DB_AREA,'areano',areano);
   document.getElementById('id_brgy').setAttribute('data-areano',areano);
   document.getElementById('id_brgy').innerHTML=name;    
   document.getElementById('id_date').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
   document.getElementById('id_date').disabled=false;
+  document.getElementById('brgy_logo').src='./gfx/proc_balls.gif';  
+  let v_mphoto=await jeff_getImage('vaxi/images/'+areano+'.jpg');  
+  if(isJpegDataUrl(v_mphoto)){ document.getElementById('brgy_logo').src=v_mphoto; }
   disp_invty_brgy(areano);
   //accom
   document.getElementById('date_accom').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
@@ -335,7 +342,7 @@ function clear_invty_brgy(){
 
 //‐-------
 function disp_brgy_list(){  
-  DB_AREA.sort(JBE_SORT_ARRAY(['rank']));
+  DB_AREA.sort(JBE_SORT_ARRAY(['rank','name']));
   console.log('disp_brgy_list',DB_AREA);
   let vdtl='';          
   for(var i=0;i<DB_AREA.length;i++){            

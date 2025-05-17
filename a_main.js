@@ -908,7 +908,8 @@ function nowLive() {
 
 async function refresh_all_now(){
   //JBE_AUDIO('gfx/snd/insight',5);
-  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+  //let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+  let areano=document.getElementById('wrapper').getAttribute('data-brgycode');  
   console.log(areano);
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     
   let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   

@@ -31,7 +31,7 @@ async function show_log(){
     let clor='black';
     if(DB_LOG[i].post==false){ 
       clor='red'; 
-      speakText('New Update! from '+aname);
+      //speakText('New Update! from '+aname);
       console.log('......... ',get_area(DB_LOG[i].areano));
       //await updateField(JBE_API+'log.json',record => record.areano ===  DB_LOG[i].areano && record.post === false,'post',true);       
       DB_LOG[i].post=true;    
@@ -40,7 +40,7 @@ async function show_log(){
     }
 
     dtl+=
-    '<div onclick="sel_brgy(&quot;'+DB_LOG[i].areano+'&quot;)" style="width:100%;height:40px;margin-top:5px;padding:2px;border:1px solid lightgray;">'+
+    '<div onclick="sel_brgy(&quot;'+DB_LOG[i].areano+'&quot;)" style="width:100%;height:40px;cursor:pointer;margin-top:5px;padding:2px;border:1px solid lightgray;">'+
       '<div style="width:100%;height:50%;">'+
         '<div style="float:left;width:70%;height:100%;font-weight:bold;color:'+clor+';">'+aname+'</div>'+
         '<div style="float:right;width:auto;height:100%;">'+DB_LOG[i].time+'</div>'+
