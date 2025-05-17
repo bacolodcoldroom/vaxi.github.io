@@ -50,7 +50,7 @@ function FM_MAIN(fm_ob,fm_layout){
       '<div id="FM_MAIN_DIV1" data-recno="" style="width:100%;height:'+h_FM_MAIN_DIV1+'px;padding:0px;border:0px solid yellow;color:black;background:white;">'+
         '<div id="FM_HEAD" style="width:100%;height:'+h_head+'px;white:black;color:white;background:'+JBE_CLOR2+';">'+  
           '<div id="FM_BACK" style="display:none;float:left;width:30px;height:100%;padding:0px;cursor:pointer;">'+
-            '<img src="gfx/jprev.png" onclick="'+FM_CB+'()" style="height:100%;" alt="call image" />'+
+            '<img src="gfx/jPrev.png" onclick="'+FM_CB+'()" style="height:100%;" alt="call image" />'+
           '</div>'+         
           '<div id="FM_MAIN_TITLE" style="float:left;width:auto;height:100%;padding:5px;font-weight:bold;font-size:13px;text-align:left;background:none;">'+fm_ob.title+'</div>'+
           '<div id="FM_MODE"       style="float:right;width:auto;height:100%;padding:5px;text-align:right;background:none;"></div>'+
