@@ -10,7 +10,7 @@ function fm_admin(){
     '<div id="div_main_admin" data-mode="" data-usercode="'+CURR_USER+'" data-cb="'+cb+'" style="width:800px;height:100%;margin:0 auto;padding:0px;border:1px solid lightgray;overflow-x:hidden;overflow-y:auto;background:none;">'+
       
       '<div style="height:55px;width:100%;padding:5px;color:'+JBE_TXCLOR1+';background:'+JBE_CLOR+';">'+
-        '<div onclick="close_admin()" style="float:left;width:auto;height:100%;cursor:pointer;">'+
+        '<div id="div_back" onclick="close_admin()" style="float:left;width:auto;height:100%;cursor:pointer;">'+
           '<img src="gfx/jback.png" style="height:100%;" />'+
         '</div>'+
         '<div style="float:right;height:100%;width:auto;border-radius:50%;border:2px solid white;background:none;">'+
@@ -33,15 +33,15 @@ function fm_admin(){
 function show_admin(){
   var menuMenu='';    
   var menuPurchase='';
-  var menuEditStaff=
+  var menufm_staff=
     '<div style="width:100%;height:auto;padding:10px;font-size:12px;">System Code: '+CURR_CLIENT+'</div>'+
-    '<div onclick="editStaff()" style="width:100%;height:40px;margin-top:10px;padding:5px;cursor:pointer;background:none;">'+
+    '<div onclick="fm_staff()" style="width:100%;height:40px;margin-top:10px;padding:5px;cursor:pointer;background:none;">'+
       '<img src="gfx/jpurchase.png" style="float:left;height:100%;"/>'+
       '<span style="float:left;margin-left:5px;padding:5px;">Edit Users</span>'+
     '</div>';  
 
   var menuEditProfile=
-    '<div onclick="fm_profile(2)" style="width:100%;height:40px;margin-top:10px;padding:5px;cursor:pointer;background:none;">'+
+    '<div onclick="fm_profile(2)" style="display:none;width:100%;height:40px;margin-top:10px;padding:5px;cursor:pointer;background:none;">'+
       '<img src="gfx/avatar.png" style="float:left;height:100%;"/>'+
       '<span style="float:left;margin-left:5px;padding:5px;">Edit Profile</span>'+
     '</div>';
@@ -53,8 +53,8 @@ function show_admin(){
       vdisp_location='none';
   }
   vdisp_location='block';
-  if(CURR_AXTYPE == 5){ menuMenu=menuEditStaff+menuEditProfile; }
-  if(CURR_AXTYPE == 9){ menuMenu=menuEditStaff }
+  if(CURR_AXTYPE == 5){ menuMenu=menufm_staff+menuEditProfile; }
+  if(CURR_AXTYPE == 9){ menuMenu=menufm_staff }
   let dtl=
     menuMenu+
     '<div onclick="my_location()" style="display:'+vdisp_location+';width:100%;height:40px;margin-top:10px;padding:5px;cursor:pointer;background:none;">'+
@@ -78,7 +78,8 @@ function show_admin(){
     '</div>';
 
   document.getElementById('div_body_admin').innerHTML=dtl;
-  document.getElementById('div_main_admin').setAttribute('data-cb','JBE_CLOSE_VIEW2');
+  document.getElementById('div_main_admin').setAttribute('data-cb','JBE_CLOSE_VIEW2');  
+  document.getElementById('div_back').style.display='block';
   mnu_fm_admin();  
 }
 
@@ -175,41 +176,6 @@ function chk_lognow(){
   }
 
   showProgress(true);
-  /*
-  axios.post(JBE_API+'z_user.php',{ clientno:CURR_CLIENT, request: 101,     
-    userid: u, 
-    pword: p 
-  },JBE_HEADER)     
-  */
- /*
-  axios.get('/api/get_user', { params: {clientno:CURR_CLIENT, userid:u,pword:p} }, JBE_HEADER)
-  .then(function (response) { 
-    showProgress(false);
-    console.log('DB_USER.length:'+DB_USER.length);        
-    console.log(response.data);        
-    if(response.data.length > 0){
-      var vDB_USER=response.data;
-      CURR_USER=vDB_USER[0]['usercode']; 
-      CURR_NAME=vDB_USER[0]['username']; 
-      CURR_AXTYPE=vDB_USER[0]['usertype'];        
-      login_ok(0);            
-    }else{
-      document.getElementById("fmsg").style.color="red";
-      document.getElementById("fmsg").innerHTML="<b>INVALID USER ID OR PASSWORD</b>.<br>Please check your User ID and Password carefully.";    
-      document.getElementById("lognow").value="Try Again";
-      document.getElementById('fuser').disabled=true;
-      document.getElementById('fpass').disabled=true;
-      document.getElementById('signUp').style.pointerEvents='none';
-      document.getElementById('signUp').style.color='gray';
-
-      //document.getElementById("div_logo").style.width='100%';
-      //document.getElementById("div_left").style.display='none';
-    }
-  })    
-  .catch(function (error) { 
-    console.log(error); showProgress(false);
-  });
-  */
   let f_found=false;
   console.log(u,p);
   for(var i=0;i<DB_USER.length;i++){    
@@ -408,24 +374,30 @@ function logout(){
 
 function fm_profile(vmode){
   //alert('fm_profile:'+vmode+'  len USER:'+DB_USER.length);
-  if(vmode==1){ 
+  if(vmode==1){
       GEO_MODE=0;
-      JBE_GETLOCATION(); 
-      document.getElementById('page_login').style.display='none'; 
+      //JBE_GETLOCATION();
+      document.getElementById('page_login').style.display='none';
   }
   var n = new Date().toLocaleTimeString('it-IT');
-  
-
-  var vDate=new Date();  
-  var vTime = vDate.toLocaleTimeString('it-IT'); 
-  vDate = new Date(vDate.getTime() - (vDate.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];  
+  var vDate=new Date(); 
+  var vTime = vDate.toLocaleTimeString('it-IT');
+  vDate = new Date(vDate.getTime() - (vDate.getTimezoneOffset() * 60000 )).toISOString().split("T")[0]; 
   var usercode='U_'+vDate+'_'+vTime;
-  usercode = usercode.replace(/-/g, "").replace(/:/g, "").replace("T", "-");   
+  usercode = usercode.replace(/-/g, "").replace(/:/g, "").replace("T", "-");  
 
 
   var profileImg='gfx/avatar.png'+'?'+n;
+  var userRow='';
+  var areano='';
+  var areaname='';
   var userid='';
   var username='';
+  var username2='';
+  var lastname='';
+  var firstname='';
+  var middlename='';
+  var fullname='';
   var pword='';
   var addrss='';
   var celno='';
@@ -435,103 +407,138 @@ function fm_profile(vmode){
   var d_active=JBE_DATE_FORMAT(vDate,'YYYY-MM-DD');
   var v_disabled='';
 
-  if(vmode==2){ 
-    //alert('CURR_USER:'+CURR_USER);
-    //alert('exist:'+usercode);
-    var aryDB=JBE_GETARRY(DB_USER,'usercode',CURR_USER);
+  if(vmode==2){
     profileImg=document.getElementById('bar_avatar').src;
+    foto=profileImg;
+    
+    let aryDB=JBE_GETARRY(DB_USER,'usercode',CURR_USER);   
+    //alert('DB_USER.length:'+aryDB.id);    
+    userRow=aryDB['id'];
+    //alert(CURR_NAME+': '+aryDB['id']+' ::: userRow: '+userRow);
     usercode=aryDB['usercode'];
     userid=aryDB['userid'];
     pword=aryDB['pword'];
     username=aryDB['username'];
+    username2=aryDB['username2'];
+    fullname=aryDB['fullname'];
+    //'Paul Steve Panakkal'.split(' '); // returns ["Paul", "Steve", "Panakkal"]
+    //'Paul Steve Panakkal'.split(' ').slice(0, -1).join(' '); // returns "Paul Steve"
+    //'Paul Steve Panakkal'.split(' ').slice(-1).join(' '); // returns "Panakkal"
+    lastname=extractNames(fullname).lastName;
+    firstname=extractNames(fullname).firstName;
+    middlename=extractNames(fullname).middleName;
+
+    console.log('lastname',lastname,firstname,middlename);
     addrss=aryDB['addrss'];
     celno=aryDB['celno'];
-    foto=aryDB['photo'];
+    areano=aryDB['areano'];
+    areaname=JBE_GETFLD('name',DB_AREA,'areano',areano);
+    
     lat=parseFloat(aryDB['lat']);
     lng=parseFloat(aryDB['lng']);
     d_active=JBE_DATE_FORMAT(aryDB['d_active'],'YYYY-MM-DD');
-    v_disabled='disabled';
-    
+    v_disabled='disabled';   
   }
 
   //alert(vmode+' usercode:'+usercode+' CURR_USER:'+CURR_USER);
-  
+  //return;
+ 
   //alert('Mode: '+vmode+' : '+ lat+' vs '+lng);
-  
-  document.getElementById('div_main_admin').setAttribute('data-cb','show_admin');
-  document.getElementById('div_main_admin').setAttribute('data-mode',vmode);
-  document.getElementById('div_main_admin').setAttribute('data-usercode',CURR_USER);
-  
-  
-  let dtl=
-  '<div id="dv_avatar" style="position:relative;width:100%;height:75px;text-align:center;background:none;">'+
-    '<img id="img_eavatar'+vmode+'" data-img="'+foto+'" name="img_eavatar'+vmode+'" src="'+profileImg+'" style="border-radius:50%;height:75px;width:75px;border:1px solid gray;"/>'+
-    '<div id="div_avatar" style="position:absolute;top:50%;left:50%;cursor:pointer;border-radius:50%;border:1px solid black;'+
-          'height:30px;width:30px;padding:3px;background:#434343;">'+            
-      //'<input type="file" id="id_efile'+vmode+'" data-orig="" data-sel=0 name="id_efile'+vmode+'" hidden="hidden" />'+
-      //'<img src="gfx/jcam.png" onclick="JBE_PICK_IMAGE(0,id_efile'+vmode+'.id,img_eavatar'+vmode+'.id,&quot;&quot;,false)" style="width:95%;"/>'+
-      '<input type="file" id="id_efile'+vmode+'" data-orig="" data-sel=0 name="id_efile'+vmode+'" hidden="hidden" />'+
-      '<img src="gfx/jcam.png" onclick="JBE_GET_IMAGE(0,id_efile'+vmode+'.id,img_eavatar'+vmode+'.id,&quot;&quot;,false)" style="width:95%;"/>'+
-    '</div>'+
-  '</div>'+
+ 
+  var dtl=
+    '<div id="div_admin_profile" data-mode='+vmode+' data-usercode="'+usercode+'" data-userRow='+userRow+' style="width:100%;height:100%;padding:0px;overflow-x:hidden;overflow-y:auto;background:white;">'+
+           
+      '<div style="height:100px;width:100%;margin-top:20px;text-align:center;padding:5px;color:black;background:none;">'+
 
-  '<form onsubmit="return false" class="class_admin" style="font-size:12px;margin-top:20px;margin-bottom:10px;height:300px;background:none;">'+
+        '<div id="dv_avatar" style="position:relative;width:100%;height:75px;text-align:center;background:none;">'+
+          '<img id="img_eavatar'+vmode+'" data-img="'+foto+'" name="img_eavatar'+vmode+'" src="'+profileImg+'" style="border-radius:50%;height:75px;width:75px;border:1px solid gray;"/>'+
+          '<div id="div_avatar" style="position:absolute;top:50%;left:50%;cursor:pointer;border-radius:50%;border:1px solid black;'+
+                'height:30px;width:30px;padding:3px;background:#434343;">'+           
+            '<input type="file" id="id_efile'+vmode+'" data-orig="" data-sel=0 name="id_efile'+vmode+'" hidden="hidden" />'+
+            '<img src="gfx/jcam.png" onclick="JBE_GET_IMAGE(0,id_efile'+vmode+'.id,img_eavatar'+vmode+'.id,&quot;&quot;,false)" style="width:95%;"/>'+
+          '</div>'+
+        '</div>'+
+        
+        '<div class="class_admin" style="font-size:12px;margin-top:20px;margin-bottom:10px;height:auto;background:none;">'+
 
-    '<div id="dv_usercode" style="margin-top:10px; height:auto; width:100%;background:none;">'+
-      '<span style="height:15px; width:100%; background:none;">USER CODE</span>'+
-      '<input id="fusercode" disabled class="class_profile" value="'+usercode+'"/>'+            
-    '</div>'+
+          '<div id="dv_usercode" style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">USER CODE</span>'+
+            '<input id="fusercode" disabled class="class_profile" value="'+usercode+'"/>'+           
+          '</div>'+
 
-    '<div id="dv_uid2" style="margin-top:10px; height:auto; width:100%;background:none;">'+
-      '<span style="height:15px; width:100%; background:none;">User ID</span>'+
-      '<input id="fuser2" class="class_profile" onchange="chk_fld(this.value,fpass2.value,'+vmode+')" type="text"  placeholder="Name, Email or Phone Number" maxlength=20 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;fpass2&quot;).focus();"'+
-          'value="'+userid+'"/>'+            
-    '</div>'+
+          '<div id="dv_uid2" style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">User ID</span>'+
+            '<input id="fuser2" class="class_profile" onchange="chk_fld(this.value,fpass2.value,'+vmode+')" type="text"  placeholder="User ID (Name, Email or Phone Number)" maxlength=20 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;fpass2&quot;).focus();"'+
+                'value="'+userid+'"/>'+           
+          '</div>'+
+ 
+          '<div id="dv_pass" style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%;background:none;">Password</span>'+           
+            '<input id="fpass2" class="class_profile" onchange="chk_fld(this.value,fpass2.value,'+vmode+')" name="fpass" autocomplete="off" type="password" placeholder="Password" maxlength=20 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;faddrss2&quot;).focus()"'+
+                'value="'+pword+'"/>'+           
+          '</div>'+
 
-    '<div id="dv_pass" style="margin-top:10px; height:auto; width:100%;background:none;">'+
-      '<span style="height:15px; width:100%;background:none;">Password</span>'+            
-      '<input id="fpass2" class="class_profile" onchange="chk_fld(this.value,fpass2.value,'+vmode+')" name="fpass" autocomplete="off" type="password" placeholder="Password" maxlength=20 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;faddrss2&quot;).focus()"'+
-          'value="'+pword+'"/>'+            
-    '</div>'+
+          '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">Username</span>'+
+            '<input id="fname2" class="class_profile" type="text" placeholder="User Name"  maxlength=50 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;faddrss2&quot;).focus()" '+
+                'value="'+username+'"/>'+           
+          '</div>'+
+         
+          '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">Voice Name</span>'+
+            '<input id="fname22" class="class_profile" type="text" placeholder="Voice Name"  maxlength=50 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;faddrss2&quot;).focus()" '+
+                'value="'+username2+'"/>'+           
+          '</div>'+
+         
+          '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">Full Name: [Last Name], [First Name] [Middle Name].</span>'+
+            '<input id="fullname" class="class_profile" type="text" placeholder="User Full Name"  maxlength=50 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;faddrss2&quot;).focus()" '+
+                'value="'+fullname+'"/>'+           
+          '</div>'+
 
-    '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
-      '<span style="height:15px; width:100%; background:none;">Username</span>'+
-      '<input id="fname2" class="class_profile" type="text" placeholder="User Name"  maxlength=50 onkeydown="javascript:if(event.keyCode==13) document.getElementById(&quot;faddrss2&quot;).focus()" '+
-          'value="'+username+'"/>'+            
-    '</div>'+
+          '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">Address</span>'+
+            '<textarea id="faddrss2" class="class_profile" name="faddrss" rows="4" cols="50" maxlength=300 placeholder="Address" style="resize:none;height:70px;">'+
+              addrss+'</textarea>'+   
+          '</div>'+
 
-    '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
-      '<span style="height:15px; width:100%; background:none;">Address</span>'+
-      '<textarea id="faddrss2" class="class_profile" name="faddrss" rows="4" cols="50" maxlength=300 placeholder="Address" style="resize:none;height:70px;">'+
-        addrss+'</textarea>'+    
-    '</div>'+
+          '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
+            '<span style="height:15px; width:100%; background:none;">Celphone</span>'+
+            '<input id="fcelno2" class="class_profile" type="number" placeholder="Contact Number"  maxlength=11" '+
+                'value="'+celno+'"/>'+           
+          '</div>'+
 
-    '<div style="margin-top:10px; height:auto; width:100%;background:none;">'+
-      '<span style="height:15px; width:100%; background:none;">Celphone</span>'+
-      '<input id="fcelno2" class="class_profile" type="number" placeholder="Contact Number"  maxlength=11" '+
-          'value="'+celno+'"/>'+            
-    '</div>'+
+          '<div style="margin-top:10px; height:auto; width:100%;text-align:center;background:none;">'+
+            '<div style="height:15px;width:100%;font-weight:bold;font-size:12px;color:black;">BARANGAY</div>'+
+            '<div style="height:15px;width:100%;font-weight:bold;font-size:23px;color:'+JBE_CLOR+';">'+areaname+'</div>'+
+          '</div>'+
 
-    '<div style="display:none;margin-top:10px; height:40px; width:100%;background:none;">'+
-      '<div style="float:left;height:100%; width:49.5%;background:none;">'+
-        '<div style="height:15px; width:100%; background:none;">Latitude</div>'+
-        '<input id="flat2" class="class_profile" type="number" readonly placeholder="Latitude" '+
-            'value="'+lat+'"/>'+            
+          '<div style="display:none;margin-top:10px; height:40px; width:100%;background:none;">'+
+            '<div style="float:left;height:100%; width:49.5%;background:none;">'+
+              '<div style="height:15px; width:100%; background:none;">Latitude</div>'+
+              '<input id="flat2" class="class_profile" type="number" readonly placeholder="Latitude" '+
+                  'value="'+lat+'"/>'+           
+            '</div>'+
+            '<div style="float:right;height:100%; width:49.5%;background:none;">'+
+              '<div style="height:15px; width:100%; background:none;">Longitude</div>'+
+              '<input id="flng2" class="class_profile" type="number" readonly placeholder="Longitude" '+
+                  'value="'+lng+'"/>'+ 
+            '</div>'+
+          '</div>'+
+
+          '<div id="dv_d_active" style="display:none;margin-top:10px; height:auto; width:100%;background:none;">'+
+            d_active+
+          '</div>'+
+
+        '</div>'+
+
       '</div>'+
-      '<div style="float:right;height:100%; width:49.5%;background:none;">'+
-        '<div style="height:15px; width:100%; background:none;">Longitude</div>'+
-        '<input id="flng2" class="class_profile" type="number" readonly placeholder="Longitude" '+
-            'value="'+lng+'"/>'+  
-      '</div>'+
-    '</div>'+
 
-    '<div id="dv_d_active" style="display:none;margin-top:10px; height:auto; width:100%;background:none;">'+
-      d_active+
-    '</div>'+
+    '</div>';       
 
-  '</form>';
-
-  document.getElementById('div_body_admin').innerHTML=dtl;
+  //JBE_OPEN_VIEW(dtl,'My Profile','close_profile');
+  document.getElementById('div_body_admin').innerHTML=dtl;  
+  document.getElementById('div_back').style.display='none';
   mnu_profile();
 }
 
@@ -544,7 +551,7 @@ function mnu_profile(){
         '</div>'+
         '<span class="footer_fonts">Save</span>'+
       '</div>'+      
-      '<div id="btn_hd_cancel" onclick="close_admin()" style="float:left;width:25%;height:100%;margin-left:50%;color:'+JBE_TXCLOR1+';background:none;">'+        
+      '<div id="btn_hd_cancel" onclick="show_admin()" style="float:left;width:25%;height:100%;margin-left:50%;color:'+JBE_TXCLOR1+';background:none;">'+        
         '<div class="footer_gfxs">'+
           '<img src="gfx/jcancel.png"  style="height:100%;" alt="del image" />'+
         '</div>'+
@@ -554,53 +561,86 @@ function mnu_profile(){
     dispMenu('div_foot_admin',jmenu);
 }
 
+function extractNames(fullName) {
+  let lastName = "", firstName = "", middleName = "";
+  
+  // Check if the name is in "Last, First Middle" format
+  if (fullName.includes(",")) {
+      let parts = fullName.split(",");
+      lastName = parts[0].trim();
+      let firstMiddle = parts[1].trim().split(" ");
+      firstName = firstMiddle[0];
+      middleName = firstMiddle.slice(1).join(" ");
+  } else {
+      // Otherwise assume "First Middle Last" format
+      let parts = fullName.trim().split(" ");
+      if (parts.length === 2) {
+          [firstName, lastName] = parts;
+      } else if (parts.length > 2) {
+          firstName = parts[0];
+          lastName = parts[parts.length - 1];
+          middleName = parts.slice(-1).join(" ");
+      }
+  }
+  
+  return { firstName, middleName, lastName };
+}
+
 function chk_fld(u,p,vmode){
   if(vmode != 1) { return; };
   if(u=='' || p==''){
     //alert('blank u:'+u+'  p:'+p);
     return;
   }
-  
-  //axios.get(JBE_API+'z_user.php',{ clientno:CURR_CLIENT, request: 101, userid: u, pword:p },JBE_HEADER)     
-  axios.get('/api/get_user', { params: {clientno:CURR_CLIENT, userid:u,pword:p} }, JBE_HEADER)
-  .then(function (response) {     
-    console.log(response.data);  
-    if(response.data.length > 0){
-      snackBar('Record Already Exist. Change User ID and Password.');
-      return;
-    }
-  })    
-  .catch(function (error) { 
-    console.log(error); 
-  });
+ 
+  rest_api_chk_fld(u,p);
 }
 
-function save_profile(){  
-  var vmode=document.getElementById('div_main_admin').getAttribute('data-mode');
-  //let vmode=1;
-  //alert('going to save. data mode:'+document.getElementById('img_eavatar1'));
-	
-  if(vmode==1){ GEO_MODE=0; }
+function close_profile(){
+  var vmode=document.getElementById('div_admin_profile').getAttribute('data-mode');
+  if(vmode==1){
+    //document.getElementById('page_login').style.display='none';
+    showMainPage();
+  }else{
+    mnu_fm_admin();
+  }
+}
 
-  var usercode=CURR_USER;//document.getElementById('div_main_editStaff').getAttribute('data-usercode');
+function save_profile(){ 
+  var vmode=document.getElementById('div_admin_profile').getAttribute('data-mode');
+  var userRow=parseInt(document.getElementById('div_admin_profile').getAttribute('data-userRow'));
+  //alert('going to save. data mode:'+vmode+'\nuserRow: '+userRow);  
+
+  if(vmode==1){ GEO_MODE=0; }
+  var profileImg=document.getElementById('bar_avatar').src;
+  var usercode=document.getElementById('div_admin_profile').getAttribute('data-usercode');
   var u=document.getElementById('fuser2').value;
   var p=document.getElementById('fpass2').value;
   var n=document.getElementById('fname2').value;
+  var n2=document.getElementById('fname22').value;
+  var fullname=document.getElementById('fullname').value;
   var a=document.getElementById('faddrss2').value;
-  var c=document.getElementById('fcelno2').value;  
-  var lat=document.getElementById('flat2').value;  
-  var lng=document.getElementById('flng2').value;  
-  var d_active=document.getElementById('dv_d_active').innerHTML;  
-  
-  var foto=document.getElementById('img_eavatar'+vmode).getAttribute('data-img');
-  var photoImg=document.getElementById('img_eavatar'+vmode).src;
-  //alert(photoImg);
-  //alert(d_active+' = '+lat+' vs '+lng);
+  var c=document.getElementById('fcelno2').value; 
+  var lat=document.getElementById('flat2').value; 
+  var lng=document.getElementById('flng2').value; 
+  var d_active=document.getElementById('dv_d_active').innerHTML; 
+ 
+  //var foto=document.getElementById('img_eavatar'+vmode).getAttribute('data-img');
+  var foto=document.getElementById('img_eavatar'+vmode).src;
 
+  let lastname=extractNames(fullname).lastName;
+  let firstname=extractNames(fullname).firstName;
+  let middlename=extractNames(fullname).middleName;
+  
+  //foto=profileImg;
+  //alert('foto:'+foto);
+
+ 
   if(u=='' || p=='' || n=='' || c=='' || a=='' || foto==''){
     var vmsg='';
     //if(lat==0 || lng==0){ vmsg="Location Can't be Found!<br>Please Turn On your Location."; }
-    if(u==''){ vmsg='User ID is Empty'; }
+    if(foto==''){ vmsg='Image Profile is Empty'; }
+    else if(u==''){ vmsg='User ID is Empty'; }
     else if(p==''){ vmsg='User Password is Empty'; }
     else if(n==''){ vmsg='User Name is Empty'; }
     else if(c==''){ vmsg='User Celfone is Empty'; }
@@ -609,118 +649,58 @@ function save_profile(){
     MSG_SHOW(vbOk,"ERROR: Pls. complete the form.",vmsg,function(){},function(){});
     return;
   }
-    
-  if(vmode==1){
-    var req=2; //add
-    var photo=usercode+'.jpg'; 
+  //console.log('foto',foto);
+  rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,lastname,firstname,middlename,a,foto,c,lat,lng,d_active,CURR_AXTYPE);
+  //document.getElementById('div_back').style.display='none';
+  //show_admin();
+}
+
+async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,lastname,firstname,middlename,a,photo,c,lat,lng,d_active,usertype){  
+  var jimg=photo;  
+  if(JBE_CHK_BASE64(photo)){    
+    await JBE_BLOB(n,jimg).then(result => jimg=result);
   }else{
-    var req=3; 
-    var photo=usercode+'.jpg'; 
+    jimg='';
   }
+  var ob = {
+    id:userRow, 
+    clientno:CURR_CLIENT,
+    areano:CURR_AREANO,
+    usercode:usercode,
+    userid:u,
+    username:n,
+    username2:n2,
+    pword:p,
+    fullname:fullname,
+    lastname:lastname,
+    firstname:firstname,
+    midname:middlename,
+    photo:jimg,    
+    usertype:usertype,
+    addrss:a,
+    celno:c,
+    fb:'',
+    email:'',
+    d_active:d_active,
+    lat:lat,
+    lng:lng
+  };      
 
-  let ob = [
-    { "div":"bar_avatar" },
-    { "div":"log_avatar" },
-    { "div":"admin_avatar" }
-  ];
-
-  var targetDIR='upload/users/';
-  
   showProgress(true);
-  if(vmode==1){
-    //alert('going to add. '+lng);
-    axios.put('/api/save_user', {headers: { 'Content-Type': 'application/json' }}, { params: { 
-      clientno:CURR_CLIENT,     
-      usercode:usercode,
-      userid:u,
-      pword:p,
-      username:n, 
-      addrss:a,     
-      photo:photo,
-      celno:c,
-      lat:lat,
-      lng:lng,
-      d_active:d_active,
-      usertype:0
-    }})
-    .then(function (response) {
-      showProgress(false);
-      if(req==2){
-        if(response.data=="EXIST"){        
-          MSG_SHOW(vbOk,"ERROR:","User already exist!, Try Again...",function(){},function(){});
-          return;
-        }else{
-          DB_USER=response.data;
-          snackBar('Signing Up is successful...');
-          //if(THISFILE[0]){
-          //  uploadNOW(THISFILE[0],photo,targetDIR,'',false,false);               
-          //}
-        }
-      }else{
-        DB_USER=response.data;
-        //if(THISFILE[0]){
-        //  uploadNOW(THISFILE[0],photo,targetDIR,ob,false,false);
-        //}
-        snackBar('User Updated...');
-        update_curr_user(usercode,n);
-        document.getElementById('admin_username').innerHTML=n;
-        //document.getElementById('logger').innerHTML='HOY, '+n; //eppy        
-      }    
-      get_db_all('user');
-      dispHeaderMode();
-      close_admin();
-    })
-    .catch(function (error) { console.log(error); 
-      showProgress(false);
-    });  
-  }else{
-    //alert('update');
-    axios.put('/api/upd_user', {headers: { 'Content-Type': 'application/json' }}, { params: { 
-      clientno:CURR_CLIENT,     
-      usercode:usercode,
-      userid:u,
-      pword:p,
-      username:n, 
-      addrss:a,     
-      photoName:photo,
-      photoImg:photoImg,
-      celno:c,
-      lat:lat,
-      lng:lng,
-      usertype:CURR_AXTYPE
-    }})
-    .then(function (response) {
-      showProgress(false);
-      if(req==2){
-        if(response.data=="EXIST"){        
-          MSG_SHOW(vbOk,"ERROR:","User already exist!, Try Again...",function(){},function(){});
-          return;
-        }else{
-          DB_USER=response.data;
-          snackBar('Signing Up is successful...');
-          //if(THISFILE[0]){
-          //  uploadNOW(THISFILE[0],photo,targetDIR,'',false,false);               
-          //}
-        }
-      }else{
-        DB_USER=response.data;
-        if(THISFILE[0]){
-          //uploadNOW(THISFILE[0],photo,targetDIR,ob,false,false);
-        }
-        snackBar('User Updated...');
-        update_curr_user(usercode,n);
-        document.getElementById('admin_username').innerHTML=n;
-        //document.getElementById('logger').innerHTML=n;
-      }    
-      get_db_all('user');
-      dispHeaderMode();
-      //JBE_CLOSE_VIEW();
-      close_admin();
-    })
-    .catch(function (error) { console.log(error); 
-      showProgress(false);
-    });  
-  }
+  console.log('save:',lastname,':',firstname,':',middlename);  
+  if(JBE_CLOUD){ await jeff_uploadImage(photo,'vaxi/images/'+usercode+'.jpg'); ob.photo=''; }
+  //console.log('ob.photo',ob.photo);
+  await api_save(JBE_CLOUD,JBE_API+'user',[ob],record => record.usercode !== CURR_USER || record.areano !== CURR_AREANO);
+   
+  document.getElementById('admin_avatar').src=photo;
+  document.getElementById('bar_avatar').src=photo;
+  //document.getElementById('owner').src=photo;
+  
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;
+  console.log('save profile:',DB_USER);
+  //JBE_CLOSE_VIEW();
+  showProgress(false); 
+  show_admin();
 }
   
 function update_curr_user(usercode,n){
@@ -733,42 +713,50 @@ function update_curr_user(usercode,n){
 }
 
 /************************************** */
-function editStaff(){  
+function fm_staff(){  
   usercode=CURR_USER;
   //alert(usercode); 
   var profileImg=document.getElementById('bar_avatar').src;
   var username=CURR_NAME;  
-  document.getElementById('div_main_admin').setAttribute('data-cb','show_admin');
+  //document.getElementById('div_main_admin').setAttribute('data-cb','show_admin');
+  document.getElementById('div_back').style.display='none';
   let dtl=
-  '<div id="div_main_editStaff" data-usercode="'+CURR_USER+'" style="width:100%;height:100%;margin:0 auto;padding:5px;overflow-x:hidden;overflow-y:auto;background:none;">'+
+  '<div id="div_main_fm_staff" data-usercode="'+CURR_USER+'" style="width:100%;height:100%;margin:0 auto;padding:5px;overflow-x:hidden;overflow-y:auto;background:none;">'+
     '<div style="width:100%;height:20px;margin-top:0px;color:navy;font-weight:bold;background:white;">'+
       '<span style="float:left;width:65%;text-align:center;">User Name</span>'+
       '<span style="float:right;width:35%;text-align:right;padding:0 13px 0 0;background:none;">User Level</span>'+
     '</div>'+
-    '<div id="div_editStaff" style="width:100%;height:'+(H_BODY-(37+55+50))+'px;margin-top:0px;padding:0px;overflow-x:hidden;overflow-y:auto;background:none;"></div>'+
+    '<div id="div_fm_staff" style="width:100%;height:'+(H_BODY-(37+55+50))+'px;margin-top:0px;padding:0px;overflow-x:hidden;overflow-y:auto;background:none;"></div>'+
   '</div>';
 
   document.getElementById('div_body_admin').innerHTML=dtl;
-  mnu_editStaff();
-  disp_editStaff();  
+  mnu_fm_staff();
+  disp_fm_staff();  
 }
-function mnu_editStaff(){
+function mnu_fm_staff(){
   var jmenu=
-    '<div style="width:100%;height:100%;">'+
-      '<div style="width:100%;height:100%;padding:12px 0 0 0;text-align:center;background:none;">'+
-        'Users Facility'+
+  '<div style="width:100%;height:100%;color:'+JBE_TXCLOR1+';">'+
+    '<div onclick="save_staff()" style="float:left;width:25%;height:100%;color:'+JBE_TXCLOR1+';background:none;">'+        
+      '<div class="footer_gfxs">'+
+        '<img src="gfx/jsave.png"  style="height:100%;" alt="save image" />'+
       '</div>'+
-    '</div>';
+      '<span class="footer_fonts">Save</span>'+
+    '</div>'+      
+    '<div id="btn_hd_cancel" onclick="show_admin()" style="float:left;width:25%;height:100%;margin-left:50%;color:'+JBE_TXCLOR1+';background:none;">'+        
+      '<div class="footer_gfxs">'+
+        '<img src="gfx/jcancel.png"  style="height:100%;" alt="del image" />'+
+      '</div>'+
+      '<span class="footer_fonts">Cancel</span>'+
+    '</div>'+      
+  '</div>';
   dispMenu('div_foot_admin',jmenu);
 }
 
-
-
-function close_editStaff(){ 
+function close_fm_staff(){ 
   mnu_fm_admin();
 }
 
-function disp_editStaff(){  
+function disp_fm_staff(){  
   //alert(JBE_API);
   var aryDB=DB_CLIENTS;  
   aryDB.sort(sortByMultipleKey(['usertype','username']));
@@ -811,7 +799,7 @@ function disp_editStaff(){
         '</div>'+
       '</div>';
   }   
-  document.getElementById('div_editStaff').innerHTML=dtl;
+  document.getElementById('div_fm_staff').innerHTML=dtl;
 }
 
 function chgLevel(usercode,usertype){  
@@ -870,7 +858,7 @@ function del_staff(usercode){
       showProgress(false);      
       console.log(response.data);        
       DB_CLIENTS=response.data;  
-      disp_editStaff();  
+      disp_fm_staff();  
     })
     .catch(function (error) {
       console.log(error);

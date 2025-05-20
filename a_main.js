@@ -149,6 +149,21 @@ function dispMenu(divmenu,m){
   document.getElementById(divmenu).innerHTML=m;
 }
 
+function dispMenu_app(f_main,m){
+  //alert('dispMenu activated... :'+m);
+  document.querySelectorAll('.menu_class').forEach(function(el) {
+    el.style.display = 'none'; 
+  });
+  //document.getElementById('mnu_main').style.display='none';
+  document.getElementById('mnu_main_owner').style.display='none';
+  if(f_main){
+    document.getElementById('mnu_mainmenu').style.display='block';   
+    document.getElementById(m).style.display='block';
+  }else{
+    document.getElementById('mnu_submenu').style.display='block';   
+    document.getElementById('mnu_submenu').innerHTML=m;
+  }
+}
 // ** ======================= SHOW ROUTINES ===================================
 function showProfile(v){ 
   return;

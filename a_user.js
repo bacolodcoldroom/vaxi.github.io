@@ -150,6 +150,18 @@ function fm_user(){
   FM_MAIN(fm_ob,fm_layout);
 }
 
+function putimg_user(){
+  return;
+  //document.getElementById('img_user').src=document.getElementById('lu_stock_photo').src;
+  var vimg=document.getElementById('img_user').getAttribute('data-img');  
+  document.getElementById('tx_stock_photo').value=vimg;
+  alert('vimg:'+vimg);
+
+  let img=document.getElementById('img_stock').src;
+  //document.getElementById('tx_b64').value=img;
+  //alert('img:'+img);
+}
+
 function look_usercode(){
   //{ "title":"Product Name", "width":"60%", "align":"left" },
   var flds=[
