@@ -37,10 +37,11 @@ function showMap(vmode,usercode){
     return;
   }    
   //getCurrPos();
+  var h_map=H_WRAPPER-80;
   var dtl='';
   var dtl2='';
   dtl=
-    '<div id="div_showmap" data-vmode='+vmode+' data-p1="'+p1+'" data-p2='+p2+' data-usercode="'+usercode+'" data-zoom=0 style="width:100%;height:100%;text-align:left;padding:0px;background-color:lightgray;">'+
+    '<div id="div_showmap" data-vmode='+vmode+' data-p1="'+p1+'" data-p2='+p2+' data-usercode="'+usercode+'" data-zoom=0 style="width:100%;height:'+h_map+'px;text-align:left;padding:0px;background-color:lightgray;">'+
       '<div id="theMap" style="position:relative;width:100%;height:100%;border:0px solid red;background-color:none;">'+
         '<div id="dsboard" style="display:none;position:absolute;z-index:1450;width:150px;height:45px;right:60px;bottom:2px;border-radius:5px;opacity:0.7;background:white;"></div>'+        
         '<div id="dsboard2" style="display:none;position:absolute;z-index:1455;width:150px;height:45px;right:60px;bottom:2px;border-radius:5px;border:2px solid black;font-size:14px;text-align:center;color:red;background:none;">'+
@@ -119,8 +120,16 @@ function showMap(vmode,usercode){
           
       '</div>';
     }
+    JBE_OPENBOX('div_showmap','Client Map',dtl,dtl2,'close_showmap'); 
+    /*
     JBE_OPEN_VIEW(dtl,'Client Map','close_showmap');
-    dispMenu(false,dtl2);  
+    if(CURR_CLIENT='VAXMAIN'){
+      dispMenu('div_foot_admin',dtl2);  
+    }else{
+      dispMenu(false,dtl2);  
+    }
+    */
+
     map = L.map( 'theMap', {
       center: [12.8797, 121.7740],
       minZoom: 2,
@@ -195,6 +204,8 @@ function btnZoom(m){
 }
 	
 function close_showmap(){  
+  map.remove();
+  return;
   var vmode=document.getElementById('div_showmap').getAttribute('data-vmode');
   map.remove();
   if(vmode==0){
