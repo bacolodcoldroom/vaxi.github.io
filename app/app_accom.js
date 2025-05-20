@@ -92,7 +92,7 @@ function do_total_accom(id){
     tot_m+=Number(document.getElementById(div_m).value);
     tot_f+=Number(document.getElementById(div_f).value);
   }
-  console.log('>>>>>> ',tot_m,tot_f);
+  //console.log('>>>>>> ',tot_m,tot_f);
   document.getElementById(id+'_totM').value=tot_m;
   document.getElementById(id+'_totF').value=tot_f;
   document.getElementById(id+'_total').value=tot_m+tot_f;
