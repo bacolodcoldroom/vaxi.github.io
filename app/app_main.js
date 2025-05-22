@@ -135,8 +135,10 @@ function showMainPage(){
 
 async function dispHeaderMode(){
   //var n = new Date().toLocaleTimeString('it-IT');
+  CURR_AREANO=JBE_GETFLD('areano',DB_USER,'usercode',CURR_USER);
   let v_mphoto='../gfx/avatar.png'; 
   let v_mphoto_brgy='../gfx/avatar.png'; 
+  let brgytitle='Barangay:';
   if(!CURR_USER){    
     document.getElementById('logger').innerHTML="Please Log In";
     document.getElementById("page_login").style.display="none";     
@@ -157,9 +159,17 @@ async function dispHeaderMode(){
       v_mphoto='../gfx/avatar.png';
     }
   }
+
+  let brgyname=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);  
+  document.getElementById('brgyname').innerHTML=brgyname;  
+  console.log('CURR_AREANO',CURR_AREANO,' --- '+brgyname);
+  
+  let cluster=JBE_GETFLD('cluster',DB_AREA,'areano',CURR_AREANO);  
+  if(cluster=='YES'){ brgytitle='Cluster:'; }  
+  document.getElementById('brgytitle').innerHTML=brgytitle;  
+
   document.getElementById('bar_avatar').src=v_mphoto;
-  document.getElementById('owner').src=v_mphoto_brgy;
-  document.getElementById('brgyname').innerHTML=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);
+  document.getElementById('owner').src=v_mphoto_brgy;  
 }
 
 // ** ======================= SHOW ROUTINES ===================================

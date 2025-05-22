@@ -31,12 +31,7 @@ async function rest_api_start(){
     if(DB_USER.length==0){
       MSG_SHOW(vbOk,'ERROR:','No Database Found. Ask the Administrator.', function(){ return; },function(){});
     }
-  }
-
-  CURR_AREANO=JBE_GETFLD('areano',DB_USER,'usercode',CURR_USER);
-  let brgyname=JBE_GETFLD('name',DB_AREA,'areano',CURR_AREANO);  
-  document.getElementById('brgyname').innerHTML=brgyname;  
-  console.log('CURR_AREANO',CURR_AREANO,' --- '+brgyname);
+  }  
   dispHeaderMode();
   showProgress(false);
 }

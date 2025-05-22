@@ -1,8 +1,32 @@
 let clor_male='lightblue';
 let clor_female='pink';
 
-async function fm_accom(){
-  //if(!CHK_ONLINE()){ return; };
+async function sel_brgy_accom(){
+  let cluster=JBE_GETFLD('cluster',DB_AREA,'areano',CURR_AREANO);  
+  if(cluster != 'YES'){ 
+    fm_accom(CURR_AREANO);
+    return;
+  }  
+  
+  var h=380;
+  var dtl=     
+    '<div id="main_sel_brgy_accom" data-zoom=0 data-close="" style="width:100%;height:'+h+'px;text-align:center;background-color:white;">'+     
+      '<div style="width:100%;height:100%;padding:2px;overflow:auto;background:none">';      
+      for(var i=0;i<DB_AREA.length;i++){
+        if(DB_AREA[i].cluster_areano != CURR_AREANO){ continue; }        
+        dtl+='<button style="width:100%;height:25px;" onclick="fm_accom(&quot;'+DB_AREA[i].areano+'&quot;);JBE_CLOSEBOX();">'+DB_AREA[i].name+'</button>';
+      }
+    dtl+=  
+      '</div>'+
+    '</div>';
+  var dtl2=     
+    '<div style="width:100%;height:100%;padding:0px 0 0 0;text-align:center;color:'+JBE_TXCLOR1+';background:none;">'+
+      '<input type="button" onclick="JBE_CLOSEBOX()" style="width:100px;height:100%;" value="Close" />'+     
+    '</div>';  
+  JBE_OPENBOX('main_sel_brgy_accom',' Select a Barangay',dtl,dtl2);
+}
+
+async function fm_accom(brgycode){
   if(!CHK_ONLINE() && JBE_CLOUD){ return; }
   if(!CURR_USER){
     snackBar('Please Log In...');
@@ -16,18 +40,24 @@ async function fm_accom(){
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content; 
   showProgress(false);
   mnu_fm_accom();
-  
-  let pa_height=H_BODY-35-8;  
+  let brgyname=JBE_GETFLD('name',DB_AREA,'areano',brgycode);  
+  let pa_height=H_BODY-50-8;  
   let dtl= 
-  '<div id="dv_accom" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+
+  '<div id="dv_accom" data-brgycode="'+brgycode+'" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+
 
-    '<div style="height:35px;width:100%;padding:0px;border:1px solid lightgray;background:none;">'+             
+    '<div style="height:50px;width:100%;padding:5px;border:1px solid lightgray;background:none;">'+             
       
-      '<div class="cls_daily" style="margin:0 auto;width:250px;height:100%;padding:4px;border:0px solid lightgray;">'+ 
-        '<span style="float:left;width:40%;height:100%;padding:3px 0 0 0;font-size:14px;font-weight:bold;background:none;">Month of: </span>'+ 
-        '<input id="date_accom" style="width:60%;height:100%;" onchange="chg_accom_month(this.value)" type="month" value="'+JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM')+'"  placeholder="Date" />'+ 
+      '<div style="float:left;width:50%;height:100%;font-size:14px;padding:0px;border:0px solid lightgray;background:none;">'+         
+        '<div style="width:100%;height:40%;text-align:left;padding:2px;background:none;">Area:</div>'+
+        '<div id="div_brgyname" style="width:100%;height:60%;text-align:left;font-weight:bold;padding:2px;background:none;">'+brgyname+'</div>'+        
       '</div>'+
-
+      '<div style="float:right;width:130px;height:100%;font-size:14px;padding:0px;border:0px solid lightgray;background:none;">'+         
+        '<div style="width:100%;height:40%;text-align:center;padding:2px;background:none;">Month of:</div>'+        
+        '<div style="width:100%;height:60%;text-align:right;padding:2px;background:none;">'+
+          '<input id="date_accom" style="width:130px;height:100%;background:none;" onchange="chg_accom_month(this.value)" type="month" value="'+JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM')+'"  placeholder="Date" />'+
+        '</div>'+
+      '</div>'+
+  
     '</div>'+
 
     '<div style="width:100%;height:'+pa_height+'px;border:1px solid lightgray;padding:5px;background:white;">'+
@@ -103,11 +133,12 @@ function disp_fm_accom(){
   //alert('act disp_fm_accom');  
   JBE_BACK_VIEW(true);
   let curdate=document.getElementById('date_accom').value;  
+  let curbrgycode=document.getElementById('dv_accom').getAttribute('data-brgycode');
   update_week_buttons(curdate,'accom');
   clear_fm_accom();  
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== curdate){ continue; }
-    if(DB_ACCOM[i].areano !== CURR_AREANO){ continue; }
+    if(DB_ACCOM[i].areano !== curbrgycode){ continue; }
 
     let div='';    
     for(var k=0;k<5;k++){
@@ -133,7 +164,7 @@ function edit_fm_accom(col){
     //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
     return;
   }
-  let vheight=H_BODY-100;
+  let vheight=H_BODY-100-5;
   let fld1=col+'wm';      
   let fld2=col+'wf';
   let div='';    
@@ -238,6 +269,7 @@ function clear_fm_accom(){
 }
 
 async function save_fm_accom(){
+  let curbrgycode=document.getElementById('dv_accom').getAttribute('data-brgycode');
   let n=new Date();
   let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
   let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
@@ -251,7 +283,7 @@ async function save_fm_accom(){
     //let totals=Number(document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'total').value);
     //if(!totals){ console.log('wala totals #',i);continue; }
     let obj={
-      "areano":CURR_AREANO,
+      "areano":curbrgycode,
       "stockno":DB_STOCK_ACCOM[i].stockno,
       "date_save":date_save,"time_save":time_save,
       "date":document.getElementById('date_accom').value,
@@ -274,11 +306,10 @@ async function save_fm_accom(){
   showProgress(true);
   console.log('<<<<arr',arr);
   let curdate=document.getElementById('date_accom').value;  
-  //await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => record.areano !== CURR_AREANO);// || record.date !== curdate);  
-  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === CURR_AREANO  && record.date === curdate));  
+  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === curbrgycode  && record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   speakText('Data Uploaded successfully');
-  make_log(CURR_AREANO,'accom');
+  make_log(curbrgycode,'accom');
   console.log('arr:',arr);
   showProgress(false);
   disp_fm_accom();
