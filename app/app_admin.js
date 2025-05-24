@@ -179,24 +179,7 @@ function login_ok(v){
   createCookie('cok_axtype_'+CURR_CLIENT,CURR_AXTYPE,1);
   createCookie('cok_name_'+CURR_CLIENT,CURR_NAME,1);
   createCookie('cok_name2_'+CURR_CLIENT,CURR_NAME2,1);
-  //alert(CURR_NAME+' vs '+CURR_NAME2);
-  var vmenu='mnu_main_owner';
-  /*       
-  aryPix[0]='data:image/png;base64,' + btoa(aryDB['photo']);
-  if(CURR_AXTYPE > 0){
-    document.getElementById("menu_open").style.display='block';
-    vmenu='mnu_main_owner';
-  }else{
-    document.getElementById("menu_open").style.display='none';
-  }
-  */
-  dispMenu(true,vmenu);
-  //get_db_user(CURR_USER,true);
   closeLogin();
-  //get_app_var(CURR_USER,true);
-  //refreshNOTIF('');
-  //document.getElementById("logger").innerHTML="Hi!, "+CURR_NAME;
-  dispHeaderMode();
   refresh_sidenav();
 }
 
@@ -209,6 +192,7 @@ function main_login(){
 }
 function closeLogin(){
   document.getElementById("page_login").style.display="none";
+  dispHeaderMode();
 }
 function preLogOut(){
   MSG_SHOW(vbYesNo,"CONFIRM:","Are you sure to Log Out now?",
@@ -322,12 +306,7 @@ function logout(){
   JBE_TRANS=[];
   JBE_TRANS2=[];   
   showProfile(5);
-  //refreshNOTIF('');
   closeLogin();
-
-  var vmenu='mnu_main_owner';
-  if(CURR_AXTYPE > 0){ vmenu='mnu_main_owner'; } 
-  dispMenu(true,vmenu);
 }
 
 function fm_profile(vmode){
