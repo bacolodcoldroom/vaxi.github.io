@@ -304,7 +304,7 @@ function mnu_fm_weekly(){
         'Click Week Buttons to Edit'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 }
 
 function mnu_save_fm_weekly(){
@@ -323,7 +323,7 @@ function mnu_save_fm_weekly(){
         '</div>'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 }
 
 function refresh_weekly(){  

@@ -197,7 +197,7 @@ function mnu_setting(){
       '</div>'+
     '</div>'+
   '</div>';
-  dispMenu(false,jmenu);  
+  dispMenu('div_footer',jmenu);
 }
 
 function mnu_edit_setting(){  
@@ -216,7 +216,7 @@ function mnu_edit_setting(){
       '</div>'+
     '</div>'+
   '</div>';
-  dispMenu(false,jmenu);  
+  dispMenu('div_footer',jmenu);
 }
 
 function cancel_setting(){

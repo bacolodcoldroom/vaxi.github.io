@@ -300,7 +300,7 @@ function mnu_fm_admin(){
         'Account Menu'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 }
 
 function layas(){
@@ -353,7 +353,7 @@ function fm_profile(vmode){
         '<span class="footer_fonts">Cancel</span>'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 
   var vDate=new Date(); 
   var vTime = vDate.toLocaleTimeString('it-IT');
@@ -645,7 +645,7 @@ function mnu_editStaff(){
         'Users Facility'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 }
 function close_editStaff(){
   mnu_fm_admin();

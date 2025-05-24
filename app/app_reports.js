@@ -33,8 +33,8 @@ function mnu_repo(){
         '<span>Close</span>'+
       '</div>'+
     '</div>'+
-  '</div>';
-  dispMenu(false,jmenu);  
+  '</div>';  
+  dispMenu('div_footer',jmenu);
 }
 
 function mnu_repo2(){  
@@ -74,7 +74,7 @@ function mnu_repo2(){
       '</div>'+
     '</div>'+
   '</div>';
-  dispMenu(false,jmenu);  
+  dispMenu('div_footer',jmenu);
 }
 
 function closeREPO2(){

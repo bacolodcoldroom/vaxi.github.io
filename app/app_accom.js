@@ -14,7 +14,7 @@ async function sel_brgy_accom(){
       '<div style="width:100%;height:100%;padding:2px;overflow:auto;background:none">';      
       for(var i=0;i<DB_AREA.length;i++){
         if(DB_AREA[i].cluster_areano != CURR_AREANO){ continue; }        
-        dtl+='<button style="width:100%;height:25px;" onclick="fm_accom(&quot;'+DB_AREA[i].areano+'&quot;);JBE_CLOSEBOX();">'+DB_AREA[i].name+'</button>';
+        dtl+='<button style="width:100%;height:25px;margin-top:5px;border-radius:5px;background:whitesmoke;" onclick="fm_accom(&quot;'+DB_AREA[i].areano+'&quot;);JBE_CLOSEBOX();">'+DB_AREA[i].name+'</button>';
       }
     dtl+=  
       '</div>'+
@@ -332,7 +332,7 @@ function mnu_fm_accom(){
         'Click Week Buttons to Edit'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 }
 
 function mnu_save_fm_accom(){
@@ -351,7 +351,7 @@ function mnu_save_fm_accom(){
         '</div>'+
       '</div>'+
     '</div>';
-  dispMenu(false,jmenu);
+  dispMenu('div_footer',jmenu);
 }
 
 function refresh_accom(){  

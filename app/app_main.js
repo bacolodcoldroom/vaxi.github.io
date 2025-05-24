@@ -96,20 +96,8 @@ function get_app_default(){
   rest_api_start();
 }
 
-function dispMenu(f_main,m){
-  //alert('dispMenu activated... :'+m);
-  document.querySelectorAll('.menu_class').forEach(function(el) {
-    el.style.display = 'none'; 
-  });
-  //document.getElementById('mnu_main').style.display='none';
-  document.getElementById('mnu_main_owner').style.display='none';
-  if(f_main){
-    document.getElementById('mnu_mainmenu').style.display='block';   
-    document.getElementById(m).style.display='block';
-  }else{
-    document.getElementById('mnu_submenu').style.display='block';   
-    document.getElementById('mnu_submenu').innerHTML=m;
-  }
+function dispMenu(divmenu,m){
+  document.getElementById(divmenu).innerHTML=m;
 }
 
 //=================================================================================
@@ -129,8 +117,36 @@ function showMainPage(){
   //console.log('mainpage '+f_MainPage);
   openPage('page_main');  
 
-  vmenu='mnu_main_owner';
-  dispMenu(true,vmenu);
+  vmenu=
+    '<div onclick="location.href=`index.html`" style="float:left;width:25%;height:100%;background:none;">'+
+      '<div class="class_footer">'+
+        '<img src="gfx/jhome.png" alt="home image" />'+
+        '<span>Refresh</span>'+
+      '</div>'+
+    '</div>'+
+      
+    '<div onclick="callText(`call`)" style="float:left;width:25%;height:100%;background:none;">'+
+      '<div class="class_footer">'+
+        '<img src="../gfx/jcall.png" alt="call image" />'+
+        '<span>Call / Text</span>'+
+      '</div>'+
+    '</div>'+
+    
+    '<div id="mnu_upload" onclick="not_yet()" style="float:left;width:25%;height:100%;background:none;">'+
+      '<div class="class_footer">'+
+        '<img src="../gfx/jchat.png" alt="call image" />'+
+        '<span>Chat</span>'+
+      '</div>'+
+    '</div>'+
+
+    '<div onclick="show_credits()" style="float:left;width:25%;height:100%;background:none;">'+
+      '<div class="class_footer">'+
+        '<img src="../gfx/jorg.png" alt="call image" />'+
+        '<span>Credits</span>'+
+      '</div>'+
+    '</div>';   
+
+  dispMenu('div_footer',vmenu);
 }
 
 async function dispHeaderMode(){
