@@ -162,8 +162,8 @@ async function dispHeaderMode(){
     document.getElementById('logger').innerHTML='Hi!, '+CURR_NAME;     
     document.getElementById("page_login").style.display="none";    
     if(JBE_CLOUD){
-      v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
-      v_mphoto_brgy=await jeff_getImage('vaxi/images/'+CURR_AREANO+'.jpg');
+      v_mphoto=await jeff_getImage(CURR_USER+'.jpg');
+      v_mphoto_brgy=await jeff_getImage(CURR_AREANO+'.jpg');
     }else{        
       const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
       if(ndx > -1){

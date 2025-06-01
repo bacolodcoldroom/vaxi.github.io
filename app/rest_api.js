@@ -4,8 +4,7 @@ async function rest_api_start(){
   GITHUB_TOKEN = DB_SYS[0].sys_pat.substring(3);
   console.log('GITHUB_TOKEN:',GITHUB_TOKEN);
   console.log('DB_SYS',DB_SYS);
-
-  JBE_CLOUD=true;
+  
   JBE_API='';
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
   console.log('**************************************');
