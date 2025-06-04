@@ -38,53 +38,53 @@
 
 <style>
 
-    @media print {
-        body {
-            -webkit-print-color-adjust: exact;
-            -moz-print-color-adjust: exact;
-            -ms-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-    }
- 
-    #wrapper {
-      width: 100%;
-      height: 400px;
-      background-color: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 0px;
-      touch-action: none;
-    }
-    .cl_item {
-      width: auto;
-      height: auto;
-      position: absolute;
-      border: 0px solid indianred;
-      background-repeat:no-repeat;background-size:auto 100%;
-      background-color: none;
-      padding:0px;
-      /*
-      background-color: rgb(245, 230, 99);
-      border: 1px solid rgba(136, 136, 136, .5);
-      border-radius: 50%; 
-      */
-      touch-action: none;
-      user-select: none;
-    }
+  @media print {
+      body {
+          -webkit-print-color-adjust: exact;
+          -moz-print-color-adjust: exact;
+          -ms-print-color-adjust: exact;
+          print-color-adjust: exact;
+      }
+  }
 
+  #wrapper {
+    width: 100%;
+    height: 400px;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0px;
+    touch-action: none;
+  }
+  .cl_item {
+    width: auto;
+    height: auto;
+    position: absolute;
+    border: 0px solid indianred;
+    background-repeat:no-repeat;background-size:auto 100%;
+    background-color: none;
+    padding:0px;
     /*
-    .cl_item:active {
-      background-color: rgba(168, 218, 220, 1.00);
-    }    
-    .cl_item:hover {
-      cursor: pointer;
-      border-width: 2px;
-      border:1px solid red;
-    }
+    background-color: rgb(245, 230, 99);
+    border: 1px solid rgba(136, 136, 136, .5);
+    border-radius: 50%; 
     */
+    touch-action: none;
+    user-select: none;
+  }
+
+  /*
+  .cl_item:active {
+    background-color: rgba(168, 218, 220, 1.00);
+  }    
+  .cl_item:hover {
+    cursor: pointer;
+    border-width: 2px;
+    border:1px solid red;
+  }
+  */
     
 </style>
 
@@ -104,8 +104,9 @@
 
   var CURR_PAGE='';
   var CURR_DATE=new Date();
-  
+  //*********************************
   var JBE_CLOUD=true;
+  //*********************************
   var JBE_ONLINE=true;
   var JBE_ONLINE_NAVI=true;
   var JBE_API='';
@@ -114,10 +115,9 @@
   if(window.location.origin.substring(0,26) == 'http://localhost:8080') { 
     JBE_API=window.location.origin+'/vaxi/';  
     JBE_CLOUD=false;
-    eruda.init();   
+    //eruda.init();   
   }else if(window.location.origin.substring(0,16) == 'http://localhost') { 
     JBE_API=window.location.origin+'/vaxi/';   
-    JBE_CLOUD=false;
   }    
 </script>
 <!-- ****************************************************************** -->
@@ -234,41 +234,31 @@
 
 <!--  *************************PAGES***************************************************
 ************************************************************************** -->
-<div id="wrapper" data-brgycode="" data-brgydate="" class="head_color" style="display:flex;position:relative;width:100%;height:100%;margin:0;background:dimgray;">  
+<div id="wrapper" data-brgycode="" data-tran="" data-date="" class="head_color" style="display:flex;position:relative;width:100%;height:100%;margin:0;background:dimgray;">  
 
   <div id="page_main" class="page_class" style="display:block;width:100%;height:auto;border:0px solid red;">
 
-    <div id="div_header" style="display:block;width:100%;height:100px;text-align:center;border:1px solid gray;padding:0px;color:white;">        
+    <div id="div_header" style="display:block;width:100%;height:100px;text-align:center;padding:0px;color:white;">        
 
-      <div id="div_logo">
-        <img src="gfx/favicon_io/android-chrome-192x192.png" onclick="location.href='index.html'" title="Refresh" style="cursor:pointer;float:left;height:100%;border:0px solid white;"/> 
-        <!--img src="gfx/icon-192x192.png" onclick="openNav()" title="Refresh" style="cursor:pointer;float:left;height:100%;border:0px solid white;"/-->               
+      <div id="div_logo" style="background:none;">
+        <img src="gfx/favicon_io/android-chrome-192x192.png" onclick="location.href='index.html'" title="Refresh" style="cursor:pointer;float:left;height:100%;border:1px solid white;" /> 
       </div>
 
-      <div id="hd_area" style="display:none;float:left;height:100%;text-align:left;background:red;">     
+      <div id="hd_area" style="display:none;float:left;height:100%;text-align:left;background:none;">     
         <div id="sys_tilt" onclick="jeff()"></div>  
         <div id="sys_tilt1"></div>  
         <div id="sys_tilt2"></div>  
       </div>
 
-      <div id="hd_datetime" style="float:left;width:60%;height:100%;margin:0 auto;background:none;">
-        <div style="width:100%;height:55%;padding:5px 0 0 0;font-size:25px;font-weight:bold;background:none;">BARANGAY VACCINE INVENTORY SYSTEM</div>
-        <div style="width:100%;height:45%;padding:5px 0 0 0;font-size:16px;background:none;">
+      <div id="hd_datetime" onclick="alert('hd_datetime');">
+        <h1>BARANGAY VACCINE INVENTORY SYSTEM</h1>
+        <h2>
           <div id="hd_date" style="float:left;width:50%;height:100%;text-align:right;padding:0px 5px 0 0;background:none;"></div> 
           <div id="hd_time" style="float:left;width:50%;height:100%;text-align:left;padding:0px 0 0 5px;background:none;"></div>       
-        </div> 
+        </h2> 
       </div> 
-
-      <div id="hd_notif" style="display:none;position:absolute;top:0px;text-align:left;padding:2px;width:90px;background:none;">
-        <div style="position:relative;width:100%;height:100%;text-align:center;padding:0px 0 0 0;border:0px solid green;background:none;">
-          <img src="gfx/jbell.png" style="height:100%;" />
-          <div id="hd_num1" title="Today" style="cursor:move;position:absolute;top:12px;left:29px;width:28px;height:28px;text-align:left;padding:3.2px 1.2px 0px 0px;border-radius:50%;border:2px solid black;font-size:15px;font-weight:bold;text-align:center;color:white;background:red;">1</div>          
-          <div id="hd_num2" title="Tomorrow" style="cursor:move;position:absolute;top:3px;left:3px;width:28px;height:28px;text-align:left;padding:3.2px 1.2px 0px 0px;border-radius:50%;border:2px solid black;font-size:15px;font-weight:bold;text-align:center;color:white;background:orange;">8</div>
-          <div id="hd_num3" title="within 7 Days" style="cursor:move;position:absolute;top:3px;left:55px;width:28px;height:28px;text-align:left;padding:3.2px 1.2px 0px 0px;border-radius:50%;border:2px solid black;font-size:15px;font-weight:bold;text-align:center;color:white;background:lightgreen;">11</div>          
-        </div> 
-      </div> 
-
-      <div id="hd_user" style="float:right;z-index:100;width:20%;height:100%;background:none;">                  
+      
+      <div id="hd_user" style="float:right;z-index:100;height:100%;background:none;">                  
         <div onclick="main_login()" style="float:right;width:auto;height:100%;text-align:right;border:0px solid red;background:none;">            
           <img id="bar_avatar" style="display:block;float:right;cursor:pointer;height:100%;border-radius:50%;border:2px solid white;background:white;" src="gfx/avatar.png" />                         
         </div>
@@ -288,11 +278,15 @@
 
     </div>  <!--body--> 
 
+    <!--************************* footer -->
+    <div id="main_footer" class="head_color" style="width:100%;height:25px;font-size:12px;overflow:auto;padding:5px 0 0 0;color:white;">
+      Bacolod City Health Office | Cold Chain Facility &copy; Copyright 2025.    
+    </div> <!--footer-->
+
   </div> <!--main div-->
 
-  <div id="mySidenav" class="sidenav" style="display:none;height:100%;margin-top:0px;font-size:9px;background:black;">    
+  <div id="mySidenav" class="sidenav" style="display:none;height:100%;margin-top:0px;font-size:9px;">    
   </div>
-
 
   <!--  *************************PAGES***************************************************  -->
   <div id="myView1" data-page=0 data-open=0 data-close="" data-JBEpage=0 class="page_class myView" style="display:none;">
@@ -369,13 +363,6 @@
     </div>       
   </div>
 
-  <!--************************* footer -->
-  <div class="head_color" id="main_footer" style="display:block;height:25px;width:100%;background:none;">
-    <div id="copyright" style="width:100%;height:100%;font-size:12px;padding:5px 0 0 0;color:white;background:none;">
-      Bacolod City Health Office | Cold Chain Facility &copy; Copyright 2025. All rights reserved.
-    </div>      
-  </div> <!--footer-->
-
 </div> <!--wrapper div-->
 
 <link rel="stylesheet" href="css_main.css">
@@ -410,8 +397,13 @@
 <script type='text/javascript'  src='a_stock2.js'></script>
 <script type='text/javascript'  src='a_user.js'></script>
 <script type='text/javascript'  src='a_report.js'></script>
+<script type='text/javascript'  src='a_setting.js'></script>
+
+<script type='text/javascript'  src='a_rep_invty.js'></script>
+<script type='text/javascript'  src='a_rep_accom.js'></script>
 
 <script>
+  
   var THISFILE=[];
   clear_THISFILE();  
 

@@ -18,12 +18,13 @@ let clor_female='#ffccff';
 function fm_dashboard(f_clear){   
   //if(!JBE_CHK_USER(0)){ return; };
   //get_main_all_db();
-  let h_dashboard=22;
+  DB_AREA.sort(JBE_SORT_ARRAY(['*cluster','name']));
+  let h_dashboard=40;
   let h_box1=280;
   h_box1=350;
   h_box1=window.innerHeight-h_dashboard-155;
-  h_box1=H_BODY-h_dashboard-25;
-  //if(JBE_MOBILE){ h_box1=350; }
+  h_box1=H_BODY-h_dashboard-25-0;
+  if(JBE_MOBILE){ h_box1+=10; }
   let h_spaces=30;
   let h_box2=H_BODY-(h_dashboard+h_box1+h_spaces+5);
   //refresh_all_db();
@@ -33,214 +34,53 @@ function fm_dashboard(f_clear){
   let h_mainbox_invty=(h_box1-94)/2;
   let h_mainbox_accom=h_mainbox_invty;
   let dtl=
-  '<div style="display:block;width:100%;height:100%;font-size:18px;text-align:center;padding:10px;border:0px solid orange;background:	lightgray;">'+  
+  '<div id="dv_dashboard" style="display:block;width:100%;height:100%;font-size:12px;text-align:center;border:0px solid orange;background:	lightgray;">'+  
 
-    '<div style="width:100%;height:'+h_dashboard+'px;font-size:18px;padding:0px;font-weight:bold;text-align:left;border:0px solid gainsboro;background:none;">'+  
-      '<div id="menu_open"" data-mode=0 onclick="openNav()" style="float:left;width:30px;height:100%;"><img src="gfx/jham.png" style="height:100%;" /></div>'+
-      '<div  style="float:left;width:auto;height:100%;">DASHBOARD</div>'+
+    '<div style="width:100%;height:'+h_dashboard+'px;padding:0px;font-weight:bold;text-align:left;border:0px solid gainsboro;background:none;">'+ 
+      '<div id="menu_open"" data-mode=0 onclick="openNav()" style="float:left;width:auto;height:100%;"><img src="gfx/jham.png" style="height:100%;" /></div>'+
+      '<div  style="float:left;width:auto;height:100%;padding:10px;font-size:18px;background:none;">DASHBOARD</div>'+
     '</div>'+
 
+    //'<div style="width:100%;height:50px;margin-top:5px;text-align:center;padding:0%;overflow:auto;border:0px solid red;background:darkgray;">HEAD</div>'+
 
-    '<div style="display:block;width:100%;height:'+h_box1+'px;margin-top:5px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
+    '<div style="width:100%;height:'+h_box1+'px;margin-top:5px;text-align:center;padding:0%;overflow:auto;border:0px solid red;background:white;">';
+    let vdtl='';
 
-      //left brgy
-      
-      '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
-        '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:center;border:0px solid black;color:white;background:'+JBE_CLOR2+';">'+
-          '<div style="width:100%;height:100%;" style="font-weight:bold;">Barangay</div>'+
-        '</div>'+
-        '<div id="brgy_list" style="width:100%;height:'+(h_box1-30-200)+'px;padding:10px;border:0px solid black;overflow:auto;background:white;">'+
-        '</div>'+
-        '<div style="width:100%;height:190px;margin-top:10px;border:0px solid black;padding:10px;background:white;">'+
-          '<img id="brgy_logo" src="gfx/avatar.png" style="height:100%;" />'+
-        '</div>'+
-      '</div>'+
+    for(var i=0;i<DB_AREA.length;i++){
+      let vdisp_invty='block';      
+      if(DB_AREA[i].cluster_areano != '-'){ vdisp_invty='none'; }
+      let vdisp_accom=iif(DB_AREA[i].cluster=='YES','none','block');
+      //console.log(DB_AREA[i].areano+'I');
+      dtl+=
+      '<div id="dv_dbCircle" style="float:left;width:23.75%;height:50px;margin-left:1%;margin-top:1%;padding:2px;border-radius:10px;">'+
+        '<div style="width:100%;height:50%;border:0px solid gold;text-align:center;background:none;">'+
 
-      //right
-      '<div style="float:left;margin-left:1%;width:59%;height:100%;margin-top:0px;text-align:center;padding:0px;border:0px solid red;background:none;">'+
-
-        '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:white;background:'+JBE_CLOR2+';">'+
-          '<div style="width:100%;height:100%;">Barangay : <span id="id_brgy" data-areano="" style="font-weight:bold;"></span></div>'+
-        '</div>'+
-
-        //'<div style="width:100%;height:'+h_mainbox+'px;;margin-top:10px;text-align:center;padding:0px;overflow:auto;border:1px solid yellow;background:none;">'+
-
-        //invty
-        '<div div="div_invty" style="display:block;width:100%;height:'+h_mainbox_invty+'px;margin-top:10px;text-align:center;padding:0%;border:1px solid black;background:#FFD900;">'+
-          /*
-          '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
-            '<div style="float:left;width:50%;height:100%;">Weekly Inventory</div>'+
-            '<div style="float:left;width:50%;height:100%;text-align:right;background:none;">Date : <input type="month" id="id_date" onchange="chgdate_invty_brgy()"  style="float:right;width:100px;margin-left:5px;height:100%;font-weight:bold;" disabled value='+curdate+' /></div>'+
-          '</div>'+
-          */
-
-          '<div style="width:100%;height:30px;font-size:12px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
-            '<div style="float:left;width:25%;height:100%;background:none;">'+
-              '<div onclick="prn_brgy(1)" style="width:60px;height:100%;cursor:pointer;background:none;">'+
-                '<img src="gfx/jprn.png" style="float:left;height:100%;width:auto;" />'+
-                '<input type="text" value="Print" class="cls_inputlabel" style="float:left;width:35px;"/>'+
-              '</div>'+
-            '</div>'+
-            '<div style="float:left;width:50%;height:100%;text-align:center;font-size:17px;">Weekly Inventory</div>'+
-            '<div style="float:left;width:25%;height:100%;text-align:right;background:none;">'+
-              '<input type="text" value="Date: " class="cls_inputlabel" style="float:left;width:50%;text-align:right;" />'+
-              '<input type="month" id="id_date" onchange="chgdate_invty_brgy(this.value)"  style="float:right;width:50%;height:100%;font-weight:bold;" disabled value='+curdate+' />'+
-            '</div>'+
+          '<div style="float:left;width:50%;height:100%;border:0px solid red;background:none;">'+
+            '<div id="'+DB_AREA[i].areano+'I'+'" onclick="prn_brgy(`'+DB_AREA[i].areano+'`,`invty`,`'+curdate+'`)" style="display:'+vdisp_invty+';float:right;margin-right:10px;width:25px;height:100%;cursor:pointer;border-radius:50%;text-align:center;font-size:13px;border:1px solid black;padding:4px 0 0 0;background:yellow;"></div>'+
           '</div>'+
 
-          '<div disabled id="div_hd_invty" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:4px;background:#FFD900;">'+
-            '<div style="float:left;width:20%;height:100%;padding:3px;">Vaccines</div>'+
-            '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';"></button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';"></button></div>'+
-              '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';"></button></div>'+
-              '<div class="cls_weekly_row" style="width:15%;margin-left:1%;padding:4px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
-              '<div class="cls_weekly_row" style="width:10%;padding:4px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
-              '<div class="cls_weekly_row" style="width:8%;margin-left:1%;padding:4px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
-            '</div>'+
-          '</div>'+
-          
-          '<div id="dtls_invty" style="width:100%;height:'+(h_mainbox_invty-(30+30+2))+'px;border:0px solid blue;overflow:auto;padding:5px;background:white;">';              
-            let vdtl='';
-            DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
-            for(var i=0;i<DB_STOCK_INVTY.length;i++){
-              vdtl+=
-              '<div id="div_row" style="width:100%;height:35px;font-size:14px;border:1px solid black;color:black;background:none;">'+
-                '<div style="float:left;width:20%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
-
-                '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
-                  '<div style="width:100%;height:50%;border:0px solid black;">'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w2'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w3'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w4'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w5'+'" class="cls_weekly_row" value="" />'+
-
-                    '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_1lotno'+'"  class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-                    '<input type="month" id="'+DB_STOCK_INVTY[i].stockno+'_1expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1req'+'"  class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />'+
-                  '</div>'+
-                  '<div style="width:100%;height:50%;border:0px solid black;">'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w1'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w2'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w3'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w4'+'" class="cls_weekly_row" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2w5'+'" class="cls_weekly_row" value="" />'+
-
-                    '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_2lotno'+'"   class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-                    '<input type="month" id="'+DB_STOCK_INVTY[i].stockno+'_2expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
-                    '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2req'+'"   class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-bottom:0px;border-right:0px;background:'+clor_req+';" value="" />'+
-                  '</div>'+
-                '</div>'+
-
-              '</div>';
-            }
-            dtl+=vdtl+        
+          '<div style="float:left;width:50%;height:100%;border:0px solid red;background:none;">'+
+            '<div id="'+DB_AREA[i].areano+'A'+'" onclick="prn_brgy(`'+DB_AREA[i].areano+'`,`accom`,`'+curdate+'`)" style="display:'+vdisp_accom+';float:left;margin-left:10px;width:25px;height:100%;cursor:pointer;border-radius:50%;text-align:center;font-size:13px;border:1px solid black;padding:4px 0 0 0;background:pink;"></div>'+
           '</div>'+
 
         '</div>'+
-        //=====================================================================================================================
-        //accom
-        '<div id="div_accom" style="display:block;width:100%;height:'+h_mainbox_accom+'px;margin-top:10px;font-size:14px;text-align:center;padding:0px;border:1px solid black;background:white;">'+
-
-          '<div style="width:100%;height:30px;font-size:12px;padding:5px;font-weight:normal;text-align:left;border:0px solid black;color:black;background:#FFEE00;">'+
-            '<div style="float:left;width:25%;height:100%;background:none;">'+
-              '<div onclick="prn_brgy(2,date_accom.value)" style="width:60px;height:100%;cursor:pointer;background:none;">'+
-                '<img src="gfx/jprn.png" style="float:left;height:100%;width:auto;" />'+
-                '<input type="text" value="Print" class="cls_inputlabel" style="float:left;width:35px;"/>'+
-              '</div>'+
-            '</div>'+
-            '<div style="float:left;width:50%;height:100%;text-align:center;font-size:17px;background:none;">Weekly Accomplishment</div>'+
-            '<div style="float:right;width:25%;height:100%;text-align:right;background:none;">'+
-              '<input type="text" value="Date: " class="cls_inputlabel" style="float:left;width:50%;text-align:right;" />'+
-              '<input type="month" id="date_accom" onchange="chgdate_accom_brgy(this.value)"  style="float:right;width:50%;height:100%;font-weight:bold;" disabled value='+curdate+' />'+
-            '</div>'+
-          '</div>'+
-
-          '<div style="width:100%;height:30px;border:0px solid lightgray;padding:0px;background:#FFD900;">'+
-
-            '<div id="div_hd_accom" style="width:100%;height:100%;border:0px solid red;padding:3px;background:#FFD900;">'+
-              '<div style="float:left;width:13%;height:100%;padding:3px;">Vaccine</div>'+
-              '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
-                '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_accom_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
-                '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn11" onclick="edit_accom_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
-                '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn12" onclick="edit_accom_brgy(3)" style="background:'+JBE_CLOR+';"></button></div>'+
-                '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn13" onclick="edit_accom_brgy(4)" style="background:'+JBE_CLOR+';"></button></div>'+
-                '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn14" onclick="edit_accom_brgy(5)" style="background:'+JBE_CLOR+';"></button></div>'+     
-                '<div class="cls_accom_row" style="width:22.8%;border:1px solid lightgray;padding:4px 0 0 0;margin-left:1.1%;font-weight:bold;text-align:center">TOTALS</div>'+     
-              '</div>'+
-            '</div>'+
-            
-
-            '<div id="dtls_accom" style="width:100%;height:'+(h_mainbox_accom-(30+30+2))+'px;;border:0px solid red;overflow:auto;padding:5px;background:none;">';
-              let vdtl2='';
-              DB_STOCK_ACCOM.sort(JBE_SORT_ARRAY(['rank']));
-              for(var i=0;i<DB_STOCK_ACCOM.length;i++){
-                vdtl2+=
-                '<div id="div_row" style="width:100%;height:40px;border:1px solid black;color:black;background:none;">'+
-                  '<div style="float:left;width:13%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_ACCOM[i].descrp+'</div>'+
-
-                  '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
-                    '<div style="width:100%;height:100%;border:0px solid black;">'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_1wm'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-left:2px solid black;background:'+clor_male+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_1wf'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-right:1px solid black;background:'+clor_female+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_2wm'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-left:1px solid black;background:'+clor_male+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_2wf'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-right:1px solid black;background:'+clor_female+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_3wm'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-left:1px solid black;background:'+clor_male+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_3wf'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-right:1px solid black;background:'+clor_female+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_4wm'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-left:1px solid black;background:'+clor_male+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_4wf'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-right:1px solid black;background:'+clor_female+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_5wm'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-left:1px solid black;background:'+clor_male+';" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_5wf'+'" class="cls_accom_row" onchange="do_total_accom(&quot;'+DB_STOCK_ACCOM[i].stockno+'&quot;)" style="border-right:2px solid black;background:'+clor_female+';" value="" />'+
-                      
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_totM'+'" class="cls_accom_row" style="background:'+clor_male+';border:1px solid black;margin-left:1.1%;border-left:2px solid black;" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_totF'+'" class="cls_accom_row" style="background:'+clor_female+';border:1px solid black;" value="" />'+
-                      '<input type="number" id="'+DB_STOCK_ACCOM[i].stockno+'_total'+'" class="cls_accom_row" style="background:white;border:1px solid black;" value="" />'+
-                    '</div>'+
-                  '</div>'+
-
-                '</div>';
-              }
-              dtl+=vdtl2+        
-              
-            '</div>'+ 
-
-            //menu
-            '<div id="div_menu" data-saveMode="" class="cls_dispMenu" style="width:100%;height:35px;margin-top:10px;padding:2px;border:2px solid black;background:#3A3B3C;background:'+JBE_CLOR+';">'+            
-            '</div>'+            
-
-          '</div>'+   
-          
-        '</div>'+
-
-        //'</div>'+
-
-      '</div>'+
-
-      //
-      '<div style="float:right;width:19%;height:100%;margin-left:1%;text-align:left;border:0px solid red;background:white;">'+
-        '<div style="width:100%;height:30px;padding:5px;text-align:center;color:white;background:'+JBE_CLOR2+';">Log</div>'+
-        '<div id="id_log" style="width:100%;height:'+(H_BODY-40-35-2)+'px;font-size:12px;padding:5px;overflow:auto;background:white;">'+
-        '</div>'+        
-      '</div>'+
-
+        '<div style="width:100%;height:50%;font-weight:bold;border:0px solid red;overflow:auto;color:black;background:none;">'+DB_AREA[i].name+'</div>'+        
+      '</div>';
+    }
+    dtl+=
     '</div>'+
 
   '</div>';
   document.getElementById('div_right').innerHTML=dtl;
-  disp_brgy_list();
+  //disp_brgy_list();
+  //document.getElementById('TANI').innerHTML='777';
+  //document.getElementById('CABA').innerHTML='999';
 
   if(f_clear){
     document.getElementById('div_body').setAttribute('data-row',0);
     document.getElementById('div_body').setAttribute('data-row2',0);
   }
   /*
-  document.querySelectorAll('.menu_class').forEach(function(el) {
-    el.style.display = 'none'; 
-  });
-  */
   let dv_hd=document.getElementById('div_hd_invty');
   let dv_dt=document.getElementById('dtls_invty');
   dv_hd.style.width=dv_dt.clientWidth+'px';
@@ -249,6 +89,70 @@ function fm_dashboard(f_clear){
   dv_dt=document.getElementById('dtls_accom');
   dv_hd.style.width=dv_dt.clientWidth+'px';
   mnu_brgy();
+  */
+  disp_week_encoded();
+}
+
+function disp_week_encoded(){  
+  //console.clear();  
+  let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
+  for(var i=0;i<DB_AREA.length;i++){
+    let areano=DB_AREA[i].areano;
+    let ctr_week=0;
+    let ary_tot=[0,0,0,0,0]; 
+       
+    //===========================================================================================================
+    //invty        
+    DB_INVTY.sort(JBE_SORT_ARRAY(['areano','date']));
+    for(var j=0;j<DB_INVTY.length;j++){
+      if(DB_INVTY[j].areano != areano){ continue; }
+      if(DB_INVTY[j].date != curdate){ continue; }
+      
+      for(var k=1;k<=5;k++){
+        let fld1='1w'+k; let fld2='2w'+k;
+        let wk_row1=Number(DB_INVTY[j][fld1]); 
+        let wk_row2=Number(DB_INVTY[j][fld2]);
+        //console.log(areano,k,wk_row1,wk_row2);
+        let tot=wk_row1+wk_row2;
+        ary_tot[k-1]+=tot;
+      } 
+      //console.log('invty',areano,tot_wk1);      
+    }
+
+    ctr_week=0;
+    for(var kk=0;kk<ary_tot.length;kk++){
+      if(ary_tot[kk] > 0){ ctr_week++; }
+    }
+    //if(document.getElementById(areano+'I').innerHTML !=0 && document.getElementById(areano+'I').innerHTML != ctr_week){ alert(ctr_week); }
+    document.getElementById(areano+'I').innerHTML=ctr_week;
+    //console.log('invty',areano,ary_tot);
+    
+    //===========================================================================================================
+    ctr_week=0;
+    ary_tot=[0,0,0,0,0]; 
+    //accom   
+    DB_ACCOM.sort(JBE_SORT_ARRAY(['areano','date'])); 
+    for(var j=0;j<DB_ACCOM.length;j++){
+      if(DB_ACCOM[j].areano != areano){ continue; }
+      if(DB_ACCOM[j].date != curdate){ continue; }
+      let tot=0;
+      for(var k=1;k<=5;k++){
+        let fld1=k+'wm'; let fld2=k+'wf';
+        let wk_male=Number(DB_ACCOM[j][fld1]);
+        let wk_female=Number(DB_ACCOM[j][fld2]);
+        tot=wk_male+wk_female;
+        ary_tot[k-1]+=tot;
+      }      
+    }
+    //console.log('accom',areano,ary);
+    ctr_week=0;
+    for(var kk=0;kk<ary_tot.length;kk++){
+      if(ary_tot[kk] > 0){ ctr_week++; }
+    }
+    //if(document.getElementById(areano+'A').innerHTML != ctr_week){ alert(ctr_week); }
+    document.getElementById(areano+'A').innerHTML=ctr_week;
+    
+  }
 }
 
 function mnu_brgy(){
@@ -256,6 +160,12 @@ function mnu_brgy(){
     '<div style="width:100%;height:100%;">'+           
       '<div style="float:left;width:75%;height:100%;padding:5px;font-size:16px;text-align:left;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
+      '</div>'+
+      '<div onclick="JBE_CLOSE_VIEW2();showMainPage();" style="float:right;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jclose.png"  alt="home image" />'+
+          '<span style="padding:0px;color:white;">Close</span>'+
+        '</div>'+
       '</div>'+
     '</div>';  
   //document.getElementById('div_menu').innerHTML=jmenu;
@@ -284,8 +194,13 @@ function mnu_save_brgy(){
 }
 
 function disp_brgy(areano){
-  disp_invty_brgy(areano);
-  disp_accom_brgy(areano);
+  let tran=document.getElementById('wrapper').getAttribute('data-tran');
+  console.log('disp_brgy:',tran,areano);
+  if(tran=='invty'){
+    disp_invty_brgy(areano);
+  }else if(tran=='accom'){
+    disp_accom_brgy(areano);
+  }
   mnu_brgy();
 }
 
@@ -298,14 +213,11 @@ async function sel_brgy(areano){
   document.getElementById('id_date').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
   document.getElementById('id_date').disabled=false;
   document.getElementById('brgy_logo').src='./gfx/proc_balls.gif';  
-  let v_mphoto=await jeff_getImage('vaxi/images/'+areano+'.jpg');  
+  let v_mphoto=await jeff_getImage(areano+'.jpg');  
   if(isJpegDataUrl(v_mphoto)){ document.getElementById('brgy_logo').src=v_mphoto; }
-  disp_invty_brgy(areano);
-  //accom
-  document.getElementById('date_accom').value=JBE_DATE_FORMAT(new Date(),'YYYY-MM');
-  document.getElementById('date_accom').disabled=false;
-  disp_accom_brgy(areano);
-  mnu_brgy();
+  
+  disp_brgy(areano);
+ 
   //hightlight select barangay
   let ndx=0;
   let len_dtls=document.querySelectorAll('.class_brgy').length;
@@ -318,10 +230,16 @@ async function sel_brgy(areano){
   JBE_HL_ROW(ndx,'black','gray', '.class_brgy', 'id_',  'red', 'black');
 }
 
-function chgdate_invty_brgy(){
-  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+function chgdate_brgy(){
+  console.log('chgdate_brgy');
+  let tran=document.getElementById('wrapper').getAttribute('data-tran');
+  let areano=document.getElementById('wrapper').getAttribute('data-areano');
   if(!areano){ snackBar('No Barangay selected...'); }
-  disp_invty_brgy(areano);
+  if(tran=='invty'){
+    disp_invty_brgy(areano);
+  }else if(tran=='accom'){
+    disp_accom_brgy(areano);
+  }  
 }
 
 function clear_invty_brgy(){
@@ -342,11 +260,18 @@ function clear_invty_brgy(){
 
 //‐-------
 function disp_brgy_list(){  
-  DB_AREA.sort(JBE_SORT_ARRAY(['rank','name']));
+  let tran=document.getElementById('wrapper').getAttribute('data-tran');
+
+  DB_AREA.sort(JBE_SORT_ARRAY(['*cluster','name']));
   console.log('disp_brgy_list',DB_AREA);
+  let ctr=0;
   let vdtl='';          
   for(var i=0;i<DB_AREA.length;i++){            
-    vdtl+='<div id="id_'+i+'" class="class_brgy" onclick="sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
+    if(tran=='invty' && (DB_AREA[i].cluster_areano != '-')){ continue; }
+    if(tran=='accom' && (DB_AREA[i].cluster == 'YES')){ continue; }
+
+    vdtl+='<div id="id_'+ctr+'" class="class_brgy" onclick="sel_brgy(&quot;'+DB_AREA[i].areano+'&quot;)" style="width:100%;height:25px;font-size:12px;margin-top:2px;cursor:pointer;padding:4px;border:1px solid lightgray;color:black;background:gray;">'+DB_AREA[i].name+'</div>';
+    ctr++;
   }
   document.getElementById('brgy_list').innerHTML=vdtl;
 }
@@ -354,14 +279,15 @@ function disp_brgy_list(){
 //‐-------
 function disp_invty_brgy(areano){  
   let curdate=document.getElementById('id_date').value;
-  curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
+  //alert(curdate+' areano:'+areano);
+  //curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
   clear_invty_brgy();
   btn_enabled(0);
   update_week_buttons(curdate,'invty');
   for(var i=0;i<DB_INVTY.length;i++){
     if(DB_INVTY[i].areano !== areano){ continue; }
     if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
-
+    //console.log(DB_INVTY[i]);
     let div;
     for(var k=0;k<5;k++){
       let fld1='1w'+(k+1);
@@ -394,7 +320,7 @@ function edit_invty_brgy(col){
     return;
   }
   document.getElementById('div_menu').setAttribute('data-saveMode','invty');
-  btn_enabled(col,'invty');
+  btn_enabled(col);
   //assign
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
     let div=DB_STOCK_INVTY[i].stockno+'_1w'+col;  document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
@@ -410,17 +336,16 @@ function edit_invty_brgy(col){
   mnu_save_brgy();
 }
 
-function btn_enabled(col,tran){
+function btn_enabled(col){
+  let tran=document.getElementById('wrapper').getAttribute('data-tran');
   let vbtn='btn';
   if(tran=='accom'){ vbtn='btn1'; }
   let vcolor='white';let vopacity='0.5'; let vdisabled=true;
   if(col==0){
     vcolor='white'; vopacity='1'; vdisabled=false;
   }
-  for(var i=0;i<5;i++){    
-    //document.getElementById(vbtn+i).style.color='white'; document.getElementById(vbtn+i).style.opacity='0.5'; document.getElementById(vbtn+i).disabled=true;
-    document.getElementById('btn'+i).style.color=vcolor; document.getElementById('btn'+i).style.opacity=vopacity; document.getElementById('btn'+i).disabled=vdisabled;
-    document.getElementById('btn1'+i).style.color=vcolor; document.getElementById('btn1'+i).style.opacity=vopacity; document.getElementById('btn1'+i).disabled=vdisabled;    
+  for(var i=0;i<5;i++){        
+    document.getElementById(vbtn+i).style.color=vcolor; document.getElementById(vbtn+i).style.opacity=vopacity; document.getElementById(vbtn+i).disabled=vdisabled;
   }
   if(col != 0){
     document.getElementById(vbtn+(col-1)).style.color='red'; document.getElementById(vbtn+(col-1)).style.opacity='1'; document.getElementById(vbtn+(col-1)).disabled=false;
@@ -452,15 +377,17 @@ function subtractDates(date1, date2) {
 }
 //save
 function save_brgy(areano){
-  let saveMode=document.getElementById('div_menu').getAttribute('data-saveMode');  
-  if(saveMode=='invty'){
+  let tran=document.getElementById('wrapper').getAttribute('data-tran');
+  //let saveMode=document.getElementById('div_menu').getAttribute('data-saveMode');  
+  if(tran=='invty'){
     save_invty_brgy(areano);
-  }else if(saveMode=='accom'){
+  }else if(tran=='accom'){
     save_accom_brgy(areano);
   }else{
     snackBar('ERROR: Select Inventory or Accomplishment mode.');
     return;    
   }
+  mnu_brgy();
 }
 
 async function save_invty_brgy(areano){
@@ -500,7 +427,8 @@ async function save_invty_brgy(areano){
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   console.log('data new:',data.length);
   showProgress(false);
-  disp_invty_brgy(areano);
+  //disp_invty_brgy(areano);
+  disp_brgy(areano);
 }
 
 //=========================================================================================================================================================================
@@ -508,7 +436,7 @@ async function save_invty_brgy(areano){
 //=========================================================================================================================================================================
 //‐-------
 function disp_accom_brgy(areano){  
-  let curdate=document.getElementById('date_accom').value;    
+  let curdate=document.getElementById('id_date').value;    
   clear_accom_brgy();
   btn_enabled(0);
   update_week_buttons(curdate,'accom');
@@ -546,7 +474,7 @@ function edit_accom_brgy(col){
     return;
   }
   document.getElementById('div_menu').setAttribute('data-saveMode','accom');
-  btn_enabled(col,'accom');
+  btn_enabled(col);
   //assign
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
     let div=DB_STOCK_ACCOM[i].stockno+'_'+col+'wm';  document.getElementById(div).style.borderLeft='2px solid red'; document.getElementById(div).style.pointerEvents='auto';
@@ -576,7 +504,7 @@ async function save_accom_brgy(areano){
   let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
   let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
   
-  let curdate=document.getElementById('date_accom').value;  
+  let curdate=document.getElementById('id_date').value;  
   let arr=[];arr_ctr=0;
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
     let totals=Number(document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'total').value);
@@ -585,7 +513,7 @@ async function save_accom_brgy(areano){
       "areano":areano,
       "stockno":DB_STOCK_ACCOM[i].stockno,
       "date_save":date_save,"time_save":time_save,
-      "date":document.getElementById('date_accom').value,
+      "date":document.getElementById('id_date').value,
       "1wm":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'1wm').value,
       "1wf":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'1wf').value,
       "2wm":document.getElementById(DB_STOCK_ACCOM[i].stockno+'_'+'2wm').value,
@@ -605,7 +533,8 @@ async function save_accom_brgy(areano){
   await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === areano || record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   showProgress(false);
-  disp_accom_brgy(areano);
+  //disp_accom_brgy(areano);
+  disp_brgy(areano);
 }
 
 function chgdate_accom_brgy(v){
@@ -626,27 +555,6 @@ function mnu_accom_brgy(){
       '<div style="float:left;width:75%;height:100%;padding:5px;font-size:16px;text-align:left;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
       '</div>'+      
-    '</div>';
-  dispMenu('div_menu2',jmenu);
-}
-
-function xmnu_save_accom_brgy(){
-  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-  var jmenu=
-    '<div style="width:100%;height:100%;">'+           
-      '<div onclick="save_accom_brgy(&quot;'+areano+'&quot;)" style="float:left;width:25%;height:100%;background:none;">'+
-        '<div class="class_footer">'+
-          '<img src="gfx/jsave.png"  alt="home image" />'+
-          '<span style="padding:0 0 0 5px;color:white;">Save</span>'+
-        '</div>'+
-      '</div>'+
-      //'<div onclick="disp_accom_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
-      '<div onclick="disp_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
-        '<div class="class_footer">'+
-          '<img src="gfx/jclose.png"  alt="home image" />'+
-          '<span style="padding:0px;color:white;">Cancel</span>'+
-        '</div>'+
-      '</div>'+
     '</div>';
   dispMenu('div_menu2',jmenu);
 }

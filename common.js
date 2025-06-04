@@ -16,6 +16,7 @@ async function make_log(areano,tran){
 }
 
 async function show_log(){
+  return;
   let data=await api_readfile(JBE_CLOUD,JBE_API+'log'); DB_LOG=data.content;
   let curdate=JBE_DATE_FORMAT(new Date(),'YYYY-MM-DD');
   
@@ -97,7 +98,7 @@ function update_week_buttons(date,tran){
     vbtn='btn1';
   }
 
-  for(var i=0;i<4;i++){   
+  for(var i=0;i<5;i++){   
     document.getElementById((vbtn+i)).textContent='';
   }
   for(var i=0;i<wednesdays.length;i++){

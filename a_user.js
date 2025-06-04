@@ -155,7 +155,7 @@ function putimg_user(){
   //document.getElementById('img_user').src=document.getElementById('lu_stock_photo').src;
   var vimg=document.getElementById('img_user').getAttribute('data-img');  
   document.getElementById('tx_stock_photo').value=vimg;
-  alert('vimg:'+vimg);
+  //alert('vimg:'+vimg);
 
   let img=document.getElementById('img_stock').src;
   //document.getElementById('tx_b64').value=img;
@@ -241,6 +241,8 @@ function add_fm_user(){
   document.getElementById('lu_stock_photo').disabled=false;
   document.getElementById('lu_stock_photo').style.opacity='1';
   document.getElementById('img_user').src='./gfx/proc_balls.gif'; 
+  document.getElementById('lu_areano').disabled=false;
+  document.getElementById('lu_areano').style.opacity='1';    
   document.getElementById('tx_username').focus();
 }
 //edit
@@ -272,6 +274,7 @@ function del_fm_user(stat,r){
 //save
 async function save_fm_user(stat,r){
   //alert('stat :'+stat+' r:'+r);
+  document.getElementById('tx_usercode').value=document.getElementById('tx_usercode').value.toUpperCase();
   var recno=document.getElementById('tx_usercode').value;    
   if(stat==2){
     console.log('save recno:',recno);
@@ -297,7 +300,7 @@ async function disp_fm_user(){
   document.getElementById('lu_stock_photo').style.opacity='0.5';
 
   document.getElementById('img_user').src='./gfx/proc_balls.gif';  
-  let v_mphoto=await jeff_getImage('vaxi/images/'+recno+'.jpg');  
+  let v_mphoto=await jeff_getImage(recno+'.jpg');  
   if(isJpegDataUrl(v_mphoto)){ document.getElementById('img_user').src=v_mphoto; }
 }
 

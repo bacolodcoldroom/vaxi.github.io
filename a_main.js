@@ -5,8 +5,8 @@ var arySysColors=[
 ];
 var live_id;
 
-async function start_app(){
-  //allow_start(false);
+async function start_app(){  
+  //allow_start(true);
   JBE_ONLINE_NAVI=navigator.onLine;   
   JBE_ONLINE=false;  
   //****************
@@ -25,6 +25,7 @@ async function start_app(){
     console.log("The app is "+msg);
   });
   
+  if(!JBE_MOBILE){ document.getElementById('main_footer').innerHTML+='All Rights Reserved.'; }
   
   //if(!CURR_NAME2){ CURR_NAME2=''; }
   //speakText('Hello '+CURR_NAME2+'! Welcome to the Bahcolod City Cold Chain Facility.');
@@ -36,7 +37,7 @@ async function start_app(){
   console.log('GITHUB_TOKEN:',GITHUB_TOKEN);
   console.log('DB_SYS',DB_SYS);
    
-  JBE_CLOUD=true;
+  //JBE_CLOUD=false;
   JBE_API='';
   if(JBE_CLOUD){ JBE_API='vaxi/'; }
   console.log('JBE_API',JBE_API);
@@ -94,7 +95,7 @@ async function get_main_all_db(){
   data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   data=await api_readfile(JBE_CLOUD,JBE_API+'sysfile'); DB_SYS=data.content;
   showProgress(false);
-  show_log();
+  //show_log();
   DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
   DB_STOCK_ACCOM.sort(JBE_SORT_ARRAY(['rank']));
 }
@@ -130,7 +131,7 @@ async function dispHeaderMode(){
     document.getElementById('logger').innerHTML='Hi!, '+CURR_NAME;     
     document.getElementById("page_login").style.display="none";   
     if(JBE_CLOUD){
-      v_mphoto=await jeff_getImage('vaxi/images/'+CURR_USER+'.jpg');
+      v_mphoto=await jeff_getImage(CURR_USER+'.jpg');
     }else{        
       const ndx = DB_USER.findIndex(item => item.usercode === CURR_USER); 
       if(ndx > -1){
@@ -148,7 +149,7 @@ async function dispHeaderMode(){
 function dispMenu(divmenu,m){
   document.getElementById(divmenu).innerHTML=m;
 }
-
+/*
 function dispMenu_app(f_main,m){
   //alert('dispMenu activated... :'+m);
   document.querySelectorAll('.menu_class').forEach(function(el) {
@@ -164,6 +165,7 @@ function dispMenu_app(f_main,m){
     document.getElementById('mnu_submenu').innerHTML=m;
   }
 }
+*/
 // ** ======================= SHOW ROUTINES ===================================
 function showProfile(v){ 
   return;
@@ -299,10 +301,11 @@ function myResizeFunction(){
 }
 
 /***************************************************** */
+/***************************************************** */
 function openNav() {
-  //if(!JBE_CHK_USER(0)){ return; };
-  if(!CURR_USER){
-    snackBar('Please Log In...');
+  if(!JBE_CHK_USER(0)){ return; };
+  if(!JBE_ONLINE){
+    snackBar('OFFLINE');
     return;
   }
  
@@ -311,8 +314,8 @@ function openNav() {
     return;
   }
   //document.getElementById('menu_open').innerHTML='&#8592;';
-  document.getElementById('hd_img').src='gfx/jback.png';   
-  //document.getElementById("mySidenav").style.display='none';
+  //document.getElementById('hd_img').src='gfx/jback.png';   
+  //document.getElementById("mySidenav").style.display='block';
   document.getElementById("mySidenav").style.width = "100%";
   document.getElementById("menu_open").setAttribute('data-open','1');
   event.stopPropagation();   
@@ -320,20 +323,18 @@ function openNav() {
 
 function closeNav() {
   //document.getElementById('menu_open').innerHTML='&#9776;';
-  /*
-  document.getElementById('hd_img').src='gfx/jham.png';   
+  //document.getElementById('hd_img').src='gfx/jham.png';   
   document.getElementById("mySidenav").style.width = "0";  
   document.getElementById("menu_open").setAttribute('data-open','0');
   event.stopPropagation();   
-  */
 }
 
-window.onclick = function(event) { 
-  //alert('alert:'+event.target.id); 
-  //if(event.target.id !== 'mySidenav' && event.target.id !== 'menu_open') {      
- 
-  if(event.target.id !== 'mySidenav') {
-    closeNav();
+window.onclick = function(event) {  
+  //alert('alert:'+event.target.id);  
+  //if(event.target.id !== 'mySidenav' && event.target.id !== 'div_left') {       
+  
+  if(event.target.id !== 'div_left_box') {
+    //closeNav();
   }
   if (!event.target.matches('.dropbtn')) {
     closeDropdown();
@@ -458,20 +459,20 @@ function show_sidenav(){
   let mtop=0;
   if(JBE_MOBILE){ mtop=50; }
   let dtl=
-  '<div id="div_left_box" style="width:100px;height:'+H_BODY+'px;margin-top:'+mtop+'px;font-size:9px;border:1px solid white;background:black;">'+
+  '<div id="div_left_box" style="width:100px;height:'+H_BODY+'px;margin-top:'+mtop+'px;font-size:9px;border:0px solid lightgray;background:black;">'+
               
-    '<div id="back_menu" onclick="closeNav()" style="height:20px;background:black;">'+
-      '<img src="gfx/jback.png" style="float:left;height:100%;padding:5px;"/><span style="float:left;height:100%;padding:5px;">BACK</span>'+
+    '<div id="back_menu" onclick="closeNav()" style="height:40px;border:2px solid black;background:grey;">'+
+      '<img src="gfx/jback.png" style="float:left;height:100%;padding:5px;"/><h1 style="float:left;margin:0px;height:100%;padding:10px 0 0 0;">BACK</h1>'+
     '</div>'+
 
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
-      '<div class="nw_menu" onclick="showMainPage();snackBar(&quot;Dashboard Refreshed...&quot;)">'+
+      '<div class="nw_menu" onclick="refresh_all_now();showMainPage();snackBar(&quot;Dashboard Refreshed...&quot;)">'+
         '<img src="gfx/jhome.png"/>'+
         '<span>Dashboard</span>'+
       '</div>'+
     '</div>'+
-    
+    /*
     '<div class="dropdown">'+
       '<div class="dropbtn"></div>'+
       '<div class="nw_menu">'+
@@ -479,15 +480,29 @@ function show_sidenav(){
         '<span>Reports</span>'+
       '</div>'+
       '<div class="dropdown-content">'+
-        '<a href="javascript:rp_daily()">Daily Inventory</a>'+        
+        '<a href="javascript:report_main(`invty`)">Weekly Inventory</a>'+        
         '<hr>'+
-        '<a href="javascript:rp_ptr_summ(0)">NIP Dispense Summary</a>'+        
-        '<hr>'+
-        '<a href="javascript:prn_tmp_ptr(0)">Print RIS Template (NIP)</a>'+        
+        '<a href="javascript:report_main(`accom`)">NIP Weekly Accomplishment</a>'+         
+      '</div>'+
+    '</div>'+
+    */
+
+    '<div class="dropdown">'+
+      '<div class="dropbtn"></div>'+
+      '<div class="nw_menu" onclick="report_main(`invty`)">'+
+        '<img src="gfx/jreport.png"/>'+
+        '<span style="color:yellow;">Weekly Inventory</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="dropdown">'+
+      '<div class="dropbtn"></div>'+
+      '<div class="nw_menu" onclick="report_main(`accom`)">'+
+        '<img src="gfx/jreport.png"/>'+
+        '<span style="color:pink;">NIP Weekly Accomplishment</span>'+
       '</div>'+
     '</div>'+
 
-    '<div class="dropdown">'+
+    '<div class="dropdown" style="margin-top:10px;">'+
       '<div class="dropbtn"></div>'+
       '<div class="nw_menu">'+
         '<img src="gfx/jproject.png"/>'+
@@ -508,7 +523,7 @@ function show_sidenav(){
       '<span>Setting</span>'+
       '</div>'+
       '<div class="dropdown-content">'+
-        '<a href="javascript:fm_signatories()">Signatories</a>'+
+        '<a href="javascript:fm_lotno_expiry()">Lot No. & Expiry</a>'+
         '<a href="javascript:fm_notif()">Notes</a>'+
         '<a href="javascript:backupDB()">Backup Database</a>'+
       '</div>'+
@@ -858,50 +873,6 @@ function factoryReset(){
   }  
 }
 
-async function xxxfetchTextPortion(url, start, end) {
-  try {
-      // Validate parameters
-      const startNum = Number(start);
-      if (isNaN(startNum)) {
-          throw new Error('Start must be a valid number');
-      }
-     
-      let endNum;
-      if (typeof end !== 'undefined') {
-          endNum = Number(end);
-          if (isNaN(endNum)) {
-              throw new Error('End must be a valid number');
-          }
-      }
-
-      // Fetch the file
-      const response = await fetch(url);
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-     
-      // Get full text
-      const fullText = await response.text();
-     
-      // Calculate indices
-      const startIndex = Math.max(0, startNum);
-      let endIndex = typeof end !== 'undefined' ? endNum : fullText.length;
-      endIndex = Math.min(endIndex, fullText.length);
-
-      // Handle invalid range
-      if (startIndex >= endIndex) {
-          return '';
-      }
-
-      // Return the requested portion
-      return fullText.substring(startIndex, endIndex);
-     
-  } catch (error) {
-      console.error('Error fetching text portion:', error);
-      throw error; // Re-throw for caller to handle
-  }
-}
-
 function nowLive() {
   f_syslive=document.getElementById('divLive').getAttribute('data-live');
   
@@ -925,16 +896,19 @@ async function refresh_all_now(){
   //JBE_AUDIO('gfx/snd/insight',5);
   //let areano=document.getElementById('id_brgy').getAttribute('data-areano');
   let areano=document.getElementById('wrapper').getAttribute('data-brgycode');  
-  console.log(areano);
+  console.log('refresh_all_now',areano);
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     
   let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   
-  let brgy=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=brgy.content;  
+  //let brgy=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=brgy.content;  
+  /*
   if(areano){
     disp_invty_brgy(areano);
     disp_accom_brgy(areano);
-    disp_brgy_list(areano);
+    //disp_brgy_list(areano);
   }
-  show_log();
+    */
+  //show_log();
+  disp_week_encoded();
 }
 
 async function refresh_all_data(){
@@ -947,29 +921,6 @@ async function refresh_all_data(){
   disp_brgy();
   showProgress(false);
 }
-
-
-/*
-// Example usage for current month
-const today = new Date();
-const currentYear = today.getFullYear();
-const currentMonth = today.getMonth(); // 0-11
-
-const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
-
-// Format and display the dates
-console.log("All Wednesdays in the current month:");
-wednesdays.forEach(wed => {
-  console.log(wed.toDateString());
-});
-
-// If you want to display them in the browser
-const outputDiv = document.createElement('div');
-outputDiv.innerHTML = "<h3>Wednesdays this month:</h3><ul>" + 
-  wednesdays.map(wed => `<li>${wed.toDateString()}</li>`).join('') + 
-  "</ul>";
-document.body.appendChild(outputDiv);
-*/
 
 function getFormattedWednesdaysInMonth(year, month) {
   const wednesdays = getWednesdaysInMonth(year, month);
@@ -990,3 +941,28 @@ function getFormattedWednesdaysInMonth(year, month) {
 // Example usage
 //const formattedWednesdays = getFormattedWednesdaysInMonth(2023, 10); // November 2023
 //console.log(formattedWednesdays);
+
+
+/////////////////////////////////////////////////////////////////////////
+function saveImage(imageUrl,flename) {
+  //const img = document.getElementById(div);
+  //const imageUrl = img.src;
+
+  fetch('save_image.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      url: imageUrl,
+      flename:flename
+    })
+  })
+  .then(response => response.text())
+  .then(data => {
+    alert('Image saved: ' + data);
+  })
+  .catch(error => {
+    console.error('Error saving image:', error);
+  });
+}

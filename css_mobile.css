@@ -314,18 +314,24 @@
   /* /////////// BUILD 3.33 ///////////////////////////////////////// */
   /* //////////////////////////////////////////////////////////////// */
   /* for mobile version */  
-  #div_header{ height:50px; }
-  #div_logo{ float:left;width:50px;height:100%;text-align:left;padding:4px;background:none; }
-  #hd_area{ width:40%;border:0px solid blue; }  
-  #hd_user{ width:150px; font-size:12px;border:0px solid brown; padding:0px; }  
-  #hd_datetime{ display:none;float:left;width:200px;height:100%;padding:0px;text-align:center; }  
+  
+  #div_header{ display:block;height:60px;text-align:center;border:0px solid gray;padding:0px;color:white; }
+  #div_logo{ float:left;width:15%;height:100%;text-align:left;padding:4px;background:none; }
+  #hd_area{ border:0px solid red;width:40%; }  
+  #hd_user{ border:0px solid red;width:15%; font-size:15px; padding:2px; }  
+  
+  #hd_datetime{ float:left;width:70%;height:100%;padding:0px;text-align:center; }  
+    #hd_datetime h1 { font-size:12px;overflow:auto; }  
+    #hd_datetime h2 { font-size:10px; }  
 
   #sys_tilt{ height:40%;width:100%;font-size:13px;font-weight:bold;padding:2px 0 0 0;background:none; }
   #sys_tilt1{ height:30%;width:100%;font-size:7px;padding:2px 0 0 0;background:none; }
   #sys_tilt2{ height:30%;width:100%;font-size:9px;font-weight:bold;padding:0px 0 0 0;background:none; }
 
-  #logger{ font-size:11px; padding:15px 0 0 0; background:none; }
+  #logger{ display:none;font-size:11px; padding:15px 0 0 0; background:none; }
 
+  #dv_dashboard{ padding:5px; }
+  #dv_dbCircle { border:1px solid lightgray; }
   #div_left{ display:none; }
   #div_right{ width:100%;border:0px solid gold; }
   
@@ -343,6 +349,8 @@
     .cls_ptr_tot_panel input { width:110px;height:50%;text-align:center;padding:5px;color:black;background:lightgray; }
 
   .cls_weekly_row{ float:left;height:100%;color:black;padding:2px;border:1px solid lightgray; }
+
+  .cls_dashboard{ display:none; }
   
 }
 
