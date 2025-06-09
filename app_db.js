@@ -2,15 +2,6 @@ var dbVersion = 1;
 var dbReady = false;
 var db;
 
-var JBE_STORE_IDX = [    
-  { "id":0, "flename":"accom", "numrec":0 , "init":1 },
-  { "id":1, "flename":"area", "numrec":0 , "init":1 },
-  { "id":2, "flename":"invty", "numrec":0 , "init":1 },
-  { "id":3, "flename":"stock_invty", "numrec":0 , "init":1 },
-  { "id":4, "flename":"stock_accom", "numrec":0 , "init":1 },
-  { "id":5, "flename":"user", "numrec":0 , "init":1 }     
-];
-
 if (navigator.storage && navigator.storage.persist)
   navigator.storage.persist().then(granted => {
     if (granted){
@@ -23,8 +14,7 @@ if (navigator.storage && navigator.storage.persist)
   }
 );
 
-//var CURR_IDX_DB='IDB_'+CURR_CLIENT;
-var CURR_IDX_DB='IDB_VAXI';
+var CURR_IDX_DB='IDB_'+CURR_CLIENT;
 initDb();
 //=========================================================================================================================
 //=========================================================================================================================
@@ -44,13 +34,11 @@ function initDb() {
 
   request.onupgradeneeded = function(e) {
     db = e.target.result;
-    db.createObjectStore('sysfile', { keyPath:'clientno' });
-    db.createObjectStore('user', { keyPath:'usercode' });
-    db.createObjectStore('area', { keyPath:'areano' });
-    db.createObjectStore('stock_invty', { keyPath:'stockno' });
-    db.createObjectStore('stock_accom', { keyPath:'stockno' });
-    db.createObjectStore('invty', { keyPath:['areano','date','stockno'] });
-    db.createObjectStore('accom', { keyPath:['areano','date','stockno'] });
+    db.createObjectStore('daily', { keyPath:['usercode','date','row'] });
+    db.createObjectStore('monthly', { keyPath:'date' });    
+    db.createObjectStore('sig', { keyPath:'id' });    
+    db.createObjectStore('user', { keyPath:'usercode' });    
+    //db.createObjectStore('TranMeter', { keyPath:'meterno' });
     
     dbReady = true;
     console.log('initDb onupgradeneeded...'+JBE_ONLINE);
@@ -160,11 +148,11 @@ function getDataFromIDX(i,db2) {
           txt_fsize:cursor.value.txt_fsize
         };  
       }else if(i==1){ //monthly
-        ob = {
-          id:i,
-          date:cursor.value.date,
-          descrp:cursor.value.descrp
-        };  
+          ob = {
+            id:i,
+            date:cursor.value.date,
+            descrp:cursor.value.descrp
+          };  
       }else if(i==2){ //sig
         ob = {
           id:i,
@@ -235,7 +223,7 @@ function jdata(){
   //if(CURR_AXTYPE < 9){ return; }
   var jd=
     'From IDX '+JBE_STORE_IDX[0]['flename']+' : '+JBE_STORE_IDX[0]['numrec']+' vs '+DB_CAT.length+' Array<br>'+
-    'From IDX '+JBE_STORE_IDX[1]['flename']+' : '+JBE_STORE_IDX[1]['numrec']+' vs '+DB_STOCK_INVTY.length+' Array<br>'+
+    'From IDX '+JBE_STORE_IDX[1]['flename']+' : '+JBE_STORE_IDX[1]['numrec']+' vs '+DB_STOCK.length+' Array<br>'+
     'From Array CLIENTS '+DB_USER.length+' Array<br>'+
     'From Array BELLS '+DB_BELL.length+' Array<br>';    
 
@@ -243,92 +231,72 @@ function jdata(){
 }
 
 async function saveDataToIDX(aryDB,n) {    
-  console.log('saveDataToIDX',JBE_STORE_IDX[n].flename);
-  //JBE_STORE_IDX[n]['numrec']=aryDB.length;
-  console.log(JBE_STORE_IDX[n].flename+' ::: length: '+aryDB.length+'::: saveDataToIDX '+n);
+  //console.log('saveDataToIDX',JBE_STORE_IDX[n].flename, aryDB.length);
+  JBE_STORE_IDX[n]['numrec']=aryDB.length;
+  console.log(JBE_STORE_IDX[n]['flename']+' ::: '+aryDB.length+'::: saveDataToIDX '+n);
   for(var i=0;i<aryDB.length;i++){     
     //if(aryDB[i]['clientno']!=CURR_CLIENT){ continue; }
     //console.log((i+1)+'/'+aryDB.length);
     await putDataToIDX(i,aryDB,n);
   }
 }
-
 async function putDataToIDX(i,aryDB,n){ 
-  if(n==0){ //accom   
-    ob = {  
-      "areano":aryDB[i]['areano'],
-      "stockno":aryDB[i]['stockno'],
-      "date":aryDB[i]['date'],
-      "1wm":aryDB[i]['1wm'],
-      "1wf":aryDB[i]['1wf'],
-      "2wm":aryDB[i]['2wm'],
-      "2wm":aryDB[i]['2wm'],
-      "3wm":aryDB[i]['3wm'],
-      "3wf":aryDB[i]['3wf'],
-      "4wm":aryDB[i]['4wm'],
-      "4wf":aryDB[i]['4wf'],
-      "5wm":aryDB[i]['5wm'],
-      "5wf":aryDB[i]['5wf'],
-      "totM":aryDB[i]['totM'],
-      "totF":aryDB[i]['totF'],
-      "total":aryDB[i]['total']
+  if(n==0){ //daily 
+    ob = {      
+      row:aryDB[i]['row'],
+      date:aryDB[i]['date'],
+      rank:aryDB[i]['rank'],
+      usercode:aryDB[i]['usercode'],
+      day:aryDB[i]['row'],
+      time1:aryDB[i]['time1'],
+      time2:aryDB[i]['time2'],
+      time3:aryDB[i]['time3'],
+      time4:aryDB[i]['time4'],
+
+      txt:aryDB[i]['txt'],
+      txt_top:aryDB[i]['txt_top'],
+      txt_left:aryDB[i]['txt_left'],
+      txt_width:aryDB[i]['txt_width'],
+      txt_fsize:aryDB[i]['txt_fsize']
     };
-  }else if(n==1){ //area    
+  }else if(n==1){ //monthly    
     ob = {
-      "areano": aryDB[i]['areano'],
-      "name": aryDB[i]['name'],
-      "rank": aryDB[i]['rank'],
-      "cat": aryDB[i]['cat']
+      id:i,
+      date:aryDB[i]['date'],
+      descrp:aryDB[i]['descrp']
     };  
-  }else if(n==2){ //invty    
-    ob = {  
-      "areano":aryDB[i]['areano'],
-      "stockno":aryDB[i]['stockno'],
-      "date":aryDB[i]['date'],
+  }else if(n==2){ //sig    
+    ob = {
+      id:i,
+      head:aryDB[i]['head'],
+      position:aryDB[i]['position'],
+      office:aryDB[i]['office'],
+      license:aryDB[i]['license'],
+      tiktok:aryDB[i]['tiktok']
+    }; 
+  }else if(n==3){ //user    
+    /*
+    var jimg='uploadz/'+aryDB[i]['photo'];  
+    if(aryDB[i]['photo']){    
+      await JBE_BLOB(n,jimg).then(result => jimg=result);
+    }else{
+      jimg='';
+    }
+    */
 
-      "1w1":aryDB[i]['1w1'],
-      "1w2":aryDB[i]['1w2'],
-      "1w3":aryDB[i]['1w3'],
-      "1w4":aryDB[i]['1w4'],
-      "1w5":aryDB[i]['1w5'],
-      "1lotno":aryDB[i]['1lotno'],
-      "1expiry":aryDB[i]['1expiry'],
-      "1req":aryDB[i]['1req'],
-
-      "2w1":aryDB[i]['2w1'],
-      "2w2":aryDB[i]['2w2'],
-      "2w3":aryDB[i]['2w3'],
-      "2w4":aryDB[i]['2w4'],
-      "2w5":aryDB[i]['2w5'],
-      
-      "2lotno":aryDB[i]['2lotno'],      
-      "2expiry":aryDB[i]['2expiry'],
-      "2req":aryDB[i]['2req']
-    };
-  }else if(n==3){ //stock  invty  
-    ob = {  
-      "stockno": aryDB[i]['stockno'],
-      "descrp": aryDB[i]['descrp'],
-      "lotno": aryDB[i]['lotno'],
-      "expiry": aryDB[i]['expiry']
-    };
-  }else if(n==4){ //stock  accom
-    ob = {  
-      "stockno": aryDB[i]['stockno'],
-      "descrp": aryDB[i]['descrp'],
-      "lotno": aryDB[i]['lotno'],
-      "expiry": aryDB[i]['expiry']
-    };
-  }else if(n==5){ //user    
     let jimg=aryDB[i]['photo'];  
+    //console.log('jimg',jimg);
+    /*
     if(JBE_CHK_BASE64(jimg)){    
       await JBE_BLOB(n,jimg).then(result => jimg=result);
     }else{
       jimg='';
     }
+      */
+
     ob = {
+      id:i,
       clientno:aryDB[i]['clientno'],
-      areano:aryDB[i]['areano'],
       usercode:aryDB[i]['usercode'],
       userid:aryDB[i]['userid'],
       username:aryDB[i]['username'],
@@ -338,8 +306,8 @@ async function putDataToIDX(i,aryDB,n){
       lastname:aryDB[i]['lastname'],
       firstname:aryDB[i]['firstname'],
       midname:aryDB[i]['midname'],
-      //photo:jimg,
-      photo:aryDB[i]['photo'],
+      photo:jimg,
+      //photo:aryDB[i]['photo'],
       usertype:aryDB[i]['usertype'],
       addrss:aryDB[i]['addrss'],
       celno:aryDB[i]['celno'],
@@ -351,8 +319,7 @@ async function putDataToIDX(i,aryDB,n){
     };
   }
 
-  //console.log(i,'>>> putDataToIDX: flename: ',JBE_STORE_IDX[n]['flename']);
-  //console.log(ob.photo);
+  //console.log(i,'>>> putDataToIDX: flename: ',JBE_STORE_IDX[n]['flename'],ob.username);
   var trans = db.transaction([JBE_STORE_IDX[n]['flename']], 'readwrite');
   var addReq = trans.objectStore(JBE_STORE_IDX[n]['flename']).put(ob);
   addReq.onerror = function(e) {
@@ -362,7 +329,7 @@ async function putDataToIDX(i,aryDB,n){
   }
 
   trans.oncomplete = function(e) {
-    //console.log(n+': putToIDX '+JBE_STORE_IDX[n]['flename']+' with value '+JBE_STORE_IDX[n]['numrec']);  
+    console.log(n+': putToIDX '+JBE_STORE_IDX[n]['flename']+' with value '+JBE_STORE_IDX[n]['numrec']);  
     //console.log('--------------');
     //alert(xox);
   }
