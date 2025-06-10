@@ -516,7 +516,7 @@ async function FM_SAVE_REC(){
     }
         
     if(!val && disp > 0){
-      snackBar('ERROR: Empty Field: (<font color=red>'+document.getElementById(div).getAttribute('data-caption')+'</font>)');
+      snackBar('ERROR: Empty Field: ['+fld+'] (<font color=red>'+document.getElementById(div).getAttribute('data-caption')+'</font>)');
       document.getElementById(div).focus();
       return;
     }
@@ -837,7 +837,7 @@ function FM_INIT_REC(){
     var div=FM_FIELDS[i]['div'];    
     var fld=FM_FIELDS[i]['fld'];
     var disp=parseInt(FM_FIELDS[i]['disp']);
-    console.log('div: '+div);
+    //console.log('div: '+div);
     
     if(disp <= 0){   
       document.getElementById(div).style.display='none';

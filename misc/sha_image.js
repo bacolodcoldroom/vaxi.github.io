@@ -1,4 +1,11 @@
 async function jeff_uploadImage(IMAGE_URL,TARGET_FILENAME) {
+  if(!JBE_CLOUD){    
+    TARGET_FILENAME = 'images/'+TARGET_FILENAME;
+    saveImage(IMAGE_URL,TARGET_FILENAME);
+    return;
+  }
+
+  TARGET_FILENAME='vaxi/images/'+TARGET_FILENAME;
   const GITHUB_BRANCH = "main";
   const output = document.getElementById("output");
 
@@ -102,6 +109,8 @@ async function getPrivateImage(IMAGE_PATH) {
 }
 
 async function jeff_getImage(FILE_PATH) {
+  if(!JBE_CLOUD){ return 'images/'+FILE_PATH; }
+  FILE_PATH='vaxi/images/'+FILE_PATH;
   const BRANCH = 'main';
   const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`;
 
