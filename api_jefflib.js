@@ -62,11 +62,10 @@ async function updateFile_api(path,updatedContent, message, sha) {
 }
 
 async function api_save(cloud,fileName,newData,cond){
-  //console.clear();
+  console.clear();
   console.log('api_save filename',fileName);
   console.log(newData);
   console.log('=================================');
-  
   if(cloud){
     try {
       const { content, sha } = await api_readfile(cloud,fileName);
@@ -92,7 +91,6 @@ async function api_save(cloud,fileName,newData,cond){
     }
   }else{
     let n=get_ndx_JBE_STORE_IDX(fileName);
-    console.log('saveDataToIDX',JBE_STORE_IDX[n]['flename'],n);
     await saveDataToIDX(newData,n);
     //speakText('Data updated to Indexed DB.');
   }
@@ -124,7 +122,7 @@ function encodeBase64(str) {
 // =====================================================================================================================
 // =====================================================================================================================
 
-async function xxget_all_db_from_json(){  
+async function get_all_db_from_json(){  
   let dir='./DBF/';
   if(CURR_CLIENT=='VAXIAPP'){ dir='../DBF/'; }
   console.log('************* JBE_API '+JBE_API);  

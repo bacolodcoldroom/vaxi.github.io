@@ -1,11 +1,9 @@
 function rp_invty(areano,date){    
-  //date+='-01';
+  let ndate=date+'-01';
+  ndate=JBE_DATE_FORMAT(ndate,'MMMM YYYY');
   console.log('rp_invty date:',date);
-  let clor_male='lightblue';
-  let clor_female='pink';
   //date=JBE_DATE_FORMAT(CURR_DATE,'YYYY-MM-DD');
   let v_areaname=get_area(areano);
-  let v_pop=JBE_GETFLD('pop',DB_AREA,'areano',areano);
  
   const today=new Date(date);
   const currentYear = today.getFullYear();
@@ -20,26 +18,40 @@ function rp_invty(areano,date){
 
   wd_box=Number((100-(wd_date+30))/(len_wed));
 
-  let hd=reportHead('WEEKLY INVENTORY',v_areaname)+
-  '<div style="width:100%;height:40px;margin-top:0px;font-size:14px;padding:0px 0 0 0;text-align:left;border:0px solid black;">'+      
-    //'<div style="float:left;width:100%;height:50%;">DATE : '+JBE_DATE_FORMAT(date,'MMMM YYYY')+'</div>'+
-    //'<div style="float:left;width:100%;height:50%;">TARGET POP/ ELIGIBLE POP : <span style="text-decoration:underline;">'+v_pop+'</span></div>'+    
+  let hd=
+  
+  '<div style="width:100%;height:auto;margin-top:0px;font-size:14px;">'+      
+    '<div style="width:100%;height:40px;font-size:24px;font-weight:bold;text-align:center;padding:5px;border:1px solid black;background:yellow;">MONTHLY VACCINE INVENTORY FORM</div>'+
+    
+    '<div style="width:100%;height:20px;border:1px solid black;background:white;">'+
+      '<div style="float:left;width:20%;height:100%;text-align:left;border-right:1px solid black;">BARANGAY : </div>'+
+      '<div style="float:left;width:79%;height:100%;text-align:center;font-weight:bold;">'+v_areaname+'</div>'+    
+    '</div>'+
+
+    '<div style="width:100%;height:20px;border:1px solid black;background:white;">'+
+      '<div style="float:left;width:20%;height:100%;text-align:left;border-right:1px solid black;">DATE : </div>'+
+      '<div style="float:left;width:79%;height:100%;text-align:center;font-weight:bold;">'+ndate+'</div>'+    
+    '</div>'+
+
+    '<div style="width:100%;height:10px;border:1px solid black;background:yellow;"></div>'+
   '</div>';
+  
   let hd1=
-  '<div style="width:100%;height:40px;margin-top:10px;font-size:14px;font-weight:bold;text-align:center;border:1px solid black;border-bottom:0px;background:'+clor_req+';">'+      
-    '<div style="float:left;width:'+(wd_date-0)+'%;height:100%;border-right:1px solid black;background:white;"><div style="padding:3px 0 0 0;">DATE</div></div>';    
+  '<div style="width:100%;height:40px;margin-top:0px;font-size:14px;font-weight:bold;text-align:center;border:1px solid black;border-bottom:0px;background:'+clor_req+';">'+      
+    '<div style="float:left;width:'+(wd_date-0)+'%;height:100%;border-right:1px solid black;background:white;"><div style="padding:10px 0 0 0;">DATE</div></div>';        
     let vdtl='';
     let px=1;
     let wed='';
     for(var k=1;k<=len_wed;k++){          
       wed=JBE_DATE_FORMAT(wednesdays[(k-1)].toDateString(),'MMM DD, YYYY');
-      vdtl+='<div style="float:left;width:'+wd_box+'%;height:100%;text-align:center;border-right:'+px+'px solid black;"><div style="height:100%;padding:3px 0 0 0;background:white;">'+wed+'</div></div>';
+      vdtl+='<div style="float:left;width:'+wd_box+'%;height:100%;text-align:center;border-right:'+px+'px solid black;background:white;"><div style="padding:10px 0 0 0;">'+wed+'</div></div>';
     }
     vdtl+=   
-    '<div style="float:left;width:10%;height:100%;border-right:1px solid black;color:black;background:'+clor_lotno+';"><div style="height:100%;padding:3px 0 0 0;">Lot No.</div></div>'+
-    '<div style="float:left;width:10%;height:100%;border-right:1px solid black;background:'+clor_expiry+';"><div style="height:100%;padding:3px 0 0 0;">Expiry</div></div>'+
-    '<div style="float:left;width:9%;height:100%;border-right:0px solid black;background:'+clor_req+';"><div style="height:100%;padding:3px 0 0 0;">Required</div></div>'+
-  '</div>';
+    '<div style="float:left;width:10%;height:100%;border-right:1px solid black;color:black;background:'+clor_lotno+';"><div style="height:100%;padding:10px 0 0 0;">Lot No.</div></div>'+
+    '<div style="float:left;width:10%;height:100%;border-right:1px solid black;background:'+clor_expiry+';"><div style="height:100%;padding:10px 0 0 0;">Expiry</div></div>'+
+    '<div style="float:left;width:9%;height:100%;border-right:0px solid black;background:'+clor_req+';"><div style="height:100%;padding:3px 0 0 0;">Monthly Required</div></div>'+
+  '</div>'+
+  '<div style="width:100%;height:10px;border:1px solid black;background:yellow;"></div>';
   hd1+=vdtl;
 
   let hd2='';  

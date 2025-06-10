@@ -17,8 +17,9 @@ body {
 #printableBorder{ margin-top:0px;width:100%;border:1px solid lightgray;overflow:auto; }
 #printableArea{ height:auto;width:716px;width:750px;border:2px solid darkgray;
   margin:0 auto;margin-top:20px;margin-bottom:20px;
-  font-family:Times New Roman, Times, serif;font-size:11px;padding:10px;
+  /* font-family:Times New Roman, Times, serif; */
   font-family: Arial, Helvetica, sans-serif;
+  font-size:11px;padding:10px;
   background:white;
 }
 #pa_dtl{ height:100%;width:100%;border:0px solid red; }
@@ -40,7 +41,8 @@ body {
   h1 {font-family: "Britannic Bold", Broadway, Calibri, sans-serif;
   }  
   p {font-size:12pt;
-  font-family:Cambria, "Times New Roman", serif;
+    /* font-family:Cambria, "Times New Roman", serif; */
+    font-family: Arial, Helvetica, sans-serif;
   }    
   .positioned {position:static;}    
 }
@@ -897,8 +899,8 @@ font-size:20px;
 #hd_user{ border:0px solid red;width:25%; font-size:15px; padding:2px; }  
 
 #hd_datetime{ float:left;width:50%;height:100%;margin:0 auto;background:none; }  
-  #hd_datetime h1 { margin:0;width:100%;height:60%;padding:5px 0 0 0;background:cyan; font-size:25px;font-weight:bold; }  
-  #hd_datetime h2 { margin:0;width:100%;height:40%;padding:2px 0 0 0;font-size:16px;background:blueviolet; font-size:16px; }  
+  #hd_datetime h1 { margin:0;width:100%;height:60%;padding:5px 0 0 0;background:none; font-size:25px;font-weight:bold; }  
+  #hd_datetime h2 { margin:0;width:100%;height:40%;padding:2px 0 0 0;font-size:16px;background:none; font-size:16px; }  
   
 #sys_tilt{ text-shadow: 2px 2px black;height:40%;width:100%;font-size:18px;font-weight:bold;padding:2px 0 0 0;background:greenyellow; }
 #sys_tilt1{ height:30%;width:100%;font-size:12px;padding:0px 0 0 0;background:none; }

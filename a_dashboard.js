@@ -96,6 +96,12 @@ function fm_dashboard(f_clear){
 function disp_week_encoded(){  
   //console.clear();  
   let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
+  const today=new Date(curdate+'-01');
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth(); // 0-11
+  const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
+  const len_wed=wednesdays.length;
+
   for(var i=0;i<DB_AREA.length;i++){
     let areano=DB_AREA[i].areano;
     let ctr_week=0;
@@ -125,6 +131,10 @@ function disp_week_encoded(){
     }
     //if(document.getElementById(areano+'I').innerHTML !=0 && document.getElementById(areano+'I').innerHTML != ctr_week){ alert(ctr_week); }
     document.getElementById(areano+'I').innerHTML=ctr_week;
+    if(ctr_week==len_wed){ 
+      document.getElementById(areano+'I').style.color='red'; 
+      document.getElementById(areano+'I').style.backgroundColor='gold'; 
+    }
     //console.log('invty',areano,ary_tot);
     
     //===========================================================================================================
@@ -151,6 +161,11 @@ function disp_week_encoded(){
     }
     //if(document.getElementById(areano+'A').innerHTML != ctr_week){ alert(ctr_week); }
     document.getElementById(areano+'A').innerHTML=ctr_week;
+    //#C11C84
+    if(ctr_week==len_wed){ 
+      document.getElementById(areano+'A').style.color='white'; 
+      document.getElementById(areano+'A').style.backgroundColor='#C11C84'; 
+    }
     
   }
 }
@@ -423,7 +438,8 @@ async function save_invty_brgy(areano){
     arr[arr_ctr]=obj; 
     arr_ctr++;
   }
-  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === areano || record.date === curdate));  
+  //await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === areano || record.date === curdate));  
+  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === areano && record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   console.log('data new:',data.length);
   showProgress(false);
@@ -530,7 +546,7 @@ async function save_accom_brgy(areano){
     }
     arr[arr_ctr]=obj; arr_ctr++;
   }  
-  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === areano || record.date === curdate));  
+  await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === areano && record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   showProgress(false);
   //disp_accom_brgy(areano);

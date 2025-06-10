@@ -445,8 +445,7 @@ function show_download(){
 }
 
 function reportHead(tilt,areaname){
-  let dtl=
-  //'<div style="width:100%;height:60px;font-family:Times New Roman, Times, serif;">'+      
+  let dtl= 
   '<div style="width:100%;height:60px;text-align:center;background:none;">'+
     '<div style="font-size:22px;font-weight:bold;padding:0px 0 0 0;">'+tilt+'</div>'+
     '<div style="font-size:16px;font-weight:bold;padding:0px 0 0 0;">'+areaname+'</div>'+
