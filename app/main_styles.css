@@ -17,8 +17,8 @@ body {
 #printableBorder,#printableBorder2 { margin-top:0px;width:100%;border:1px solid lightgray;overflow:auto; }
 #printableArea,#printableArea2 { height:auto;width:716px;width:750px;border:2px solid black;
   margin:0 auto;margin-top:20px;margin-bottom:20px;
-  font-family:Times New Roman, Times, serif;font-size:11px;padding:10px;
-  background:white;
+  /* font-family:Times New Roman, Times, serif; */
+  font-size:11px;padding:10px;  background:white;
 }
 #pa_dtl{ height:100%;width:100%;border:0px solid red; }
 

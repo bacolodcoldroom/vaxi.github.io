@@ -704,22 +704,10 @@
     //}
     
     if (event.state) {      
-      if(f_MainPage){                
-        //refreshIDX();
-        /*
-        MSG_SHOW(vbYesNo,"CONFIRM: ","Close this App?",function(){                    
-          window.history.go(0);
-          f_reload=true;
-        },function(){});                  
-        */
-        //window.history.go(0);
-        //f_reload=true;
+      if(f_MainPage){    
          // Clear session data
-  sessionStorage.clear();
-  localStorage.clear();
-
-  // Redirect to the home page
-  //window.location.href = '/';
+        sessionStorage.clear();
+        localStorage.clear();
         exit_app();
       }
     }
