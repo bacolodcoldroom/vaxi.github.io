@@ -1,4 +1,5 @@
 function report_main(tran){
+  offLive(live_id);
   document.getElementById('wrapper').setAttribute('data-tran',tran);
   let main=ret_main(tran);
   let hd=ret_hd_main(tran);

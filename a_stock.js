@@ -1,4 +1,5 @@
 function fm_stock(){  
+  offLive(live_id);
   FM_TRANS='STOCK';
   FM_FM_MODE=1;
   FM_TABLE=DB_STOCK_INVTY;  FM_TABLE_NAME='stock_invty';  FM_RKEY='stockno';

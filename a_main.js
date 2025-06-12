@@ -883,12 +883,16 @@ function nowLive() {
     document.getElementById('divLive').setAttribute('data-live',1);
     document.getElementById('divLive').src='gfx/live.gif';
   }else{
-    clearInterval(live_id);
-    f_syslive=0;
-    document.getElementById('lbLive').innerHTML='LIVE';
-    document.getElementById('divLive').setAttribute('data-live',0);
-    document.getElementById('divLive').src='gfx/notlive.jpg';
+    offLive();
   }      
+}
+
+function offLive(){
+  clearInterval(live_id);
+  f_syslive=0;
+  document.getElementById('lbLive').innerHTML='LIVE';
+  document.getElementById('divLive').setAttribute('data-live',0);
+  document.getElementById('divLive').src='gfx/notlive.jpg';
 }
 
 async function refresh_all_now(){
@@ -897,28 +901,8 @@ async function refresh_all_now(){
   let areano=document.getElementById('wrapper').getAttribute('data-brgycode');  
   console.log('refresh_all_now',areano);
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     
-  let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;   
-  //let brgy=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=brgy.content;  
-  /*
-  if(areano){
-    disp_invty_brgy(areano);
-    disp_accom_brgy(areano);
-    //disp_brgy_list(areano);
-  }
-    */
-  //show_log();
-  disp_week_encoded();
-}
-
-async function refresh_all_data(){
-  showProgress(true);
-  await get_main_all_db();
-  if(CURR_PAGE=='invty'){
-    let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-    disp_invty_brgy(areano);
-  }
-  disp_brgy();
-  showProgress(false);
+  let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;  
+  disp_areas(wrapper.getAttribute('data-sort'));
 }
 
 function getFormattedWednesdaysInMonth(year, month) {

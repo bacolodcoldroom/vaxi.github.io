@@ -1,4 +1,5 @@
 function fm_area(){  
+  offLive(live_id);
   FM_TRANS='AREA';
   FM_FM_MODE=1;
   FM_TABLE=DB_AREA;  FM_TABLE_NAME='area';  FM_RKEY='areano';

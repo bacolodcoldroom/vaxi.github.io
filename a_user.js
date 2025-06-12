@@ -1,4 +1,5 @@
 function fm_user(){  
+  offLive(live_id);
   FM_TRANS='USER';
   FM_FM_MODE=1;
   FM_TABLE=DB_USER;  FM_TABLE_NAME='user';  FM_RKEY='usercode';

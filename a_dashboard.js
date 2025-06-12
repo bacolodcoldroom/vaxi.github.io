@@ -15,7 +15,7 @@ let clor_req='#c9daf8';
 let clor_male='#d9e2f3';
 let clor_female='#ffccff';
 
-function fm_dashboard(f_clear){   
+function fm_dashboard(){   
   //if(!JBE_CHK_USER(0)){ return; };
   //get_main_all_db();
   DB_AREA.sort(JBE_SORT_ARRAY(['*cluster','name']));
@@ -25,76 +25,38 @@ function fm_dashboard(f_clear){
   h_box1=window.innerHeight-h_dashboard-155;
   h_box1=H_BODY-h_dashboard-25-0;
   if(JBE_MOBILE){ h_box1+=10; }
-  let h_spaces=30;
-  let h_box2=H_BODY-(h_dashboard+h_box1+h_spaces+5);
-  //refresh_all_db();
-  let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
-  //alert(curdate);
-  //alert(DB_STOCK_INVTY.length);
-  let h_mainbox_invty=(h_box1-94)/2;
-  let h_mainbox_accom=h_mainbox_invty;
+      
+  var newOptionsHtml =  '<option value=0>Sort by Category</option>'; 
+  newOptionsHtml +=     '<option value=1>Sort by Inventory</option>'; 
+  newOptionsHtml +=     '<option value=2>Sort by Accomplishment</option>';   
+
   let dtl=
   '<div id="dv_dashboard" style="display:block;width:100%;height:100%;font-size:12px;text-align:center;border:0px solid orange;background:	lightgray;">'+  
 
-    '<div style="width:100%;height:'+h_dashboard+'px;padding:0px;font-weight:bold;text-align:left;border:0px solid gainsboro;background:none;">'+ 
+    '<div style="width:100%;height:'+h_dashboard+'px;padding:0px;font-weight:bold;text-align:left;border:0px solid gainsboro;background:gray;">'+ 
       '<div id="menu_open"" data-mode=0 onclick="openNav()" style="float:left;width:auto;height:100%;"><img src="gfx/jham.png" style="height:100%;" /></div>'+
       '<div  style="float:left;width:auto;height:100%;padding:10px;font-size:18px;background:none;">DASHBOARD</div>'+
+      '<div  style="float:right;width:185px;height:100%;padding:5px;font-size:12px;background:none;">'+
+        '<select id="div_sel_level" name="div_sel_level" onchange="disp_areas(this.value)" style="width:100%;height:100%;">'+
+          newOptionsHtml+
+        '</select>'+
+      '</div>'+
     '</div>'+
 
-    //'<div style="width:100%;height:50px;margin-top:5px;text-align:center;padding:0%;overflow:auto;border:0px solid red;background:darkgray;">HEAD</div>'+
-
-    '<div style="width:100%;height:'+h_box1+'px;margin-top:5px;text-align:center;padding:0%;overflow:auto;border:0px solid red;background:white;">';
-    let vdtl='';
-
-    for(var i=0;i<DB_AREA.length;i++){
-      let vdisp_invty='block';      
-      if(DB_AREA[i].cluster_areano != '-'){ vdisp_invty='none'; }
-      let vdisp_accom=iif(DB_AREA[i].cluster=='YES','none','block');
-      //console.log(DB_AREA[i].areano+'I');
-      dtl+=
-      '<div id="dv_dbCircle" style="float:left;width:23.75%;height:50px;margin-left:1%;margin-top:1%;padding:2px;border-radius:10px;">'+
-        '<div style="width:100%;height:50%;border:0px solid gold;text-align:center;background:none;">'+
-
-          '<div style="float:left;width:50%;height:100%;border:0px solid red;background:none;">'+
-            '<div id="'+DB_AREA[i].areano+'I'+'" onclick="prn_brgy(`'+DB_AREA[i].areano+'`,`invty`,`'+curdate+'`)" style="display:'+vdisp_invty+';float:right;margin-right:10px;width:25px;height:100%;cursor:pointer;border-radius:50%;text-align:center;font-size:13px;border:1px solid black;padding:4px 0 0 0;background:yellow;"></div>'+
-          '</div>'+
-
-          '<div style="float:left;width:50%;height:100%;border:0px solid red;background:none;">'+
-            '<div id="'+DB_AREA[i].areano+'A'+'" onclick="prn_brgy(`'+DB_AREA[i].areano+'`,`accom`,`'+curdate+'`)" style="display:'+vdisp_accom+';float:left;margin-left:10px;width:25px;height:100%;cursor:pointer;border-radius:50%;text-align:center;font-size:13px;border:1px solid black;padding:4px 0 0 0;background:pink;"></div>'+
-          '</div>'+
-
-        '</div>'+
-        '<div style="width:100%;height:50%;font-weight:bold;border:0px solid red;overflow:auto;color:black;background:none;">'+DB_AREA[i].name+'</div>'+        
-      '</div>';
-    }
-    dtl+=
+    '<div id="dv_areaBox" style="width:100%;height:'+h_box1+'px;margin-top:5px;text-align:center;padding:0%;overflow:auto;border:0px solid red;background:white;">';
     '</div>'+
 
   '</div>';
   document.getElementById('div_right').innerHTML=dtl;
-  //disp_brgy_list();
-  //document.getElementById('TANI').innerHTML='777';
-  //document.getElementById('CABA').innerHTML='999';
 
-  if(f_clear){
-    document.getElementById('div_body').setAttribute('data-row',0);
-    document.getElementById('div_body').setAttribute('data-row2',0);
-  }
-  /*
-  let dv_hd=document.getElementById('div_hd_invty');
-  let dv_dt=document.getElementById('dtls_invty');
-  dv_hd.style.width=dv_dt.clientWidth+'px';
-
-  dv_hd=document.getElementById('div_hd_accom');
-  dv_dt=document.getElementById('dtls_accom');
-  dv_hd.style.width=dv_dt.clientWidth+'px';
-  mnu_brgy();
-  */
-  disp_week_encoded();
+  let sortsel=wrapper.getAttribute('data-sort');
+  document.getElementById('div_sel_level').value=sortsel;
+  disp_areas(sortsel);
 }
 
-function disp_week_encoded(){  
-  //console.clear();  
+function disp_areas(sortMode){
+  wrapper.setAttribute('data-sort',sortMode);
+  console.clear();
   let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
   const today=new Date(curdate+'-01');
   const currentYear = today.getFullYear();
@@ -102,13 +64,18 @@ function disp_week_encoded(){
   const wednesdays = getWednesdaysInMonth(currentYear, currentMonth);
   const len_wed=wednesdays.length;
 
+  let arr_area=[]; let ctr_arr_area=0;
+
   for(var i=0;i<DB_AREA.length;i++){
+    //console.log(DB_AREA[i].name);
     let areano=DB_AREA[i].areano;
-    let ctr_week=0;
+    let name=DB_AREA[i].name;
+    let cluster=DB_AREA[i].cluster;
+    let cluster_areano=DB_AREA[i].cluster_areano;
+    let ctr_week_invty=0;
     let ary_tot=[0,0,0,0,0]; 
-       
-    //===========================================================================================================
     //invty        
+    //===========================================================================================================
     DB_INVTY.sort(JBE_SORT_ARRAY(['areano','date']));
     for(var j=0;j<DB_INVTY.length;j++){
       if(DB_INVTY[j].areano != areano){ continue; }
@@ -124,21 +91,10 @@ function disp_week_encoded(){
       } 
       //console.log('invty',areano,tot_wk1);      
     }
-
-    ctr_week=0;
-    for(var kk=0;kk<ary_tot.length;kk++){
-      if(ary_tot[kk] > 0){ ctr_week++; }
-    }
-    //if(document.getElementById(areano+'I').innerHTML !=0 && document.getElementById(areano+'I').innerHTML != ctr_week){ alert(ctr_week); }
-    document.getElementById(areano+'I').innerHTML=ctr_week;
-    if(ctr_week==len_wed){ 
-      document.getElementById(areano+'I').style.color='red'; 
-      document.getElementById(areano+'I').style.backgroundColor='gold'; 
-    }
-    //console.log('invty',areano,ary_tot);
-    
+    ctr_week_invty=0;
+    for(var kk=0;kk<ary_tot.length;kk++){ if(ary_tot[kk] > 0){ ctr_week_invty++; } }
     //===========================================================================================================
-    ctr_week=0;
+    let ctr_week_accom=0;
     ary_tot=[0,0,0,0,0]; 
     //accom   
     DB_ACCOM.sort(JBE_SORT_ARRAY(['areano','date'])); 
@@ -155,21 +111,52 @@ function disp_week_encoded(){
       }      
     }
     //console.log('accom',areano,ary);
-    ctr_week=0;
-    for(var kk=0;kk<ary_tot.length;kk++){
-      if(ary_tot[kk] > 0){ ctr_week++; }
-    }
-    //if(document.getElementById(areano+'A').innerHTML != ctr_week){ alert(ctr_week); }
-    document.getElementById(areano+'A').innerHTML=ctr_week;
-    //#C11C84
-    if(ctr_week==len_wed){ 
-      document.getElementById(areano+'A').style.color='white'; 
-      document.getElementById(areano+'A').style.backgroundColor='#C11C84'; 
-    }
+    ctr_week_accom=0;
+    for(var kk=0;kk<ary_tot.length;kk++){ if(ary_tot[kk] > 0){ ctr_week_accom++; } }
+    //===========================================================================================================
+
+    let ob={ "areano":areano, "name":name, "cluster":cluster, "cluster_areano":cluster_areano, "invty":ctr_week_invty, "accom":ctr_week_accom };
+    arr_area[ctr_arr_area]=ob; ctr_arr_area++;
+  }  
+  //===========================================================================================================
+  //===========================================================================================================
+  //===========================================================================================================
+  let dtl='';  
+  let sorter=['*cluster','name'];
+  if(sortMode==1){ sorter=['*invty','name']; }
+  if(sortMode==2){ sorter=['*accom','name']; }
     
+  arr_area.sort(JBE_SORT_ARRAY(sorter));
+  for(var i=0;i<arr_area.length;i++){
+    let vdisp_invty='block';          
+    if(arr_area[i].cluster_areano != '-'){ vdisp_invty='none'; }
+    let vdisp_accom=iif(arr_area[i].cluster=='YES','none','block');
+    let fg_invty='black'; let bg_invty='yellow';
+    let fg_accom='black'; let bg_accom='pink';
+
+    if(arr_area[i].invty==len_wed){ fg_invty='red'; bg_invty='gold'; }
+    if(arr_area[i].accom==len_wed){ fg_accom='white'; bg_accom='purple'; }
+    
+    dtl+=
+    '<div id="dv_Circle_'+i+'" style="float:left;width:23.75%;height:60px;margin-left:1%;margin-top:1%;padding:5px;border-radius:10px;border:1px solid lightgray;">'+
+      '<div style="width:100%;height:50%;border:0px solid gold;text-align:center;background:none;">'+
+
+        '<div style="float:left;width:50%;height:100%;border:0px solid red;background:none;">'+          
+          '<div id="'+arr_area[i].areano+'I'+'" onclick="prn_brgy(`'+arr_area[i].areano+'`,`invty`,`'+curdate+'`)" style="display:'+vdisp_invty+';float:right;margin-right:10px;width:25px;height:100%;cursor:pointer;border-radius:50%;text-align:center;font-size:13px;border:1px solid black;padding:4px 0 0 0;color:'+fg_invty+';background:'+bg_invty+';">'+arr_area[i].invty+'</div>'+
+        '</div>'+
+
+        '<div style="float:left;width:50%;height:100%;border:0px solid red;background:none;">'+        
+          '<div id="'+arr_area[i].areano+'I'+'" onclick="prn_brgy(`'+arr_area[i].areano+'`,`accom`,`'+curdate+'`)" style="display:'+vdisp_accom+';float:left;margin-left:10px;width:25px;height:100%;cursor:pointer;border-radius:50%;text-align:center;font-size:13px;border:1px solid black;padding:4px 0 0 0;color:'+fg_accom+';background:'+bg_accom+';">'+arr_area[i].accom+'</div>'+
+        '</div>'+
+
+      '</div>'+
+      '<div id="brgy_'+i+'" style="width:100%;height:50%;font-weight:bold;border:0px solid red;overflow:auto;padding:2px 0 0 0;color:black;background:none;">'+arr_area[i].name+'</div>'+        
+    '</div>';
   }
+  document.getElementById('dv_areaBox').innerHTML=dtl;
 }
 
+///////////////////////////////////////////////////////////////////////
 function mnu_brgy(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
@@ -183,7 +170,6 @@ function mnu_brgy(){
         '</div>'+
       '</div>'+
     '</div>';  
-  //document.getElementById('div_menu').innerHTML=jmenu;
   dispMenu('div_menu',jmenu);
 }
 
@@ -197,7 +183,6 @@ function mnu_save_brgy(){
           '<span style="height:100%;padding:0 0 0 5px;color:white;">Save</span>'+
         '</div>'+
       '</div>'+
-      //'<div onclick="disp_invty_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
       '<div onclick="disp_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jclose.png"  alt="home image" />'+
