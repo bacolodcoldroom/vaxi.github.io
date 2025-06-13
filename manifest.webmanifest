@@ -1,6 +1,6 @@
 {
-  "name": "Cold Chain App III",
-  "short_name": "Cold App3",
+  "name": "VAXi (Vaccine Inventory)",
+  "short_name": "VAXi",
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait",
