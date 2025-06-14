@@ -1,7 +1,8 @@
 function fm_stock2(){  
-  FM_TRANS='STOCK';
+  offLive(live_id);
+  FM_TRANS='STOCK2';
   FM_FM_MODE=1;
-  FM_TABLE=DB_STOCK_ACCOM;  FM_TABLE_NAME='stock_invty';  FM_RKEY='stockno';
+  FM_TABLE=DB_STOCK_ACCOM;  FM_TABLE_NAME='stock_accom';  FM_RKEY='stockno';
   FM_CB='';
   //FM_TABLE2=DB_RECEIVE2;
 
@@ -117,11 +118,13 @@ function look_fm_stock2(){
 function del_fm_stock2(stat,r){
   //alert('stat :'+stat+' r:'+r);
   if(stat==1){ 
+    /*
     let refno=JBE_REC_EXIST(DB_ACCOM,FM_RKEY,document.getElementById('tx_stockno').value,FM_RKEY);
     if(refno){
-      MSG_SHOW(vbOk,"DENIED: ","Can't Delete, Record is used in RIS No:"+refno,function(){},function(){}); 
+      MSG_SHOW(vbOk,"DENIED: ","Can't Delete, Record is used in Tran No:"+refno,function(){},function(){}); 
       return false; 
     }
+      */
   }
   if(stat==2){ DB_STOCK_ACCOM=r; } 
 }

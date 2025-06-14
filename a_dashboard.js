@@ -48,6 +48,15 @@ function fm_dashboard(){
 
   '</div>';
   document.getElementById('div_right').innerHTML=dtl;
+  /*
+  let dv_hd=document.getElementById('div_hd_invty');
+  let dv_dt=document.getElementById('dtls_invty');
+  dv_hd.style.width=dv_dt.clientWidth+'px';
+
+  dv_hd=document.getElementById('div_hd_accom');
+  dv_dt=document.getElementById('dtls_accom');
+  dv_hd.style.width=dv_dt.clientWidth+'px';
+  */
 
   let sortsel=wrapper.getAttribute('data-sort');
   document.getElementById('div_sel_level').value=sortsel;
@@ -156,8 +165,32 @@ function disp_areas(sortMode){
   document.getElementById('dv_areaBox').innerHTML=dtl;
 }
 
-///////////////////////////////////////////////////////////////////////
 function mnu_brgy(){
+  var jmenu=
+    '<div style="width:100%;height:100%;">'+           
+      '<div onclick="JBE_CLOSE_VIEW2();showMainPage();" style="float:left;width:35%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jclose.png"  alt="home image" />'+
+          '<span style="padding:0px;color:white;">Edit Inventory</span>'+
+        '</div>'+
+      '</div>'+
+      '<div onclick="JBE_CLOSE_VIEW2();showMainPage();" style="float:left;width:35%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jclose.png"  alt="home image" />'+
+          '<span style="padding:0px;color:white;">Edit Barangay</span>'+
+        '</div>'+
+      '</div>'+
+      '<div onclick="JBE_CLOSE_VIEW2();showMainPage();" style="float:right;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jclose.png"  alt="home image" />'+
+          '<span style="padding:0px;color:white;">Close</span>'+
+        '</div>'+
+      '</div>'+
+    '</div>';  
+  dispMenu('div_menu',jmenu);
+}
+///////////////////////////////////////////////////////////////////////
+function mnu_brgy2(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
       '<div style="float:left;width:75%;height:100%;padding:5px;font-size:16px;text-align:left;color:white;background:none;">'+
@@ -243,6 +276,27 @@ function chgdate_brgy(){
 }
 
 function clear_invty_brgy(){
+  for(var i=0;i<DB_STOCK_INVTY.length;i++){   
+    document.getElementById('div_row_data'+DB_STOCK_INVTY[i].stockno).innerHTML='';
+    document.getElementById('div_row'+DB_STOCK_INVTY[i].stockno).style.height='42px'; 
+    let vdtl='';
+    for(var j=1;j<=2;j++){
+      vdtl+=
+      '<div style="width:100%;height:20px;border:1px solid lightgray;">';
+        for(var k=1;k<=5;k++){
+          //let val=DB_INVTY[i][fld1];
+          vdtl+='<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_'+(j)+'w'+(k)+'" class="cls_weekly_row" value="" />';
+        }
+        vdtl+=
+          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'lotno'+'"  class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
+          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
+          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'req'+'"    class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />';
+      vdtl+=
+      '</div>';      
+    }
+    document.getElementById('div_row_data'+DB_STOCK_INVTY[i].stockno).innerHTML=vdtl;    
+  }
+  return;
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
     let div='';
     for(var k=0;k<5;k++){
@@ -277,35 +331,47 @@ function disp_brgy_list(){
 }
 
 //‐-------
-function disp_invty_brgy(areano){  
+function disp_invty_brgy(areano){    
+  console.log('disp_invty_brgy --> ',areano);
   let curdate=document.getElementById('id_date').value;
   //alert(curdate+' areano:'+areano);
-  //curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');
-  clear_invty_brgy();
+  //curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');  
   btn_enabled(0);
   update_week_buttons(curdate,'invty');
+  clear_invty_brgy();
+  console.log('disp invty brgy:',areano);
   for(var i=0;i<DB_INVTY.length;i++){
     if(DB_INVTY[i].areano !== areano){ continue; }
     if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
-    //console.log(DB_INVTY[i]);
-    let div;
-    for(var k=0;k<5;k++){
-      let fld1='1w'+(k+1);
-      let fld2='2w'+(k+1);
-      div=DB_INVTY[i].stockno+'_'+fld1;       document.getElementById(div).value=DB_INVTY[i][fld1];
-      div=DB_INVTY[i].stockno+'_'+fld2;       document.getElementById(div).value=DB_INVTY[i][fld2];
-    }
-    
-    div=DB_INVTY[i].stockno+'_1lotno';        document.getElementById(div).value=DB_INVTY[i]['1lotno'];
-    div=DB_INVTY[i].stockno+'_1expiry';       document.getElementById(div).value=DB_INVTY[i]['1expiry'];
-    div=DB_INVTY[i].stockno+'_1req';          document.getElementById(div).value=DB_INVTY[i]['1req'];
-    div=DB_INVTY[i].stockno+'_2lotno';        document.getElementById(div).value=DB_INVTY[i]['2lotno'];
-    div=DB_INVTY[i].stockno+'_2expiry';       document.getElementById(div).value=DB_INVTY[i]['2expiry'];
-    div=DB_INVTY[i].stockno+'_2req';          document.getElementById(div).value=DB_INVTY[i]['2req'];
-  }  
-  //mnu_invty_brgy();
-}
 
+    let v_stockno=DB_INVTY[i].stockno;
+    let arr_data=DB_INVTY[i].row_data;
+    console.log(arr_data.length,' ==row_data::: ',arr_data);
+    let vdtl='';
+    for(var j=1;j<=arr_data.length;j++){
+      vdtl+=
+      '<div style="width:100%;height:20px;border:1px solid lightgray;">';
+        for(var k=1;k<=5;k++){
+          //let val=DB_INVTY[i][fld1];
+          vdtl+='<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_'+(j)+'w'+(k)+'" class="cls_weekly_row" value="'+k+'" />';
+        }
+        vdtl+=
+          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'lotno'+'"  class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
+          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
+          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'req'+'"    class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />';
+      vdtl+=
+      '</div>';      
+    }
+    document.getElementById('div_row_data'+v_stockno).innerHTML=vdtl;    
+    let row_height=42;
+    console.log('arr_data.length:',arr_data.length);
+    if(arr_data.length>2){
+      let n=arr_data.length-2;
+      row_height=(20*arr_data.length)+arr_data.length-n;      
+    } 
+    document.getElementById('div_row'+v_stockno).style.height=(row_height)+'px';       
+  }  
+}
 
 //‐-------
 function edit_invty_brgy(col){  

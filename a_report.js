@@ -6,10 +6,22 @@ function report_main(tran){
   let dtl=ret_dtl_main(tran);
   JBE_OPEN_VIEW2(main,'PRINTER','');
   document.getElementById('hd_main').innerHTML=hd;
+  //document.getElementById('hd_main').style.border='2px solid blue';
   document.getElementById('dtl_main').innerHTML=dtl;
+  //document.getElementById('dtl_main').style.border='2px solid brown';
   let dv_hd=document.getElementById('hd_main');
   let dv_dt=document.getElementById('dtl_main');
   dv_hd.style.width=dv_dt.clientWidth+'px';
+  /*
+  let dv_hd=document.getElementById('div_hd_invty');
+  let dv_dt=document.getElementById('dtls_invty');
+  dv_hd.style.width=dv_dt.clientWidth+'px';
+
+  dv_hd=document.getElementById('div_hd_accom');
+  dv_dt=document.getElementById('dtls_accom');
+  dv_hd.style.width=dv_dt.clientWidth+'px';
+  mnu_brgy();
+  */
   mnu_brgy();
   disp_brgy_list();
 }
@@ -33,10 +45,12 @@ function ret_main(tran){
     '<div style="display:block;width:100%;height:'+h_box1+'px;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
 
       //left brgy      
-      '<div style="float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
+      '<div style="position:relative;float:left;width:20%;height:100%;margin-top:0px;text-align:center;padding:0%;border:0px solid red;background:none;">'+
         '<div style="width:100%;height:30px;font-size:17px;padding:5px;font-weight:normal;text-align:center;border:0px solid black;color:white;background:'+JBE_CLOR2+';">'+
           '<div style="width:100%;height:100%;" style="font-weight:bold;">Barangay</div>'+
         '</div>'+
+        '<div onclick="JBE_CLOSE_VIEW2();showMainPage()" style="position:absolute;width:auto;height:30px;top:0px;left:0px;padding:4px;background:black;"><img id="brgy_back" src="gfx/jback.png"  style="height:100%;cursor:pointer;"/></div>'+
+
         '<div id="brgy_list" style="width:100%;height:'+(h_box1-30-200)+'px;padding:10px;border:0px solid black;overflow:auto;background:white;">'+
         '</div>'+
         '<div style="width:100%;height:190px;margin-top:9px;border:0px solid black;padding:10px;background:white;">'+
@@ -92,22 +106,22 @@ function ret_main(tran){
 
 function ret_hd_main(tran){  
   let hd=
-  '<div disabled id="div_hd_invty" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:3px 0 3px 0;background:#FFD900;">'+
+  '<div disabled id="div_hd" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:3px 0 3px 0;background:#FFD900;">'+
     '<div style="float:left;width:20%;height:100%;padding:0px;">Vaccines</div>'+
-    '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
-      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
-      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
-      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';"></button></div>'+
-      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';"></button></div>'+
-      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:0 0 0 1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';"></button></div>'+
-      '<div class="cls_weekly_row" style="width:15%;margin-left:1%;padding:4px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
+    '<div style="float:left;width:80%;height:100%;border:0px solid black;background:none;">'+
+      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn0" onclick="edit_invty_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
+      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn1" onclick="edit_invty_brgy(2)" style="background:'+JBE_CLOR+';"></button></div>'+
+      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn2" onclick="edit_invty_brgy(3)" style="background:'+JBE_CLOR+';"></button></div>'+
+      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn3" onclick="edit_invty_brgy(4)" style="background:'+JBE_CLOR+';"></button></div>'+
+      '<div class="cls_weekly_row" style="border:0px solid lightgray;padding:1px;"><button id="btn4" onclick="edit_invty_brgy(5)" style="background:'+JBE_CLOR+';"></button></div>'+
+      '<div class="cls_weekly_row" style="width:15%;margin-left:0.6%;padding:4px 0 0 0;border:1px solid black;border-right:0px;background:'+clor_lotno+';">Lot No.</div>'+
       '<div class="cls_weekly_row" style="width:10%;padding:4px 0 0 0;border:0px solid black;border:1px solid black;background:'+clor_expiry+';">Exp.</div>'+
       '<div class="cls_weekly_row" style="width:8%;margin-left:1%;padding:4px 0 0 0;border:1px solid black;background:'+clor_req+';">Req.</div>'+              
     '</div>'+
   '</div>';
 
   let hd2=
-  '<div disabled id="div_hd_invty" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:3px 0 3px 0;background:#FFD900;">'+
+  '<div disabled id="div_hd" style="width:100%;height:30px;border:0px solid black;font-size:14px;border-top:0px;padding:3px 0 3px 0;background:#FFD900;">'+
     '<div style="float:left;width:13%;height:100%;padding:3px;">Vaccine</div>'+
     '<div style="float:left;width:87%;height:100%;border:0px solid black;">'+
       '<div class="cls_accom_row" style="width:15.2%;border:0px solid lightgray;padding:1px;"><button id="btn10" onclick="edit_accom_brgy(1)" style="background:'+JBE_CLOR+';"></button></div>'+
@@ -131,9 +145,11 @@ function ret_dtl_main(tran){
   DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
     dtl+=
-    '<div id="div_row" style="width:100%;height:35px;border:1px solid black;color:black;background:none;">'+
+    '<div id="div_row'+DB_STOCK_INVTY[i].stockno+'" style="width:100%;height:42px;border:1px solid red;color:black;background:none;">'+
       '<div style="float:left;width:20%;height:100%;text-align:left;padding:5px;border:0px solid black;overflow:auto;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
+      '<div id="div_row_data'+DB_STOCK_INVTY[i].stockno+'" style="float:left;width:80%;height:100%;text-align:left;padding:0px;border:0px solid red;overflow:auto;"></div>'+
 
+      /*
       '<div style="float:left;width:80%;height:100%;border:0px solid black;">'+
         '<div style="width:100%;height:50%;border:0px solid black;">'+
           '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_1w1'+'" class="cls_weekly_row" value="" />'+
@@ -158,6 +174,7 @@ function ret_dtl_main(tran){
           '<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_2req'+'"   class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-bottom:0px;border-right:0px;background:'+clor_req+';" value="" />'+
         '</div>'+
       '</div>'+
+      */
 
     '</div>';
   }
