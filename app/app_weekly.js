@@ -3,8 +3,8 @@ let clor_expiry='#fce4d6';
 let clor_req='#c9daf8';
 
 async function fm_weekly(){
-  not_yet();
-  return;
+  //not_yet();
+  //return;
   //if(!CHK_ONLINE()){ return; };
   if(!CHK_ONLINE() && JBE_CLOUD){ return; }
   if(!CURR_USER){
