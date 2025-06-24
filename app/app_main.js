@@ -96,10 +96,6 @@ function get_app_default(){
   rest_api_start();
 }
 
-function dispMenu(divmenu,m){
-  document.getElementById(divmenu).innerHTML=m;
-}
-
 //=================================================================================
 //=======================show page=================================================
 function showMainPage(){

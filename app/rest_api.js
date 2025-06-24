@@ -15,6 +15,7 @@ async function rest_api_start(){
   let data;  
   data=await api_readfile(JBE_CLOUD,JBE_API+'user');   DB_USER=data.content;   
   data=await api_readfile(JBE_CLOUD,JBE_API+'stock_invty');  DB_STOCK_INVTY=data.content;  
+  data=await api_readfile(JBE_CLOUD,JBE_API+'stock_invty2');  DB_STOCK_INVTY2=data.content;  
   data=await api_readfile(JBE_CLOUD,JBE_API+'stock_accom');  DB_STOCK_ACCOM=data.content;  
   data=await api_readfile(JBE_CLOUD,JBE_API+'area');   DB_AREA=data.content; 
   data=await api_readfile(JBE_CLOUD,JBE_API+'invty');  DB_INVTY=data.content;
@@ -115,7 +116,7 @@ async function rest_api_save_profile(vmode,userRow,usercode,u,p,n,n2,fullname,la
   console.log('save:',lastname,':',firstname,':',middlename);  
   if(JBE_CLOUD){ await jeff_uploadImage(photo,'vaxi/images/'+usercode+'.jpg'); ob.photo=''; }
   //console.log('ob.photo',ob.photo);
-  await api_save(JBE_CLOUD,JBE_API+'user',[ob],record => !(record.usercode === CURR_USER && record.areano === CURR_AREANO));
+  await api_save(JBE_CLOUD,JBE_API+'user',[ob],record => record.usercode !== CURR_USER || record.areano !== CURR_AREANO);
   showProgress(false);  
   document.getElementById('admin_avatar').src=photo;
   document.getElementById('bar_avatar').src=photo;

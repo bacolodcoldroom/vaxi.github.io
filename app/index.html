@@ -266,7 +266,7 @@
 
 <!--  *************************PAGES***************************************************
       ************************************************************************** -->
-<div id="wrapper" style="position:relative;display:none;height:100%;background-color:white;padding:0px;">  
+<div id="wrapper" data-progmode="app" style="position:relative;display:none;height:100%;background-color:white;padding:0px;">  
     <!--div id="app-logo"  style="width:100%;height:100px;text-align:center;">
       <img  src="./gfx/icon-192x192.png" style="height:100%;" alt="first_logo image" >      
     </div--> 
@@ -579,7 +579,7 @@
   var DB_ADJ2=[];
   var DB_PRODUCT=[];
   var DB_STOCK_ACCOM=[];  
-  var DB_STOCK_INVTY=[];  
+  var DB_STOCK_INVTY=[]; var DB_STOCK_INVTY2=[];  
   var DB_INVTY=[];  
   var DB_ACCOM=[];
   var DB_LOG=[];  
@@ -704,10 +704,22 @@
     //}
     
     if (event.state) {      
-      if(f_MainPage){    
+      if(f_MainPage){                
+        //refreshIDX();
+        /*
+        MSG_SHOW(vbYesNo,"CONFIRM: ","Close this App?",function(){                    
+          window.history.go(0);
+          f_reload=true;
+        },function(){});                  
+        */
+        //window.history.go(0);
+        //f_reload=true;
          // Clear session data
-        sessionStorage.clear();
-        localStorage.clear();
+  sessionStorage.clear();
+  localStorage.clear();
+
+  // Redirect to the home page
+  //window.location.href = '/';
         exit_app();
       }
     }
