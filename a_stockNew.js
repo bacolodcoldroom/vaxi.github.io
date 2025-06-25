@@ -2,6 +2,7 @@ function fm_stock(){
   //get_app_default();
   FM_TRANS='STK';
   FM_FM_MODE=2;
+  FM_REC2_EMPTY=true;
   
   FM_TABLE=DB_STOCK_INVTY;  FM_TABLE_NAME='stock_invty';  FM_RKEY='stockno';
   FM_TABLE2=DB_STOCK_INVTY2;  FM_TABLE_NAME2='stock_invty2'; FM_RKEY='stockno';
@@ -19,7 +20,7 @@ function fm_stock(){
     { hd:"", fld:"stockno", type:"text", input:false, width:"10%", align:"center", dupli:1, err:"Please enter Vaccine", disp:0, save:true },    
     { hd:"Lot No.", fld:"lotno", type:"text", input:true, width:"34%", align:"center", dupli:1, err:"Please enter Lot No.", disp:1, save:true },    
     { hd:"Expiry", fld:"expiry", type:"date", input:true, width:"33%", align:"center", dupli:0, err:"Please enter Expiry", disp:1, save:true },
-    { hd:"Required", fld:"req", type:"text", input:true, width:"33%", align:"center", dupli:0, err:"Please enter Requirement", disp:1, save:false }
+    { hd:"Required", fld:"req", type:"number", input:true, width:"33%", align:"center", dupli:0, err:"Please enter Requirement", disp:1, save:true }
   ];
     
   var fm_ob = {
@@ -70,6 +71,7 @@ function fm_stock(){
     look:"look_fm_stock",
     init:"init_fm_stock",
     add:"add_fm_stock",
+    add_item:"add_item_fm_stock",
     edit:"edit_fm_stock",
     del:"del_fm_stock",
     disp:"disp_fm_stock",
@@ -165,7 +167,7 @@ function lookup_stock_fm_stock(){
     '\nv_areano:'+tx_areano.value+
     '\nv_stockno:'+txt_stockno.innerHTML+
     '\nv_lotno:'+txt_lotno.value+
-    '\nv_cost:'+txt_cost.value+
+    '\nv_cost:'+txt_req.value+
     '\nv_amt:'+txt_amount.innerHTML+
     '\nv_loc:'+txt_loc.value+
     '\nv_refno:'+txt_refno.innerHTML
@@ -214,7 +216,7 @@ function do_lookup_stock_fm_stock(ndx){
   document.getElementById('txt_descrp').innerHTML=document.getElementById('dd_descrp'+ndx).innerHTML;
   let vtype=JBE_GETFLD('type',DB_STOCK,'stockno',val);
   document.getElementById('txt_expiry').value=document.getElementById('dd_expiry'+ndx).innerHTML;
-  document.getElementById('txt_cost').value=cost;
+  document.getElementById('txt_req').value=cost;
   document.getElementById('txt_refno').innerHTML=document.getElementById('dd_trano'+ndx).innerHTML;  
   document.getElementById('txt_ptr_qty').innerHTML=ptr_qty;  
   if(qty){ chg_qty_fm_stock(qty); }  
@@ -227,7 +229,7 @@ function init_fm_stock(){
   document.getElementById('lu_stockno').style.opacity='1';
 }
 
-function add_fm_stock(){  
+function xxxadd_fm_stock(){  
   let prfx='RET ';
   //let last_trano='1';
   //let v_date=JBE_DATE_FORMAT(new Date(),'YYYY-MM-DD');  
@@ -248,7 +250,7 @@ function add_fm_stock(){
     }
     var new_trano=prfx+v_date;
     var v_num=0;
-    
+     
     if(last_trano.substring(0,14) == new_trano){
       v_num=parseInt(last_trano.substring(15,17))+1;
     }else{
@@ -257,12 +259,12 @@ function add_fm_stock(){
     new_trano=new_trano+'-'+v_num.toString().padStart(2,0);  
     console.log('ret new trano: '+new_trano);
 
-    document.getElementById('tx_trano').value=new_trano;  
-    document.getElementById('tx_trano').disabled=false;
+    document.getElementById('tx_stockno').value=new_trano;  
+    document.getElementById('tx_stockno').disabled=false;
     //document.getElementById('btn_name').disabled=false;
-    document.getElementById('tx_trano').setAttribute('data-docno',new_trano);
+    document.getElementById('tx_stockno').setAttribute('data-docno',new_trano);
         
-    FM_FORCE_ADDREC(FM_TRANS,new_trano,'edit_fm_stock','tx_trano');    
+    FM_FORCE_ADDREC(FM_TRANS,new_trano,'edit_fm_stock','tx_stockno');    
   })    
   .catch(function (error) { console.log(error); });
 }
@@ -270,13 +272,13 @@ function add_fm_stock(){
 
 function add_item_fm_stock(f_add){
   var curRow=document.getElementById('div_FM_dtl_div2').getAttribute('data-row');
-  var recno=document.getElementById('tx_trano').value;
-  var v_areaname=document.getElementById('tx_areaname').value;
-  var v_date=document.getElementById('tx_date').value;
-  
+  var recno=document.getElementById('tx_stockno').value;
+ // var v_areaname=document.getElementById('tx_areaname').value;
+  //var v_date=document.getElementById('tx_date').value;
+  /*
   if(!recno){ 
     snackBar('Ref. No. is Empty.');
-    document.getElementById('tx_trano').focus();
+    document.getElementById('tx_stockno').focus();
     return false;
   }
   if(!v_date){ 
@@ -287,235 +289,59 @@ function add_item_fm_stock(f_add){
 
   if(!v_areaname){ 
     snackBar('Sub Area is Empty.');
-    //document.getElementById('tx_trano').focus();
+    //document.getElementById('tx_stockno').focus();
     return false;
   }
-
+  */
   var len_dtls=document.querySelectorAll('.dtls').length;   
   if(len_dtls==0 && !f_add){ 
     snackBar('Cannot Edit empty record');
     return false;
   }
 
-  let v_vaccine='';
+  let v_stockno=recno;
   let v_lotno='';
-  let v_loc='';
-  let v_stockno='';
-  let v_expiry='';
-  let v_cost='';
-  let v_amount=0;
-  let v_ptr_qty=0;
-  //let v_areaname='';
-  let v_areano=tx_areano.value;
-  let v_qty='';
-  //let v_fm_stock_date=JBE_DATE_FORMAT(new Date(),'YYYY-MM-DD');
-  let v_rti='-';
-  let v_trano=recno;  
-  let v_refno='';
+  let v_expiry=JBE_DATE_FORMAT(new Date(),'YYYY-MM-DD');
+  let v_req='';
 
   if(!f_add){
-    v_vaccine=document.getElementById('dtl_descrp_'+curRow).innerHTML;
     v_lotno=document.getElementById('dtl_lotno_'+curRow).innerHTML;
-    v_loc=document.getElementById('dtl_loc_'+curRow).innerHTML;
-    v_qty=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('dtl_qty_'+curRow).innerHTML);
-    v_rti=document.getElementById('dtl_rti_'+curRow).innerHTML;
-    v_stockno=document.getElementById('dtl_stockno_'+curRow).innerHTML;
     v_expiry=JBE_DATE_FORMAT(document.getElementById('dtl_expiry_'+curRow).innerHTML,'YYYY-MM-DD');
-    v_cost=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('dtl_cost_'+curRow).innerHTML);
-    v_amount=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('dtl_amount_'+curRow).innerHTML);
-    v_refno=document.getElementById('dtl_refno_'+curRow).innerHTML;
-    v_trano=document.getElementById('dtl_trano_'+curRow).innerHTML;
-  }
-
-  if(!v_ptr_qty || v_ptr_qty==0){
-    v_ptr_qty=JBE_GETFLD2('qty',DB_PTR2,[
-      { "fld":"trano","val":v_refno },
-      { "fld":"stockno","val":v_stockno },
-      { "fld":"lotno","val":v_lotno }
-    ]);    
+    v_req=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('dtl_req_'+curRow).innerHTML);
   }
 
   let v_head='Add';
   if(!f_add){ v_head='Edit'; }
 
   var dtl=          
-    '<div id="div_name" data-zoom=0 style="width:100%;height:100%;font-text:14px;padding:5px;background-color:white;">'+         
+    '<div id="div_name" data-zoom=0 style="width:100%;height:100%;font-text:14px;padding:5px;background-color:white;">'+      
+    
       '<div style="width:100%;height:25px;padding:4px;font-size:14px;font-weight:bold;color:white;background:'+JBE_CLOR2+';">'+
         '<span style="float:left;width:auto;">'+v_head+' Item</span>'+
         '<span style="float:right;width:auto;">Stock Return Facility</span>'+        
       '</div>'+    
-  
-      '<div class="class_mtr0" style="display:none;margin-top:5px;">'+                        
-        '<span id="txt_trano" class="class_mtr2" style="width:50%;color:red;">'+v_trano+'</span>'+
+    
+      '<div class="class_mtr0" style="display:none;margin-top:5px;">'+
         '<span id="txt_stockno" class="class_mtr2" style="width:50%;color:red;">'+v_stockno+'</span>'+
-        '<span id="txt_amount" class="class_mtr2" style="width:50%;color:red;">'+v_amount+'</span>'+
-        '<span id="txt_ptr_qty" class="class_mtr2" style="width:50%;color:red;">'+v_ptr_qty+'</span>'+
-        '<span id="txt_areano" class="class_mtr2" style="width:50%;color:red;">'+v_areano+'</span>'+
-        '<span id="txt_date" class="class_mtr2" style="width:50%;color:red;">'+v_date+'</span>'+
-        '<span id="txt_refno" class="class_mtr2" style="width:50%;color:red;">'+v_refno+'</span>'+  
-        '<span id="txt_old_loc" class="class_mtr2" style="width:50%;color:red;">'+v_loc+'</span>'+       
-      '</div>'+ 
-      /*
-      '<div class="class_mtr0" style="margin-top:5px;">'+        
-        '<span class="class_mtr1">Sub-Area:</span>'+        
-        '<span id="tx_areaname" class="class_mtr2" style="width:50%;color:red;overflow:auto;">'+v_areaname+'</span>'+
-        '<button id="btn_areaname" style="float:right;width:40px;height:100%;font-weight:bold;margin-right:3px;border-radius:5px;color:white;background:'+JBE_CLOR+';" onclick="lookup_subarea_fm_stock()">...</button>'+        
-      '</div>'+ 
-      */
-      '<div class="class_mtr0" style="margin-top:5px;">'+        
-        '<span class="class_mtr1">Vaccine:</span>'+        
-        '<span id="txt_descrp" class="class_mtr2" style="width:50%;color:red;overflow:auto;">'+v_vaccine+'</span>'+
-        '<button id="btn_descrp" style="float:right;width:40px;height:100%;font-weight:bold;margin-right:3px;border-radius:5px;color:white;background:'+JBE_CLOR+';" onclick="lookup_stock_fm_stock()">...</button>'+        
-      '</div>'+ 
+      '</div>'+   
+  
       '<div class="class_mtr0" style="margin-top:5px;">'+        
         '<span class="class_mtr1">Lot No.:</span>'+        
-        '<input type="text" id="txt_lotno" class="class_mtr2" disabled style="color:red;overflow:auto;" value="'+v_lotno+'" />'+
+        '<input type="text" id="txt_lotno" class="class_mtr2" style="color:red;overflow:auto;" value="'+v_lotno+'" />'+
       '</div>'+ 
       '<div class="class_mtr0" style="margin-top:5px;">'+        
         '<span class="class_mtr1">Expiry:</span>'+        
-        '<input type="date" id="txt_expiry" class="class_mtr2" disabled style="color:red;overflow:auto;" value="'+v_expiry+'" />'+
+        '<input type="date" id="txt_expiry" class="class_mtr2" style="color:red;overflow:auto;" value="'+v_expiry+'" />'+
       '</div>'+ 
       '<div class="class_mtr0" style="margin-top:5px;">'+        
-        '<span class="class_mtr1">Cost:</span>'+        
-        '<input type="number" id="txt_cost" class="class_mtr2" disabled style="color:red;overflow:auto;" value="'+v_cost+'" />'+
-      '</div>'+ 
-      '<div class="class_mtr0" style="margin-top:5px;">'+        
-        '<span class="class_mtr1">Quantity:</span>'+        
-        '<input type="number" id="txt_qty" onchange="chg_qty_fm_stock(this.value)" class="class_mtr2" style="color:red;overflow:auto;" value="'+v_qty+'" />'+
-      '</div>'+
-      '<div class="class_mtr0" style="margin-top:5px;">'+        
-        '<span class="class_mtr1">Location:</span>'+        
-        '<select id="txt_loc" name="txt_loc" onchange="chg_loc_fm_stock(this.value)" class="class_mtr2" style="float:left;width:50%;color:red;height:100%;padding:0px;">';
-          let dtlfld='';            
-          for(var i=0;i < DB_WHOUSE.length;i++){
-            let vsel='';
-            if(v_loc==DB_WHOUSE[i].whcode){ vsel='selected'; }
-            dtlfld+='<option '+vsel+' value="'+DB_WHOUSE[i].whcode+'">'+DB_WHOUSE[i].name+'</option>';
-          }
-          dtl+=dtlfld+
-        '</select>'+
-      '</div>'+
-            
-      
-      /*
-      '<div class="class_mtr0" style="display:none;margin-top:5px;">'+        
-        '<span class="class_mtr1">Ret. Date:</span>'+        
-        '<input type="date" id="txt_fm_stock_date" class="class_mtr2" style="color:red;overflow:auto;" value='+v_fm_stock_date+' />'+
-      '</div>'+ 
-      */
-      '<div class="class_mtr0" style="margin-top:5px;">'+        
-        '<span class="class_mtr1">RTI:</span>'+  
-        '<span id="txt_rti" class="class_mtr1" style="display:none;">'+v_rti+'</span>'+           
-        '<span id="txt_rti2" data-rti='+v_rti+' class="class_mtr2" style="color:red;">'+
-          '<input type="radio" id="rti1" '+iif(v_rti == 'YES','checked','')+' onclick="chg_rti(&quot;YES&quot;)" name="fav_rti" style="margin-left:0px;" value=0>'+
-            '<label for="rti1">Yes</label>'+
-          '<input type="radio" id="rti2" '+iif(v_rti != 'YES','checked','')+' onclick="chg_rti(&quot;-&quot;)" name="fav_rti" style="margin-left:30px;" value=1>'+
-            '<label for="rti2">No</label>'+   
-        '</span>'+         
-      '</div>'+ 
-      
+        '<span class="class_mtr1">Require:</span>'+        
+        '<input type="number" id="txt_req" class="class_mtr2" style="color:red;overflow:auto;" value="'+v_req+'" />'+
+      '</div>'+       
+
     '</div>';
   //JBE_OPEN_VIEW(dtl,'','');
   JBE_SHOW_MODULE(true,dtl);
   return true;
-}
-
-function chg_qty_fm_stock(qty){  
-  let ptr_qty=Number(txt_ptr_qty.innerHTML);
-  qty=Number(qty);
-  if(qty==0){ txt_qty.value=''; txt_qty.focus(); return; }
-  if(qty > ptr_qty){ 
-    MSG_SHOW(vbYesNo,"CONFIRM!!!: ","Returned Quantity ("+qty+") IS GREATER THAN the Quantity Dispensed ("+ptr_qty+").<br><br>Do you wish to continue?",
-      function(){ txt_loc.focus(); },function(){ txt_qty.focus(); return; }
-    ); 
-  }    
-  //alert(qty+1);
-  let cost=txt_cost.value;  
-  //txt_amount.innerHTML=JBE_FORMAT_DOUBLE_TO_STR(cost * qty);
-  txt_amount.innerHTML=cost * qty;
-}
-
-function chg_loc_fm_stock(loc){
-  let qty=Number(txt_qty.value);
-  //alert('txt_qty.value:'+qty);
-  if(qty==0){    
-    snackBar('ERROR: Quantity field is Empty...');
-    txt_qty.value='';
-    txt_qty.focus();
-    return;
-  }
-  /*
-  let curRow=document.getElementById('div_FM_dtl_div2').getAttribute('data-row');
-  let oldLoc=document.getElementById('dtl_loc_'+curRow).innerHTML;
-  console.log(loc,txt_stockno.innerHTML,txt_lotno.value);
-  */
-  //alert('loc:'+loc);  
-  //alert('txt_old_loc:'+txt_old_loc.innerHTML);  
-  /*
-  let rec=JBE_GETFLD2('id',DB_TRANSFER2,[
-    { "fld":"loc","val":loc },
-    { "fld":"stockno","val":txt_stockno.innerHTML },
-    { "fld":"lotno","val":txt_lotno.value }
-  ]);   
-  console.log('rec:'+rec);
-  */
-
-  let db=JBE_GETARRY2(DB_TRANSFER2,[
-    { "fld":"loc","val":loc },
-    { "fld":"stockno","val":txt_stockno.innerHTML },
-    { "fld":"lotno","val":txt_lotno.value }
-  ]); 
-    
-  //alert('db len:'+Object.keys(db).length);  
-
-  if(Object.keys(db).length==0){
-    let date;
-    let expiry;
-    let descrp;
-    let locname;
-    let cost=0;
-
-    let rr=JBE_GETARRY2(DB_RECEIVE2,[
-      { "fld":"stockno","val":txt_stockno.innerHTML },
-      { "fld":"lotno","val":txt_lotno.value }
-    ]);
-    if(Object.keys(rr).length>0){
-      //alert('yes:'+Object.keys(rr).length);
-      date=tx_date.value;
-      expiry=rr.expiry;
-      descrp=rr.descrp;
-      locname=get_loc(loc);
-      cost=rr.cost;
-    }
-    //alert('descrp:'+descrp);
-    //MSG_SHOW(vbOk,"ERROR: ","Location/Freezer Not Found...,<br>Add New Location at Freezer Facility.",function(){},function(){}); 
-    MSG_SHOW(vbYesNo,'CONFIRM: ','Location/Freezer Not Found...,<br>Add New Location at Freezer Facility?',function(){
-      
-      FM_AXIOS_SQL='INSERT INTO transfer2 (trano,loc,stockno,lotno,refno,date,expiry,descrp,locname,qty,balance,cost,date_tf,stat_tf) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-      FM_AXIOS_PARA1=['ST-0001',loc,txt_stockno.innerHTML,txt_lotno.value,tx_trano.value,date,expiry,descrp,locname,txt_qty.value,txt_qty.value,cost,date,1];
-      console.log('FM_AXIOS_SQL:'+FM_AXIOS_SQL);
-      console.log('FM_AXIOS_PARA1:'+FM_AXIOS_PARA1);
-      axios.post('/api/fmlib_save', {headers: { 'Content-Type': 'application/json' }}, { params: { sql:FM_AXIOS_SQL,fld:FM_AXIOS_PARA1,tbl:FM_TABLE_NAME2,fm_mode:1 } })    
-      .then(function (response) {
-        DB_TRANSFER2=response.data; 
-        snackBar('Location created successfully...');
-      }).catch(function (error) { console.log(error); showProgress(false); });      
-    },function(){ 
-      txt_loc.value=parseInt(txt_old_loc.innerHTML);
-      return; 
-    });    
-  }
-}
-
-function chg_rti(v){
-  document.getElementById('rti1').value=0;
-  document.getElementById('rti2').value=1;
-  if(v=='YES'){ 
-    document.getElementById('rti1').value=1; 
-    document.getElementById('rti2').value=0; 
-  }
-  //document.getElementById('txt_rti').setAttribute('data-rti',v); 
-  document.getElementById('txt_rti').innerHTML=v;
 }
 
 //edit
@@ -534,16 +360,13 @@ function look_fm_stock(fld){
 }
 //del
 function del_fm_stock(stat,r){
-  if(stat==2){ DB_fm_stock=r; } 
+  if(stat==2){ DB_STOCK_INVTY=r; } 
 }
 //save
 function save_fm_stock(stat,r){
   //alert('stat :'+stat+' r:'+r.length);
   if(stat==0){
-    let ob=[      
-      { fld:"date",val:document.getElementById('tx_date').value },
-      { fld:"areano",val:document.getElementById('tx_areano').value }
-    ];
+    let ob=[];
     return ob;
   }  
   if(stat==1){
@@ -562,7 +385,7 @@ function save_fm_stock(stat,r){
     }
     //return false;
     */
-    update_stocks_fm_stock(-1);
+    //update_stocks_fm_stock(-1);
   }    
   if(stat==2){
     /*
@@ -577,53 +400,15 @@ function save_fm_stock(stat,r){
     */
     //console.clear();
     //alert('----alams na!!!!!!!:'+FM_FM_MODE);
-    DB_fm_stock=r; 
+    DB_STOCK_INVTY=r; 
   }
   if(stat==3){
     console.log('----show na!!2222222!!!!!:'+FM_FM_MODE);
-    DB_fm_stock2=r; 
-    update_stocks_fm_stock(1);
+    DB_STOCK_INVTY2=r; 
+    //update_stocks_fm_stock(1);
   }
 }
 
-function update_stocks_fm_stock(mode){
-  //alert('update_stocks_fm_stock mode:'+mode);
-  console.clear();
-  var len_dtls=document.querySelectorAll('.dtls').length;    
-  for(var i=1;i<=len_dtls;i++){
-    let v_display=document.getElementById('dtl_'+i).style.display; 
-    let v_loc=Number(document.getElementById('dtl_loc_'+i).innerHTML);
-    let v_stockno=Number(document.getElementById('dtl_stockno_'+i).innerHTML);
-    let v_lotno=document.getElementById('dtl_lotno_'+i).innerHTML; 
-    let v_qty=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('dtl_qty_'+i).innerHTML);
-    if(mode == -1){
-      for(var k=0;k<FM_FIELDS2.length;k++){
-        if(!FM_FIELDS2[k].hd=='FILLER'){ continue; }
-
-        let div='fil_'+FM_FIELDS2[k].fld+'_'+i;
-        if(!document.getElementById(div)){ continue; }
-
-        console.log(i+' good: '+div);
-      }
-      //v_loc=Number(document.getElementById('fil_loc_'+i).innerHTML);
-      //v_stockno=Number(document.getElementById('fil_stockno_'+i).innerHTML);
-      //v_qty=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('fil_qty_'+i).innerHTML); 
-      v_loc=Number(document.getElementById('dtl_loc_'+i).innerHTML);
-      v_stockno=Number(document.getElementById('dtl_stockno_'+i).innerHTML);
-      v_qty=JBE_FORMAT_STR_TO_NUMBER(document.getElementById('dtl_qty_'+i).innerHTML); 
-      UPDATE_LOC_STOCKBAL(v_loc,v_stockno,v_lotno,v_qty,0); 
-    }else{
-      UPDATE_LOC_STOCKBAL(v_loc,v_stockno,v_lotno,0,0); 
-    }
-    console.log(i+' proceed....');
-    //UPDATE_LOC_STOCKBAL(v_loc,v_stockno,v_lotno,0,0); 
-  }
-}
-
-//prn
-function prn_fm_stock(){
-  prn_fm_stock();
-}
 
 //disp
 function disp_fm_stock(){   

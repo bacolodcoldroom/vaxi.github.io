@@ -90,6 +90,7 @@ async function get_main_all_db(){
   data=await api_readfile(JBE_CLOUD,JBE_API+'user'); DB_USER=data.content;
   data=await api_readfile(JBE_CLOUD,JBE_API+'log'); DB_LOG=data.content; 
   data=await api_readfile(JBE_CLOUD,JBE_API+'stock_invty'); DB_STOCK_INVTY=data.content; 
+  data=await api_readfile(JBE_CLOUD,JBE_API+'stock_invty2'); DB_STOCK_INVTY2=data.content; 
   data=await api_readfile(JBE_CLOUD,JBE_API+'stock_accom'); DB_STOCK_ACCOM=data.content; 
   data=await api_readfile(JBE_CLOUD,JBE_API+'area'); DB_AREA=data.content; 
   data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
@@ -103,7 +104,7 @@ async function get_main_all_db(){
 //=================================================================================
 //=======================show page=================================================
 function showMainPage(){
-  document.getElementById("wrapper").setAttribute('data-brgycode',''); //reset brgy code
+  document.getElementById("wrapper").setAttribute('data-areano',''); //reset brgy code
   //alert('ako main page:'+CURR_AXTYPE);
   if(CURR_AXTYPE==5){
     //showLocks();
@@ -146,26 +147,6 @@ async function dispHeaderMode(){
   //document.getElementById('owner').src=v_mphoto;
 }
 
-function dispMenu(divmenu,m){
-  document.getElementById(divmenu).innerHTML=m;
-}
-/*
-function dispMenu_app(f_main,m){
-  //alert('dispMenu activated... :'+m);
-  document.querySelectorAll('.menu_class').forEach(function(el) {
-    el.style.display = 'none'; 
-  });
-  //document.getElementById('mnu_main').style.display='none';
-  document.getElementById('mnu_main_owner').style.display='none';
-  if(f_main){
-    document.getElementById('mnu_mainmenu').style.display='block';   
-    document.getElementById(m).style.display='block';
-  }else{
-    document.getElementById('mnu_submenu').style.display='block';   
-    document.getElementById('mnu_submenu').innerHTML=m;
-  }
-}
-*/
 // ** ======================= SHOW ROUTINES ===================================
 function showProfile(v){ 
   return;
@@ -898,7 +879,7 @@ function offLive(){
 async function refresh_all_now(){
   //JBE_AUDIO('gfx/snd/insight',5);
   //let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-  let areano=document.getElementById('wrapper').getAttribute('data-brgycode');  
+  let areano=document.getElementById('wrapper').getAttribute('data-areano');  
   console.log('refresh_all_now',areano);
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;     
   let data2=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data2.content;  

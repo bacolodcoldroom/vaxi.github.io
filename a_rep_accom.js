@@ -101,8 +101,7 @@ function rp_accom(areano,date){
 
   //////////////////////////////////////////////////////
   ///////////////////display data///////////////////////
-  
-  //let brgy_code=document.getElementById('wrapper').getAttribute('data-brgycode');  
+   
   console.log('going display:',areano,date);
   for(var i=0;i<DB_ACCOM.length;i++){
     if(JBE_DATE_FORMAT(DB_ACCOM[i].date,'YYYY-MM') !== date){ continue; }

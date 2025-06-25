@@ -65,7 +65,7 @@ function fm_dashboard(){
 
 function disp_areas(sortMode){
   wrapper.setAttribute('data-sort',sortMode);
-  console.clear();
+  //console.clear();
   let curdate=JBE_DATE_FORMAT(document.getElementById('hd_date').innerHTML,'YYYY-MM'); 
   const today=new Date(curdate+'-01');
   const currentYear = today.getFullYear();
@@ -90,18 +90,20 @@ function disp_areas(sortMode){
       if(DB_INVTY[j].areano != areano){ continue; }
       if(DB_INVTY[j].date != curdate){ continue; }
       
-      for(var k=1;k<=5;k++){
-        let fld1='1w'+k; let fld2='2w'+k;
-        let wk_row1=Number(DB_INVTY[j][fld1]); 
-        let wk_row2=Number(DB_INVTY[j][fld2]);
-        //console.log(areano,k,wk_row1,wk_row2);
-        let tot=wk_row1+wk_row2;
-        ary_tot[k-1]+=tot;
-      } 
-      //console.log('invty',areano,tot_wk1);      
+      let row_data=DB_INVTY[j].row_data;
+      for(var jj=0;jj<row_data.length;jj++){
+        let tot=0;
+        for(var k=1;k<=5;k++){
+          tot=Number(row_data[jj]['w'+k]); 
+          //console.log(name,'wk:',k,' --> tot',tot);
+          ary_tot[k-1]+=tot;
+        } 
+      }
     }
     ctr_week_invty=0;
     for(var kk=0;kk<ary_tot.length;kk++){ if(ary_tot[kk] > 0){ ctr_week_invty++; } }
+
+    //===========================================================================================================
     //===========================================================================================================
     let ctr_week_accom=0;
     ary_tot=[0,0,0,0,0]; 
@@ -165,7 +167,7 @@ function disp_areas(sortMode){
   document.getElementById('dv_areaBox').innerHTML=dtl;
 }
 
-function mnu_brgy(){
+function xxmnu_brgy(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+           
       '<div onclick="JBE_CLOSE_VIEW2();showMainPage();" style="float:left;width:35%;height:100%;background:none;">'+
@@ -187,50 +189,14 @@ function mnu_brgy(){
         '</div>'+
       '</div>'+
     '</div>';  
-  dispMenu('div_menu',jmenu);
-}
-///////////////////////////////////////////////////////////////////////
-function mnu_brgy2(){
-  var jmenu=
-    '<div style="width:100%;height:100%;">'+           
-      '<div style="float:left;width:75%;height:100%;padding:5px;font-size:16px;text-align:left;color:white;background:none;">'+
-        'Click Week Buttons to Edit'+
-      '</div>'+
-      '<div onclick="JBE_CLOSE_VIEW2();showMainPage();" style="float:right;width:25%;height:100%;background:none;">'+
-        '<div class="class_footer">'+
-          '<img src="gfx/jclose.png"  alt="home image" />'+
-          '<span style="padding:0px;color:white;">Close</span>'+
-        '</div>'+
-      '</div>'+
-    '</div>';  
-  dispMenu('div_menu',jmenu);
-}
-
-function mnu_save_brgy(){  
-  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-  var jmenu=
-    '<div style="width:100%;height:100%;">'+           
-      '<div onclick="save_brgy(&quot;'+areano+'&quot;)" style="float:left;width:25%;height:100%;background:none;">'+
-        '<div class="class_footer">'+
-          '<img src="gfx/jsave.png"  alt="home image" />'+
-          '<span style="height:100%;padding:0 0 0 5px;color:white;">Save</span>'+
-        '</div>'+
-      '</div>'+
-      '<div onclick="disp_brgy(&quot;'+areano+'&quot;)" style="float:right;width:25%;height:100%;background:none;">'+
-        '<div class="class_footer">'+
-          '<img src="gfx/jclose.png"  alt="home image" />'+
-          '<span style="padding:0px;color:white;">Cancel</span>'+
-        '</div>'+
-      '</div>'+
-    '</div>';
-  dispMenu('div_menu',jmenu);
+  dispMenu('div_footer',jmenu);
 }
 
 function disp_brgy(areano){
   let tran=document.getElementById('wrapper').getAttribute('data-tran');
   console.log('disp_brgy:',tran,areano);
   if(tran=='invty'){
-    disp_invty_brgy(areano);
+    disp_invty_brgy();
   }else if(tran=='accom'){
     disp_accom_brgy(areano);
   }
@@ -239,7 +205,8 @@ function disp_brgy(areano){
 
 async function sel_brgy(areano){
   if(!JBE_CHK_USER(0)){ return; };
-  document.getElementById('wrapper').setAttribute('data-brgycode',areano);
+  document.getElementById('wrapper').setAttribute('data-areano',areano);
+  //alert('sel_brgy('+areano+')');
   let name=JBE_GETFLD('name',DB_AREA,'areano',areano);
   document.getElementById('id_brgy').setAttribute('data-areano',areano);
   document.getElementById('id_brgy').innerHTML=name;    
@@ -269,46 +236,9 @@ function chgdate_brgy(){
   let areano=document.getElementById('wrapper').getAttribute('data-areano');
   if(!areano){ snackBar('No Barangay selected...'); }
   if(tran=='invty'){
-    disp_invty_brgy(areano);
+    disp_invty_brgy();
   }else if(tran=='accom'){
     disp_accom_brgy(areano);
-  }  
-}
-
-function clear_invty_brgy(){
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){   
-    document.getElementById('div_row_data'+DB_STOCK_INVTY[i].stockno).innerHTML='';
-    document.getElementById('div_row'+DB_STOCK_INVTY[i].stockno).style.height='42px'; 
-    let vdtl='';
-    for(var j=1;j<=2;j++){
-      vdtl+=
-      '<div style="width:100%;height:20px;border:1px solid lightgray;">';
-        for(var k=1;k<=5;k++){
-          //let val=DB_INVTY[i][fld1];
-          vdtl+='<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_'+(j)+'w'+(k)+'" class="cls_weekly_row" value="" />';
-        }
-        vdtl+=
-          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'lotno'+'"  class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
-          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'req'+'"    class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />';
-      vdtl+=
-      '</div>';      
-    }
-    document.getElementById('div_row_data'+DB_STOCK_INVTY[i].stockno).innerHTML=vdtl;    
-  }
-  return;
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    let div='';
-    for(var k=0;k<5;k++){
-      div=DB_STOCK_INVTY[i].stockno+'_1w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-      div=DB_STOCK_INVTY[i].stockno+'_2w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    }
-    div=DB_STOCK_INVTY[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK_INVTY[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK_INVTY[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK_INVTY[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK_INVTY[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    div=DB_STOCK_INVTY[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
   }  
 }
 
@@ -328,94 +258,6 @@ function disp_brgy_list(){
     ctr++;
   }
   document.getElementById('brgy_list').innerHTML=vdtl;
-}
-
-//‐-------
-function disp_invty_brgy(areano){    
-  console.log('disp_invty_brgy --> ',areano);
-  let curdate=document.getElementById('id_date').value;
-  //alert(curdate+' areano:'+areano);
-  //curdate=JBE_DATE_FORMAT(curdate,'YYYY-MM');  
-  btn_enabled(0);
-  update_week_buttons(curdate,'invty');
-  clear_invty_brgy();
-  console.log('disp invty brgy:',areano);
-  for(var i=0;i<DB_INVTY.length;i++){
-    if(DB_INVTY[i].areano !== areano){ continue; }
-    if(JBE_DATE_FORMAT(DB_INVTY[i].date,'YYYY-MM') !== curdate){ continue; }
-
-    let v_stockno=DB_INVTY[i].stockno;
-    let arr_data=DB_INVTY[i].row_data;
-    console.log(arr_data.length,' ==row_data::: ',arr_data);
-    let vdtl='';
-    for(var j=1;j<=arr_data.length;j++){
-      vdtl+=
-      '<div style="width:100%;height:20px;border:1px solid lightgray;">';
-        for(var k=1;k<=5;k++){
-          //let val=DB_INVTY[i][fld1];
-          vdtl+='<input type="number" id="'+DB_STOCK_INVTY[i].stockno+'_'+(j)+'w'+(k)+'" class="cls_weekly_row" value="'+k+'" />';
-        }
-        vdtl+=
-          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'lotno'+'"  class="cls_weekly_row" style="width:15%;margin-left:1%;overflow:auto;color:black;background:'+clor_lotno+';" value="" />'+
-          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'expiry'+'" class="cls_weekly_row" style="width:10%;background:'+clor_expiry+';" value="" />'+
-          '<input type="text" id="'+DB_STOCK_INVTY[i].stockno+'_'+j+'req'+'"    class="cls_weekly_row" style="width:8%;margin-left:1%;border:1px solid black;border-top:1px;border-right:0px;background:'+clor_req+';" value="" />';
-      vdtl+=
-      '</div>';      
-    }
-    document.getElementById('div_row_data'+v_stockno).innerHTML=vdtl;    
-    let row_height=42;
-    console.log('arr_data.length:',arr_data.length);
-    if(arr_data.length>2){
-      let n=arr_data.length-2;
-      row_height=(20*arr_data.length)+arr_data.length-n;      
-    } 
-    document.getElementById('div_row'+v_stockno).style.height=(row_height)+'px';       
-  }  
-}
-
-//‐-------
-function edit_invty_brgy(col){  
-  let txtContent=document.getElementById('btn'+(col-1)).textContent;
-  if(!txtContent){
-    //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
-    return;
-  }
-  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
-  if(!areano){
-    snackBar('Select a Barangay...');
-    return;
-  }
-  document.getElementById('div_menu').setAttribute('data-saveMode','invty');
-  btn_enabled(col);
-  //assign
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    let div=DB_STOCK_INVTY[i].stockno+'_1w'+col;  document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_2w'+col;      document.getElementById(div).style.backgroundColor='yellow'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_1lotno';      document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_1expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_1req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_2lotno';      document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_2expiry';     document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-    div=DB_STOCK_INVTY[i].stockno+'_2req';        document.getElementById(div).style.backgroundColor='orange'; document.getElementById(div).style.pointerEvents='auto';
-  }
-  //document.getElementById('btn'+col).disabled=false;
-  mnu_save_brgy();
-}
-
-function btn_enabled(col){
-  let tran=document.getElementById('wrapper').getAttribute('data-tran');
-  let vbtn='btn';
-  if(tran=='accom'){ vbtn='btn1'; }
-  let vcolor='white';let vopacity='0.5'; let vdisabled=true;
-  if(col==0){
-    vcolor='white'; vopacity='1'; vdisabled=false;
-  }
-  for(var i=0;i<5;i++){        
-    document.getElementById(vbtn+i).style.color=vcolor; document.getElementById(vbtn+i).style.opacity=vopacity; document.getElementById(vbtn+i).disabled=vdisabled;
-  }
-  if(col != 0){
-    document.getElementById(vbtn+(col-1)).style.color='red'; document.getElementById(vbtn+(col-1)).style.opacity='1'; document.getElementById(vbtn+(col-1)).disabled=false;
-  }
 }
 
 function subtractDates(date1, date2) {
@@ -444,9 +286,10 @@ function subtractDates(date1, date2) {
 //save
 function save_brgy(areano){
   let tran=document.getElementById('wrapper').getAttribute('data-tran');
-  //let saveMode=document.getElementById('div_menu').getAttribute('data-saveMode');  
+  //let saveMode=document.getElementById('div_footer').getAttribute('data-saveMode');  
   if(tran=='invty'){
-    save_invty_brgy(areano);
+    let date=document.getElementById('id_date').value;    
+    save_invty_brgy(date);
   }else if(tran=='accom'){
     save_accom_brgy(areano);
   }else{
@@ -454,48 +297,6 @@ function save_brgy(areano){
     return;    
   }
   mnu_brgy();
-}
-
-async function save_invty_brgy(areano){
-  showProgress(true);
-  let n=new Date();
-  let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
-  let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
-
-  let curdate=document.getElementById('id_date').value;
-  let arr=[];arr_ctr=0;
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    let row1=[]; let row2=[];
-    for(var k=0;k<5;k++){      
-      row1[k]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1w'+(k+1)).value;
-      row2[k]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2w'+(k+1)).value;
-    }
-
-    row1[5]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1lotno').value; row1[6]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1expiry').value;    
-    row1[7]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_1req').value;    
-
-    row2[5]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2lotno').value; row2[6]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2expiry').value;
-    row2[7]=document.getElementById(DB_STOCK_INVTY[i].stockno+'_2req').value;
-    
-    let obj={
-      "areano":areano,
-      "stockno":DB_STOCK_INVTY[i].stockno,
-      "date_save":date_save,"time_save":time_save,
-      "date":curdate,
-      "1w1":row1[0],"1w2":row1[1],"1w3":row1[2],"1w4":row1[3],"1w5":row1[4], "1lotno":row1[5],"1expiry":row1[6],"1req":row1[7],
-      "2w1":row2[0],"2w2":row2[1],"2w3":row2[2],"2w4":row2[3],"2w5":row2[4], "2lotno":row2[5],"2expiry":row2[6],"2req":row2[7]
-    }
-    console.log(DB_STOCK_INVTY[i].descrp,obj);
-    arr[arr_ctr]=obj; 
-    arr_ctr++;
-  }
-  //await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === areano || record.date === curdate));  
-  await api_save(JBE_CLOUD,JBE_API+'invty',arr,record => !(record.areano === areano && record.date === curdate));  
-  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
-  console.log('data new:',data.length);
-  showProgress(false);
-  //disp_invty_brgy(areano);
-  disp_brgy(areano);
 }
 
 //=========================================================================================================================================================================
@@ -529,18 +330,20 @@ function disp_accom_brgy(areano){
 
 //‐-------
 function edit_accom_brgy(col){
+  alert('edit_accom_brgy: '+col);
   let txtContent=document.getElementById('btn1'+(col-1)).textContent;
   if(!txtContent){
     //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    
     return;
   }
   
-  let areano=document.getElementById('id_brgy').getAttribute('data-areano');
+  let areano=document.getElementById('wrapper').getAttribute('data-areano');  
+  let date=document.getElementById('id_date').value;    
   if(!areano){
     snackBar('Select a Barangay...');
     return;
   }
-  document.getElementById('div_menu').setAttribute('data-saveMode','accom');
+  document.getElementById('div_footer').setAttribute('data-saveMode','accom');
   btn_enabled(col);
   //assign
   for(var i=0;i<DB_STOCK_ACCOM.length;i++){
@@ -549,7 +352,7 @@ function edit_accom_brgy(col){
   }
   //document.getElementById('btn'+col).disabled=false;
   //mnu_save_accom_brgy();
-  mnu_save_brgy();
+  mnu_save_brgy(areano,date);
 }
 
 function clear_accom_brgy(){
@@ -565,8 +368,8 @@ function clear_accom_brgy(){
   }  
 }
 
-async function save_accom_brgy(areano){
-  showProgress(true);
+async function save_accom_brgy(xareano){
+  let areano=document.getElementById('wrapper').getAttribute('data-areano');
   let n=new Date();
   let date_save = JBE_DATE_FORMAT(n,'YYYY-MM-DD');
   let time_save= n.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
@@ -597,6 +400,7 @@ async function save_accom_brgy(areano){
     }
     arr[arr_ctr]=obj; arr_ctr++;
   }  
+  showProgress(true);
   await api_save(JBE_CLOUD,JBE_API+'accom',arr,record => !(record.areano === areano && record.date === curdate));  
   let data=await api_readfile(JBE_CLOUD,JBE_API+'accom'); DB_ACCOM=data.content;
   showProgress(false);
@@ -623,7 +427,7 @@ function mnu_accom_brgy(){
         'Click Week Buttons to Edit'+
       '</div>'+      
     '</div>';
-  dispMenu('div_menu2',jmenu);
+  dispMenu('div_footer2',jmenu);
 }
 
 function do_total_accom(id){

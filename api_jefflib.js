@@ -10,7 +10,11 @@ async function api_readfile(cloud,path) {
     path=path+'.json';
     try {
         const response = await fetch(apiBase+`${path}`, {
-            headers: { Authorization: `token ${GITHUB_TOKEN}` }
+            //headers: { Authorization: `token ${GITHUB_TOKEN}` }
+          headers: {
+            "Accept": "application/vnd.github+json",
+            "Authorization": `token ${GITHUB_TOKEN}`
+          }
         });
         if (!response.ok) throw new Error(`Failed to fetch file: ${response.status}`);
         const data = await response.json(); 
@@ -62,7 +66,7 @@ async function updateFile_api(path,updatedContent, message, sha) {
 }
 
 async function api_save(cloud,fileName,newData,cond){
-  console.clear();
+  //console.clear();
   console.log('api_save filename',fileName);
   console.log(newData);
   console.log('=================================');
