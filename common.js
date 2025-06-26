@@ -249,7 +249,7 @@ function html_dtl_invty(mode,date){
             if(k==len_wed){ vstyle='border-right:0px solid black;'};
             dtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'" value="" />';
           }
-          
+
           dtl+=
             '<input type="text"   id="'+div+'lotno'+'"  name="'+div+'lotno'+'"  class="cls_weekly_row" style="width:'+wd_lotno+'%;margin-left:'+w_marginLeft+'%;overflow:auto;color:black;background:'+clor_lotno+';" value="'+v_lotno+'" />'+
             '<input type="month"  id="'+div+'expiry'+'" name="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;background:'+clor_expiry+';" value="'+v_expiry+'" />'+
@@ -323,14 +323,7 @@ async function disp_invty_brgy(){
     //console.log(arr_data.length,' ==row_data::: ',arr_data);    
 
     for(var j=1;j<=arr_data.length;j++){
-      let div=v_stockno+'_'+j;
-      //div_row'+DB_STOCK_INVTY[i].stockno;
-      if(!document.getElementById('div_row'+v_stockno)){
-        console.log('FAILED 99999',j,div);
-        //continue;
-      }
-
-      console.log('AYOS 555',j,div);
+      let div=v_stockno+'_'+j;      
       for(var k=1;k<=5;k++){
         let val=arr_data[j-1]['w'+k];
         if(!val){ val=''; }

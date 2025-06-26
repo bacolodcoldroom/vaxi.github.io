@@ -330,7 +330,6 @@ function disp_accom_brgy(areano){
 
 //‐-------
 function edit_accom_brgy(col){
-  alert('edit_accom_brgy: '+col);
   let txtContent=document.getElementById('btn1'+(col-1)).textContent;
   if(!txtContent){
     //MSG_SHOW(vbOk,'ERROR:','No Database Found. Create New one.', function(){},function(){});    

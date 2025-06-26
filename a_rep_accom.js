@@ -20,12 +20,12 @@ function rp_accom(areano,date){
   wd_box=Number((100-wd_date)/(len_wed));
 
   let hd=reportHead('NIP WEEKLY ACCOMPLISHMENT',v_areaname)+
-  '<div style="width:100%;height:40px;margin-top:0px;font-size:14px;padding:0px 0 0 0;text-align:left;border:0px solid black;">'+      
+  '<div style="width:100%;height:35px;margin-top:0px;font-size:14px;padding:0px 0 0 0;text-align:left;border:0px solid black;">'+      
     '<div style="float:left;width:100%;height:50%;">DATE : '+JBE_DATE_FORMAT(date,'MMMM YYYY')+'</div>'+
     '<div style="float:left;width:100%;height:50%;">TARGET POP/ ELIGIBLE POP : <span style="text-decoration:underline;">'+v_pop+'</span></div>'+    
   '</div>';
   let hd1=
-  '<div style="width:100%;height:25px;margin-top:10px;font-size:14px;font-weight:bold;text-align:center;border:1px solid black;border-bottom:0px;background:yellow;">'+      
+  '<div style="width:100%;height:25px;margin-top:5px;font-size:14px;font-weight:bold;text-align:center;border:1px solid black;border-bottom:0px;background:yellow;">'+      
     '<div style="float:left;width:'+(wd_date-0)+'%;height:100%;border-right:1px solid black;background:white;"><div style="padding:3px 0 0 0;">DATE</div></div>';    
     let vdtl='';
     let px=1;
