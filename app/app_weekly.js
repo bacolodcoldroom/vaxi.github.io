@@ -25,7 +25,7 @@ async function fm_weekly(){
   
   let pa_height=H_BODY-35-8;  
   let dtl= 
-  '<div id="dv_weekly" data-maxdays=0 data-print=0  style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+
+  '<div id="dv_weekly" data-maxdays=0 data-print=0 data-mode="disp" style="height:100%;width:100%;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;padding:0px;border:1px solid lightgray;background:white;">'+
 
     '<div style="height:35px;width:100%;padding:0px;border:1px solid lightgray;background:none;">'+             
       
@@ -66,16 +66,11 @@ async function fm_weekly(){
         '</div>'+
       '</div>'+
 
-      '<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-30)+'px;margin-top:5px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">';
-        //html_dtl_invty()+     
+      '<div id="div_dtls" style="width:100%;height:'+(pa_height-60-10-30)+'px;margin-top:5px;border:1px solid lightgray;overflow:auto;padding:5px;background:none;">'+
+        //html_dtl_weekly('disp')+
+        /*      
         let w_leftWidth=15; let w_marginLeft=0;
         let wd_qty=12; let wd_lotno=18; let wd_expiry=11; let wd_req=11;
-  /*
-        let w_leftWidth=20; 
-        let w_marginLeft=1;
-        let wd_lotno=15; let wd_expiry=10; let wd_req=8;
-        */
-        
         let vdtl='';
         //let v_stockno='';
         DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
@@ -108,7 +103,7 @@ async function fm_weekly(){
           vdtl+=
           '<div id="div_row'+v_stockno+'" data-stockno="'+v_stockno+'" class="cls_stock_rows" style="width:100%;height:'+row_height+'px;border:1px solid black;color:black;background:none;">'+
             '<div id="div_row_vax'+v_stockno+'" style="float:left;width:'+w_leftWidth+'%;height:100%;text-align:left;padding:5px;border:px solid black;overflow:auto;background:none;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
-            '<div id="div_row_data'+v_stockno+'" style="float:left;width:'+(100-w_leftWidth)+'%;height:100%;text-align:left;padding:0px;border:0px solid blue;border-left:0px;overflow:auto;background:none;">';
+            '<div id="div_row_data'+v_stockno+'" style="float:left;width:'+(100-w_leftWidth)+'%;height:100%;text-align:left;padding:0px;border:0px solid blue;border-left:0px;background:none;">';
 
               for(var j=0;j<arr.length;j++){
                 let v_lotno=arr[j].lotno;
@@ -123,9 +118,13 @@ async function fm_weekly(){
                   '<input type="number" id="'+div+'w4'+'" name="'+div+'w4'+'" class="cls_weekly_row" value="" />'+
                   '<input type="number" id="'+div+'w5'+'" name="'+div+'w5'+'" class="cls_weekly_row" style="border-right:1px solid black;" value="" />'+
 
-                  '<input type="text"   id="'+div+'lotno'+'"  name="'+div+'lotno'+'"  class="cls_weekly_row" style="width:'+wd_lotno+'%;margin-left:'+w_marginLeft+'%;overflow:auto;color:black;background:'+clor_lotno+';" value="'+v_lotno+'" />'+
-                  '<input type="text"  id="'+div+'expiry'+'" name="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;background:'+clor_expiry+';" value="'+v_expiry+'" />'+
-                  '<input type="number" id="'+div+'req'+'"    name="'+div+'req'+'" class="cls_weekly_row" style="width:'+wd_req+'%;margin-left:'+w_marginLeft+'%;border:1px solid black;border-top:0px;border-right:0px;background:'+clor_req+';" value="'+v_req+'" />'+
+                  //'<input type="text"   id="'+div+'lotno'+'"  name="'+div+'lotno'+'"  class="cls_weekly_row" style="width:'+wd_lotno+'%;margin-left:'+w_marginLeft+'%;overflow:auto;color:black;background:'+clor_lotno+';" value="'+v_lotno+'" />'+
+                  //'<input type="text"  id="'+div+'expiry'+'" name="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;background:'+clor_expiry+';" value="'+v_expiry+'" />'+
+                  //'<input type="number" id="'+div+'req'+'"    name="'+div+'req'+'" class="cls_weekly_row" style="width:'+wd_req+'%;margin-left:'+w_marginLeft+'%;border:1px solid black;border-top:0px;border-right:0px;background:'+clor_req+';" value="'+v_req+'" />'+
+                  '<div id="'+div+'lotno'+'" class="cls_weekly_row" style="width:'+wd_lotno+'%;margin-left:'+w_marginLeft+'%;pointer-events:auto;overflow:auto;color:black;background:'+clor_lotno+';">'+v_lotno+'</div>'+
+                  '<div id="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;padding:2px 0 0 0;background:'+clor_expiry+';">'+v_expiry+'</div>'+
+                  '<div id="'+div+'req'+'" class="cls_weekly_row" style="width:'+wd_req+'%;margin-left:'+w_marginLeft+'%;padding:2px 0 0 0;border:1px solid black;border-top:0px;border-right:0px;background:'+clor_req+';">'+v_req+'</div>'+
+                  
                 '</div>';
               }
 
@@ -134,6 +133,7 @@ async function fm_weekly(){
           '</div>';
         }
         dtl+=vdtl+
+        */
 
       '</div>'+
 
@@ -142,6 +142,7 @@ async function fm_weekly(){
   '</div>';
   
   JBE_OPEN_VIEW(dtl,'Weekly Inventory','showMainPage');
+  document.getElementById('div_dtls').innerHTML=html_dtl_weekly('disp');
   /*
   let dv_hd=document.getElementById('div_hd');
   let dv_dt=document.getElementById('div_dtls');
@@ -150,18 +151,104 @@ async function fm_weekly(){
   disp_fm_weekly();  
 }
 
-//
-function init_fm_weekly(mode,col){
-  let w_leftWidth=15; let w_marginLeft=0;
+function html_dtl_weekly(mode,col=0){
+  document.getElementById('dv_weekly').setAttribute('data-mode',mode);
+  let w_leftWidth=15; let w_marginLeft=0; let h_dtl=20;
   let wd_qty=12; let wd_lotno=18; let wd_expiry=11; let wd_req=11;
-
-  let bg='white';
-  if(mode=='edit'){ 
-    w_leftWidth=35; w_marginLeft=0;
+  let pointEvents='none';
+  if(mode=='edit'){
+    w_leftWidth=30;
+    h_dtl=30;
+    pointEvents='auto';
+    w_marginLeft=0;
+    wd_lotno=10;  wd_expiry=10;  wd_req=9;
     wd_qty=20; wd_lotno=40; wd_expiry=20; wd_req=20;
     bg='yellow';
   }
+  //alert('pointEvents: '+pointEvents);
+  let vdtl='';
+  //let v_stockno='';
+  DB_STOCK_INVTY.sort(JBE_SORT_ARRAY(['rank']));
+  DB_STOCK_INVTY2.sort(JBE_SORT_ARRAY(['stockno','expiry','lotno']));
+  for(var i=0;i<DB_STOCK_INVTY.length;i++){
+    let v_stockno=DB_STOCK_INVTY[i].stockno;    
+    let arr=[];
+    let ctr=0;
+    for(var j=0;j<DB_STOCK_INVTY2.length;j++){
+      if(DB_STOCK_INVTY2[j].stockno != v_stockno){ continue; }
+      let ob={
+        "lotno":DB_STOCK_INVTY2[j].lotno,
+        "expiry":JBE_DATE_FORMAT(DB_STOCK_INVTY2[j].expiry,'YYYY-MM'),
+        "req":DB_STOCK_INVTY2[j].req
+      };
+      arr[ctr]=ob; ctr++;
+    }
 
+    let len=arr.length;
+    if(len==0){ arr=[{ "lotno":"", "expiry":"", "req":"" },{ "lotno":"", "expiry":"", "req":"" }]; }
+    if(len==1){ arr[1]={ "lotno":"", "expiry":"", "req":"" }; }
+    //console.log(arr);
+    
+    //let row_height=42;
+    let row_height=(h_dtl*2)+2;
+    if(len>2){
+      let n=len-2;
+      row_height=(h_dtl*len)+len-n;      
+    }
+
+    vdtl+=
+    '<div id="div_row'+v_stockno+'" data-stockno="'+v_stockno+'" class="cls_stock_rows" style="width:100%;height:'+row_height+'px;border:1px solid black;color:black;background:none;">'+
+      '<div id="div_row_vax'+v_stockno+'" style="float:left;width:'+w_leftWidth+'%;height:100%;text-align:left;padding:5px;border:px solid black;overflow:auto;background:none;">'+DB_STOCK_INVTY[i].descrp+'</div>'+
+      '<div id="div_row_data'+v_stockno+'" style="float:left;width:'+(100-w_leftWidth)+'%;height:100%;text-align:left;padding:0px;border:0px solid blue;border-left:0px;background:none;">';
+
+        for(var j=0;j<arr.length;j++){
+          let v_lotno=arr[j].lotno;
+          let v_expiry=arr[j].expiry;
+          let v_req=arr[j].req;
+          let div=mode+v_stockno+'_'+(j+1);
+
+          vdtl+=
+          '<div style="width:100%;height:'+h_dtl+'px;border:0px solid black;border-bottom:0px;background:none;">';
+            
+            for(var k=1;k<=5;k++){                  
+              let vstyle='';
+              if(mode=='edit'){
+                if(k!=col){
+                  vstyle='display:none;width:20%;pointer-events:'+pointEvents+';background:yellow;';
+                }else{
+                  vstyle='display:block;width:20%;pointer-events:'+pointEvents+';background:yellow;';
+                }                
+              }
+              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'" value="" />';
+            }
+            /*
+            '<input type="number" id="'+div+'w1'+'" name="'+div+'w1'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
+            '<input type="number" id="'+div+'w2'+'" name="'+div+'w2'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
+            '<input type="number" id="'+div+'w3'+'" name="'+div+'w3'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
+            '<input type="number" id="'+div+'w4'+'" name="'+div+'w4'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
+            '<input type="number" id="'+div+'w5'+'" name="'+div+'w5'+'" class="cls_weekly_row" style="style="pointer-events:'+pointEvents+';border-right:1px solid black;" value="" />'+
+            */
+            vdtl+=
+            '<div id="'+div+'lotno'+'" class="cls_weekly_row" style="width:'+wd_lotno+'%;margin-left:'+w_marginLeft+'%;pointer-events:auto;overflow:auto;color:black;background:'+clor_lotno+';">'+v_lotno+'</div>'+
+            '<div id="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;padding:2px 0 0 0;background:'+clor_expiry+';">'+v_expiry+'</div>'+
+            '<div id="'+div+'req'+'" class="cls_weekly_row" style="width:'+wd_req+'%;margin-left:'+w_marginLeft+'%;padding:2px 0 0 0;border:1px solid black;border-top:0px;border-right:0px;background:'+clor_req+';">'+v_req+'</div>'+
+          '</div>';
+        }
+
+        vdtl+=
+      '</div>'+
+    '</div>';
+  }
+  return vdtl;
+}
+
+//
+function init_fm_weekly(mode){
+  if(mode=='edit'){ return; }
+  let w_leftWidth=15; let w_marginLeft=0;
+  let wd_qty=12; let wd_lotno=18; let wd_expiry=11; let wd_req=11;
+  let bg='white';
+  
   for(var i=0;i<DB_STOCK_INVTY.length;i++){
     let v_stockno=DB_STOCK_INVTY[i].stockno;    
     let arr=[];
@@ -184,33 +271,17 @@ function init_fm_weekly(mode,col){
     console.log(arr.length);
 
     for(var j=0;j<arr.length;j++){
-      let div=v_stockno+'_'+(j+1); 
+      let div=mode+v_stockno+'_'+(j+1); 
       for(var k=1;k<=5;k++){
-        //document.getElementById(div+'w'+k).value='z';
         document.getElementById(div+'w'+k).style.backgroundColor='#ffb38a';          
-        document.getElementById(div+'w'+k).style.display='block'; 
-        document.getElementById(div+'w'+k).style.pointerEvents='none';
-        document.getElementById(div+'w'+k).style.backgroundColor=bg;     
-
+        document.getElementById(div+'w'+k).style.display='block';         
         document.getElementById(div+'w'+k).style.width=wd_qty+'%';
-        document.getElementById(div+'lotno').style.width=wd_lotno+'%';    document.getElementById(div+'lotno').style.marginLeft=w_marginLeft+'%';
-        document.getElementById(div+'expiry').style.width=wd_expiry+'%';  
-        document.getElementById(div+'req').style.width=wd_req+'%';        document.getElementById(div+'req').style.marginLeft=w_marginLeft+'%';
-
-        
-
-        if(mode=='edit'){
-          if(col==k){ 
-            document.getElementById(div+'w'+k).style.pointerEvents='auto';
-          }else{
-            document.getElementById(div+'w'+k).style.display='none'; 
-          }          
-        }
-
+        document.getElementById(div+'w'+k).style.backgroundColor=bg;     
+        document.getElementById(div+'w'+k).value='';
       }
-      document.getElementById(div+'lotno').value=arr[j].lotno;
-      document.getElementById(div+'expiry').value=format_expiry(arr[j].expiry); 
-      document.getElementById(div+'req').value=arr[j].req;
+      document.getElementById(div+'lotno').innerHTML=arr[j].lotno;
+      document.getElementById(div+'expiry').innerHTML=format_expiry(arr[j].expiry); 
+      document.getElementById(div+'req').innerHTML=arr[j].req;
     }    
 
   }
@@ -227,6 +298,7 @@ function format_expiry(expiry){
 }
 
 function disp_fm_weekly(){  
+  let mode=document.getElementById('dv_weekly').getAttribute('data-mode');
   console.log('CURR_AREANO:',CURR_AREANO);
   JBE_BACK_VIEW(true);  
   let date=JBE_DATE_FORMAT(document.getElementById('date_weekly').value,'YYYY-MM');
@@ -239,7 +311,7 @@ function disp_fm_weekly(){
   btn_enabled(0);
   update_week_buttons(curdate,'invty');
 
-  init_fm_weekly('disp',0);
+  init_fm_weekly(mode,0);
   
   for(var i=0;i<DB_INVTY.length;i++){
     if(DB_INVTY[i].areano !== areano){ continue; }
@@ -250,24 +322,24 @@ function disp_fm_weekly(){
     //console.log(arr_data.length,' ==row_data::: ',arr_data);    
 
     for(var j=1;j<=arr_data.length;j++){
-      let div=v_stockno+'_'+j;
+      let div=mode+v_stockno+'_'+j;
       for(var k=1;k<=5;k++){
         let val=arr_data[j-1]['w'+k];
         if(!val){ val=''; }
         console.log('val',val);
         document.getElementById(div+'w'+k).value=val;
-        document.getElementById(div+'w'+k).style.backgroundColor='white'; document.getElementById(div+'w'+k).style.pointerEvents='none';
+        //document.getElementById(div+'w'+k).style.backgroundColor='white'; //document.getElementById(div+'w'+k).style.pointerEvents='none';
       }
-      document.getElementById(div+'lotno').value=arr_data[j-1]['lotno'];    document.getElementById(div+'lotno').style.pointerEvents='none';
-      document.getElementById(div+'expiry').value=format_expiry(arr_data[j-1]['expiry']);  document.getElementById(div+'expiry').style.pointerEvents='none';
-      document.getElementById(div+'req').value=arr_data[j-1]['req'];        document.getElementById(div+'req').style.pointerEvents='none';
+      document.getElementById(div+'lotno').innerHTML=arr_data[j-1]['lotno'];    
+      document.getElementById(div+'expiry').innerHTML=format_expiry(arr_data[j-1]['expiry']);  
+      document.getElementById(div+'req').innerHTML=arr_data[j-1]['req'];      
     }
   }  
   console.log('Humana na app!');
   mnu_fm_weekly();
 }
 
-function edit_fm_weekly(col){
+function xedit_fm_weekly(col){
   let txtContent=document.getElementById('btn'+(col-1)).textContent;
   if(!txtContent){ return; }
 
@@ -280,84 +352,43 @@ function edit_fm_weekly(col){
   //div_monthof2.style.display='block';
   hd_edit_week.innerHTML='Edit Week #'+col+'  ('+txtContent+')'
   let date=JBE_DATE_FORMAT(document.getElementById('date_weekly').value,'YYYY-MM');
-  //assign  
-  
+  //assign    
   mnu_save_fm_weekly();  
 }
 
-//‐-------
-function repl_fm_weekly(col){
-  return;
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    let v_stockno=DB_STOCK_INVTY[i].stockno;    
-    let arr=[];
-    let ctr=0;
-    for(var j=0;j<DB_STOCK_INVTY2.length;j++){
-      if(DB_STOCK_INVTY2[j].stockno != v_stockno){ continue; }
-      let ob={
-        "lotno":DB_STOCK_INVTY2[j].lotno,
-        "expiry":DB_STOCK_INVTY2[j].expiry,
-        "req":DB_STOCK_INVTY2[j].req
-      };
-      arr[ctr]=ob; ctr++;
-    }
+function edit_fm_weekly(col){
+  let txtContent=document.getElementById('btn'+(col-1)).textContent;
+  if(!txtContent){ return; }
 
-    let len=arr.length;
-    if(len==0){ arr=[{ "lotno":"", "expiry":"", "req":"" },{ "lotno":"", "expiry":"", "req":"" }]; }
-    if(len==1){ arr[1]={ "lotno":"", "expiry":"", "req":"" }; }
-    
-    for(var j=0;j<arr.length;j++){
-      let id1='_'+DB_STOCK_INVTY[i].stockno+'_1w';
-      let div=v_stockno+'_'+(j+1);
-      document.getElementById(div+'w1').value=document.getElementById(id1).value;
-      
-    }
-
-  }
-  /*
-  let fld1='1w'+(col);      
-  let fld2='2w'+(col);
+  let vheight=H_BODY-100-5;
+  let fld1=col+'wm';      
+  let fld2=col+'wf';
   let div='';    
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    for(var j=0;j<arr.length;j++){
-      let div=v_stockno+'_'+(j+1);
-      for(var k=1;k<=5;k++){
-        document.getElementById(div+'w'+k).value='';
-        document.getElementById(div+'w'+k).style.backgroundColor='white'; document.getElementById(div+'w'+k).style.pointerEvents='none';
-      }
-    }
+  let v_val1=0;    let v_val2=0;    
 
-    let id1='_'+DB_STOCK_INVTY[i].stockno+'_1w';  let id2='_'+DB_STOCK_INVTY[i].stockno+'_2w'; 
-    div=DB_STOCK_INVTY[i].stockno+'_'+fld1;            document.getElementById(div).value=document.getElementById(id1).value;
-    div=DB_STOCK_INVTY[i].stockno+'_'+fld2;            document.getElementById(div).value=document.getElementById(id2).value;
-  }
-    */
-  JBE_CLOSEBOX();
-}
+  var dtl=       
+    '<div id="div_edit_fm_accom" style="width:100%;height:'+vheight+'px;text-align:center;padding:5px;overflow:auto;background-color:none;">'+
+      html_dtl_weekly('edit',col)+
+    '</div>';
 
-function clear_fm_weekly(){
-  for(var i=0;i<DB_STOCK_INVTY.length;i++){
-    let div='';
-    for(var k=0;k<5;k++){
-      div=DB_STOCK_INVTY[i].stockno+'_1w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-      div=DB_STOCK_INVTY[i].stockno+'_2w'+(k+1);    document.getElementById(div).style.backgroundColor='white'; document.getElementById(div).style.pointerEvents='none'; document.getElementById(div).value='';
-    }    
-    div=DB_STOCK_INVTY[i].stockno+'_1lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).innerHTML='';
-    div=DB_STOCK_INVTY[i].stockno+'_1expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).innerHTML='';
-    div=DB_STOCK_INVTY[i].stockno+'_1req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).innerHTML='';
+  var dtl2=   
+    '<div style="width:100%;height:100%;">'+           
+      '<div onclick="save_fm_weekly();" style="float:left;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jsave.png"  alt="home image" />'+
+          '<span>Save</span>'+
+        '</div>'+
+      '</div>'+
+      '<div onclick="JBE_CLOSEBOX();" style="float:right;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jclose.png"  alt="home image" />'+
+          '<span>Cancel</span>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
 
-    div=DB_STOCK_INVTY[i].stockno+'_2lotno';        document.getElementById(div).style.backgroundColor=clor_lotno;  document.getElementById(div).innerHTML='';
-    div=DB_STOCK_INVTY[i].stockno+'_2expiry';       document.getElementById(div).style.backgroundColor=clor_expiry; document.getElementById(div).innerHTML='';
-    div=DB_STOCK_INVTY[i].stockno+'_2req';          document.getElementById(div).style.backgroundColor=clor_req;    document.getElementById(div).innerHTML='';
-
-    
-  }  
-  for(var y=0;y<5;y++){
-    document.getElementById('btn'+(y)).style.color='white'; 
-    document.getElementById('btn'+(y)).disabled=false;
-    document.getElementById('btn'+(y)).style.opacity='1';
-    document.getElementById('btn'+(y)).style.color='white'; document.getElementById('btn'+(y)).style.opacity='1'; document.getElementById('btn'+(y)).disabled=false;
-  }
+  JBE_OPENBOX('div_edit_fm_accom','Edit Week #'+col+'  ('+txtContent+')',dtl,dtl2,'close_edit_dtr');
+  disp_fm_weekly();
 }
 
 async function save_fm_weekly(){
@@ -391,7 +422,7 @@ async function save_fm_weekly(){
     let arr_data=[];  let ctr_arr_data=0;
     let f_empty=false;
     for(var j=0;j<arr.length;j++){      
-      let div=v_stockno+'_'+(j+1);
+      let div='edit'+v_stockno+'_'+(j+1);
       if(!document.getElementById(div+'w1').value 
         && !document.getElementById(div+'w2').value 
         && !document.getElementById(div+'w3').value 
@@ -407,9 +438,9 @@ async function save_fm_weekly(){
         "w3":document.getElementById(div+'w3').value,
         "w4":document.getElementById(div+'w4').value,
         "w5":document.getElementById(div+'w5').value,
-        "lotno":document.getElementById(div+'lotno').value,
-        "expiry":JBE_DATE_FORMAT(document.getElementById(div+'expiry').value,'YYYY-MM'),
-        "req":document.getElementById(div+'req').value,
+        "lotno":document.getElementById(div+'lotno').innerHTML,
+        "expiry":document.getElementById(div+'expiry').innerHTML,
+        "req":document.getElementById(div+'req').innerHTML,
       };
       arr_data[ctr_arr_data]=ob_data; ctr_arr_data++;
     }
@@ -433,6 +464,8 @@ async function save_fm_weekly(){
   speakText('Data Uploaded successfully');
   //make_log(CURR_AREANO,'invty');
   showProgress(false);
+  JBE_CLOSEBOX();
+  document.getElementById('dv_weekly').setAttribute('data-mode','disp');
   disp_fm_weekly();
 }
 
@@ -448,8 +481,14 @@ function close_fm_weekly(){
 
 function mnu_fm_weekly(){
   var jmenu=
-    '<div style="width:100%;height:100%;">'+           
-      '<div style="width:100%;height:100%;padding:10px;font-size:15px;text-align:center;color:white;background:none;">'+
+    '<div style="width:100%;height:100%;">'+ 
+      '<div onclick="refresh_fm_weekly()" style="float:left;width:25%;height:100%;background:none;">'+
+        '<div class="class_footer">'+
+          '<img src="gfx/jrefresh.png"  alt="home image" />'+
+          '<span>Refresh</span>'+
+        '</div>'+
+      '</div>'+          
+      '<div style="float:left;width:75%;height:100%;padding:10px;font-size:15px;text-align:center;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
       '</div>'+
     '</div>';
@@ -475,7 +514,12 @@ function mnu_save_fm_weekly(){
   dispMenu('div_footer',jmenu);
 }
 
-function refresh_weekly(){  
+async function refresh_fm_weekly(){  
+  let a=document.getElementById('dv_weekly').getAttribute('data-mode');
+  showProgress(true);
+  let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content; 
+  showProgress(false);
+  disp_fm_weekly();
   snackBar(`Refreshed...`);
 }
  
