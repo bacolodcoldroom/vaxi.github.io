@@ -155,7 +155,7 @@ function html_dtl_weekly(mode,col=0){
   document.getElementById('dv_weekly').setAttribute('data-mode',mode);
   let w_leftWidth=15; let w_marginLeft=0; let h_dtl=20;
   let wd_qty=12; let wd_lotno=18; let wd_expiry=11; let wd_req=11;
-  let pointEvents='none';
+  let pointEvents='none'; let font_qty=12;
   if(mode=='edit'){
     w_leftWidth=30;
     h_dtl=30;
@@ -164,6 +164,7 @@ function html_dtl_weekly(mode,col=0){
     wd_lotno=10;  wd_expiry=10;  wd_req=9;
     wd_qty=20; wd_lotno=40; wd_expiry=20; wd_req=20;
     bg='yellow';
+    font_qty=14;
   }
   //alert('pointEvents: '+pointEvents);
   let vdtl='';
@@ -208,7 +209,7 @@ function html_dtl_weekly(mode,col=0){
           let div=mode+v_stockno+'_'+(j+1);
 
           vdtl+=
-          '<div style="width:100%;height:'+h_dtl+'px;font-size:12px;border:0px solid black;border-bottom:0px;background:none;">';
+          '<div style="width:100%;height:'+h_dtl+'px;border:0px solid black;border-bottom:0px;background:none;">';
             
             for(var k=1;k<=5;k++){                  
               let vstyle='display:block;width:20%;pointer-events:'+pointEvents+';background:yellow;';
@@ -218,7 +219,7 @@ function html_dtl_weekly(mode,col=0){
                 }             
               }
 
-              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'font-size:14px;" value="" />';
+              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'font-size:'+font_qty+';px;" value="" />';
             }
            
             vdtl+=
@@ -475,13 +476,15 @@ function close_fm_weekly(){
 function mnu_fm_weekly(){
   var jmenu=
     '<div style="width:100%;height:100%;">'+ 
+      /*
       '<div onclick="refresh_fm_weekly()" style="float:left;width:25%;height:100%;background:none;">'+
         '<div class="class_footer">'+
           '<img src="gfx/jrefresh.png"  alt="home image" />'+
           '<span>Refresh</span>'+
         '</div>'+
       '</div>'+          
-      '<div style="float:left;width:75%;height:100%;padding:10px;font-size:15px;text-align:center;color:white;background:none;">'+
+      */
+      '<div style="float:left;width:100%;height:100%;padding:10px;font-size:15px;text-align:center;color:white;background:none;">'+
         'Click Week Buttons to Edit'+
       '</div>'+
     '</div>';
