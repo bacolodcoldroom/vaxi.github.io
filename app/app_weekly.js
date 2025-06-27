@@ -219,7 +219,7 @@ function html_dtl_weekly(mode,col=0){
                 }             
               }
 
-              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'font-size:'+font_qty+'px;" value="" />';
+              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'font-weight:bold;font-size:'+font_qty+'px;" value="" />';
             }
            
             vdtl+=
