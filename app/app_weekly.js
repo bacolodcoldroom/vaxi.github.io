@@ -208,29 +208,22 @@ function html_dtl_weekly(mode,col=0){
           let div=mode+v_stockno+'_'+(j+1);
 
           vdtl+=
-          '<div style="width:100%;height:'+h_dtl+'px;border:0px solid black;border-bottom:0px;background:none;">';
+          '<div style="width:100%;height:'+h_dtl+'px;font-size:12px;border:0px solid black;border-bottom:0px;background:none;">';
             
             for(var k=1;k<=5;k++){                  
-              let vstyle='';
+              let vstyle='display:block;width:20%;pointer-events:'+pointEvents+';background:yellow;';
               if(mode=='edit'){
                 if(k!=col){
-                  vstyle='display:none;width:20%;pointer-events:'+pointEvents+';background:yellow;';
-                }else{
-                  vstyle='display:block;width:20%;pointer-events:'+pointEvents+';background:yellow;';
-                }                
+                  vstyle='display:none;';
+                }             
               }
-              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'" value="" />';
+
+              vdtl+='<input type="number" id="'+div+'w'+k+'" name="'+div+'w'+k+'" class="cls_weekly_row" style="'+vstyle+'font-size:14px;" value="" />';
             }
-            /*
-            '<input type="number" id="'+div+'w1'+'" name="'+div+'w1'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
-            '<input type="number" id="'+div+'w2'+'" name="'+div+'w2'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
-            '<input type="number" id="'+div+'w3'+'" name="'+div+'w3'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
-            '<input type="number" id="'+div+'w4'+'" name="'+div+'w4'+'" class="cls_weekly_row" style="pointer-events:'+pointEvents+';" value="" />'+
-            '<input type="number" id="'+div+'w5'+'" name="'+div+'w5'+'" class="cls_weekly_row" style="style="pointer-events:'+pointEvents+';border-right:1px solid black;" value="" />'+
-            */
+           
             vdtl+=
             '<div id="'+div+'lotno'+'" class="cls_weekly_row" style="width:'+wd_lotno+'%;margin-left:'+w_marginLeft+'%;pointer-events:auto;overflow:auto;color:black;background:'+clor_lotno+';">'+v_lotno+'</div>'+
-            '<div id="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;padding:2px 0 0 0;background:'+clor_expiry+';">'+v_expiry+'</div>'+
+            '<div id="'+div+'expiry'+'" class="cls_weekly_row" style="width:'+wd_expiry+'%;padding:2px 0 0 0;background:'+clor_expiry+';">'+format_expiry(v_expiry)+'</div>'+
             '<div id="'+div+'req'+'" class="cls_weekly_row" style="width:'+wd_req+'%;margin-left:'+w_marginLeft+'%;padding:2px 0 0 0;border:1px solid black;border-top:0px;border-right:0px;background:'+clor_req+';">'+v_req+'</div>'+
           '</div>';
         }
