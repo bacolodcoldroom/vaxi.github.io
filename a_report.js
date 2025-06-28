@@ -268,7 +268,7 @@ function prn_brgy(brgy_code,tran,date){
   mnu_repo();
 
   if(tran=='invty'){
-    rp2_invty(brgy_code,date);
+    rp_invty(brgy_code,date);
   }else if(tran=='accom'){
     rp_accom(brgy_code,date);
   }
@@ -302,7 +302,7 @@ function chg_rep_month(tran,areano,date){
   //alert(date);
   console.log(tran,areano,date);
   if(tran=='invty'){
-    rp2_invty(areano,date);
+    rp_invty(areano,date);
   }else{
     rp_accom(areano,date);
   }

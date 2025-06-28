@@ -483,8 +483,8 @@ async function save_invty_brgy(){
     if(!arr_data.length){ console.log('====b4 obj yet empty.'); continue; }
 
     let obj={
-      "areano":areano,      
-      "stockno":v_stockno,      
+      "areano":areano,
+      "stockno":v_stockno,
       "date":date,
       "row_data":arr_data
     }
@@ -497,10 +497,8 @@ async function save_invty_brgy(){
     disp_invty_brgy();
     return;
   }
-  //JBE_CLOSEBOX();
-  //return;
   showProgress(true);  
-  await api_save(JBE_CLOUD,JBE_API+'invty',aryINVTY,record => !(record.areano === CURR_AREANO  && record.date === date));  
+  await api_save(JBE_CLOUD,JBE_API+'invty',aryINVTY,record => !(record.areano === CURR_AREANO  && record.date === date));
   let data=await api_readfile(JBE_CLOUD,JBE_API+'invty'); DB_INVTY=data.content;
   speakText('Data Uploaded successfully');
   //make_log(CURR_AREANO,'invty');
